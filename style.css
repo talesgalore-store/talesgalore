@@ -1472,10 +1472,10 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     }
 }
 
-.age-section .section-title{
+.age-track .section-title{
     text-align:center;
 }
 
-.genre-section .section-title{
+.genre-track .section-title{
     text-align:center;
 }
