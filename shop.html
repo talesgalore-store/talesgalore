@@ -371,9 +371,10 @@
           : (rawAge ? [rawAge] : []);
 
         const rawGenre   = f.theme ?? [];
-        const genreArray = Array.isArray(rawGenre)
-          ? rawGenre
-          : (rawGenre ? [rawGenre] : []);
+        // Normalise to plain string array regardless of Contentful field type
+        const genreArray = (Array.isArray(rawGenre) ? rawGenre : (rawGenre ? [rawGenre] : []))
+          .map(g => typeof g === 'string' ? g : (g?.fields?.name ?? g?.fields?.title ?? ''))
+          .filter(Boolean);
 
         return {
           id:        item.sys.id,
@@ -446,8 +447,12 @@
       // checked ages (handles multi-age books correctly)
       if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
 
-      // Genre filter — same array-intersection logic
-      if (checkedGenres.length && !checkedGenres.some(g => b.genres.includes(g))) return false;
+      // Genre filter — normalise both sides so "&" vs "&amp;" never causes a mismatch
+      if (checkedGenres.length) {
+        const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
+        const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
+        if (!normFilters.some(f => normBook.includes(f))) return false;
+      }
 
       // Price filter
       if (b.price < priceMin || b.price > priceMax) return false;
