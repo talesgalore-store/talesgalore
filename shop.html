@@ -10,6 +10,130 @@
   <style>
     body { background: #faf7f2; }
 
+    /* ── ANNOUNCEMENT BAR ── */
+    .announcement-bar {
+      background: #5C7A5E;
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .announcement-track {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e5e0d8;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Override the broken rule in style.css */
+    .header-inner {
+      display: block !important;
+      height: auto !important;
+      padding: 0 !important;
+      flex-direction: unset !important;
+      gap: unset !important;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 24px;
+      border-bottom: 1px solid #f0ece4;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .social-links a {
+      color: #888;
+      display: flex;
+      align-items: center;
+      transition: color 0.15s;
+    }
+    .social-links a:hover { color: #5C7A5E; }
+
+    .cart-icon {
+      display: flex !important;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      background: #EAF0E8;
+      padding: 7px 14px;
+      border-radius: 20px;
+      transition: background 0.15s;
+    }
+    .cart-icon:hover { background: #d8e4d6; }
+    .cart-count {
+      background: #C4622D;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .header-main-row {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      padding: 10px 24px;
+    }
+
+    .logo {
+      display: flex !important;
+      align-items: center;
+      flex-shrink: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #5C7A5E;
+    }
+    .logo-img {
+      height: 52px;
+      width: auto;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .main-nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .main-nav a:hover,
+    .main-nav a.active { color: #5C7A5E; }
+
+    /* ── PAGE HERO ── */
     .page-hero {
       background: #faf7f2;
       padding: 36px 24px 28px;
@@ -24,6 +148,7 @@
       margin: 0 auto;
     }
 
+    /* ── CATALOGUE LAYOUT ── */
     .catalogue-layout {
       max-width: 1200px;
       margin: 0 auto;
@@ -37,8 +162,10 @@
       .catalogue-layout { grid-template-columns: 1fr; }
       .sidebar { display: none; }
       .mobile-filter-btn { display: flex !important; }
+      .main-nav { display: none; }
     }
 
+    /* ── SIDEBAR FILTERS ── */
     .sidebar { position: sticky; top: 100px; }
     .filter-group { border-bottom: 1px solid #e5e0d8; padding: 16px 0; }
     .filter-group:first-child { padding-top: 0; }
@@ -76,6 +203,7 @@
     }
     .clear-filters:hover { color: #1a1a1a; }
 
+    /* ── TOOLBAR ── */
     .catalogue-toolbar {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
@@ -97,6 +225,7 @@
       font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
     }
 
+    /* ── PRODUCT CARDS ── */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -136,6 +265,7 @@
       color: #888; font-size: 0.95rem;
     }
 
+    /* ── PAGINATION ── */
     .pagination {
       display: flex; justify-content: center; gap: 8px; margin-top: 40px; flex-wrap: wrap;
     }
@@ -147,7 +277,7 @@
     .page-btn:hover, .page-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
     .page-btn:disabled { opacity: 0.3; cursor: default; }
 
-    /* Active filter pill in page hero */
+    /* ── ACTIVE FILTER PILL ── */
     .active-filter-pill {
       display: inline-block; background: #5C7A5E; color: white;
       font-size: 0.78rem; font-weight: 700; padding: 4px 12px;
@@ -236,13 +366,12 @@
       <div class="filter-heading open" onclick="toggleFilter(this)">
         <h3>Suggested Age</h3><span class="chevron">▼</span>
       </div>
-      <!-- BUG FIX 1 & 3: values match exactly what Contentful stores in suggestedAge array -->
       <div class="filter-options" id="ageFilters">
-        <label><input type="checkbox" value="Age 0-2"          onchange="applyFilters()"/> Age 0–2</label>
-        <label><input type="checkbox" value="Age 3-5"          onchange="applyFilters()"/> Age 3–5</label>
-        <label><input type="checkbox" value="Age 6-8"          onchange="applyFilters()"/> Age 6–8</label>
-        <label><input type="checkbox" value="Age 9-12"         onchange="applyFilters()"/> Age 9–12</label>
-        <label><input type="checkbox" value="Age 13 & above"   onchange="applyFilters()"/> Age 13+</label>
+        <label><input type="checkbox" value="Age 0-2"         onchange="applyFilters()"/> Age 0–2</label>
+        <label><input type="checkbox" value="Age 3-5"         onchange="applyFilters()"/> Age 3–5</label>
+        <label><input type="checkbox" value="Age 6-8"         onchange="applyFilters()"/> Age 6–8</label>
+        <label><input type="checkbox" value="Age 9-12"        onchange="applyFilters()"/> Age 9–12</label>
+        <label><input type="checkbox" value="Age 13 & above"  onchange="applyFilters()"/> Age 13+</label>
       </div>
     </div>
 
@@ -251,14 +380,14 @@
         <h3>Genre</h3><span class="chevron">▼</span>
       </div>
       <div class="filter-options" id="genreFilters">
-        <label><input type="checkbox" value="Tickles & Chuckles"   onchange="applyFilters()"/> Tickles &amp; Chuckles</label>
+        <label><input type="checkbox" value="Tickles & Chuckles"    onchange="applyFilters()"/> Tickles &amp; Chuckles</label>
         <label><input type="checkbox" value="Activity & Educational" onchange="applyFilters()"/> Activity &amp; Educational</label>
-        <label><input type="checkbox" value="Faith & Festivals"    onchange="applyFilters()"/> Faith &amp; Festivals</label>
-        <label><input type="checkbox" value="Vehicles & Machines"  onchange="applyFilters()"/> Vehicles &amp; Machines</label>
-        <label><input type="checkbox" value="Sensory & Moveables"  onchange="applyFilters()"/> Sensory &amp; Moveables</label>
-        <label><input type="checkbox" value="Morals & Values"      onchange="applyFilters()"/> Morals &amp; Values</label>
-        <label><input type="checkbox" value="Fantasy & Fairy Tales" onchange="applyFilters()"/> Fantasy &amp; Fairy Tales</label>
-        <label><input type="checkbox" value="Adventure"            onchange="applyFilters()"/> Adventure</label>
+        <label><input type="checkbox" value="Faith & Festivals"     onchange="applyFilters()"/> Faith &amp; Festivals</label>
+        <label><input type="checkbox" value="Vehicles & Machines"   onchange="applyFilters()"/> Vehicles &amp; Machines</label>
+        <label><input type="checkbox" value="Sensory & Moveables"   onchange="applyFilters()"/> Sensory &amp; Moveables</label>
+        <label><input type="checkbox" value="Morals & Values"       onchange="applyFilters()"/> Morals &amp; Values</label>
+        <label><input type="checkbox" value="Fantasy & Fairy Tales"  onchange="applyFilters()"/> Fantasy &amp; Fairy Tales</label>
+        <label><input type="checkbox" value="Adventure"             onchange="applyFilters()"/> Adventure</label>
       </div>
     </div>
 
@@ -358,19 +487,14 @@
         assets[a.sys.id] = 'https:' + a.fields.file.url;
       });
 
-      // BUG FIX 1: read suggestedAge (the real field name from Contentful)
-      // and normalise to always be an array regardless of whether Contentful
-      // returns a string or an array.
       allBooks = (data.items || []).map(item => {
         const f        = item.fields;
         const rawAge   = f.suggestedAge ?? f.suggestedAges ?? [];
-        // Normalise: string → single-element array; undefined/null → []
         const ageArray = Array.isArray(rawAge)
           ? rawAge
           : (rawAge ? [rawAge] : []);
 
         const rawGenre   = f.theme ?? [];
-        // Normalise to plain string array regardless of Contentful field type
         const genreArray = (Array.isArray(rawGenre) ? rawGenre : (rawGenre ? [rawGenre] : []))
           .map(g => typeof g === 'string' ? g : (g?.fields?.name ?? g?.fields?.title ?? ''))
           .filter(Boolean);
@@ -381,7 +505,6 @@
           author:    f.author    || '',
           price:     parseFloat(f.price) || 0,
           condition: f.condition || '',
-          // BUG FIX 2: store as array so multi-age books filter correctly
           ages:      ageArray,
           genres:    genreArray,
           inStock:   f.inStock !== false,
@@ -390,7 +513,6 @@
         };
       });
 
-      // BUG FIX 3: read URL params AFTER books are loaded so pre-check works
       readUrlParams();
       applyFilters();
 
@@ -402,16 +524,15 @@
     }
   }
 
-  // ── BUG FIX 3: Read URL params and pre-tick the right checkboxes ──────────
+  // ── Read URL params and pre-tick checkboxes ────────────────────────────────
   function readUrlParams() {
     const params = new URLSearchParams(window.location.search);
-    const age    = params.get('age');   // e.g. "Age 13 & above"
-    const genre  = params.get('genre'); // e.g. "Tickles & Chuckles"
+    const age    = params.get('age');
+    const genre  = params.get('genre');
 
     if (age) {
       const cb = document.querySelector(`#ageFilters input[value="${age}"]`);
       if (cb) cb.checked = true;
-      // Update page title pill
       document.getElementById('pageTitle').textContent = age;
       showPill(age);
     }
@@ -439,32 +560,22 @@
     const sort              = document.getElementById('sort-select').value;
 
     filtered = allBooks.filter(b => {
-      // Condition filter
       if (checkedConditions.length && !checkedConditions.includes(b.condition)) return false;
-
-      // BUG FIX 2: array intersection — book must have at least ONE of the
-      // checked ages (handles multi-age books correctly)
       if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
-
-      // Genre filter — normalise both sides so "&" vs "&amp;" never causes a mismatch
       if (checkedGenres.length) {
         const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
         const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
         if (!normFilters.some(f => normBook.includes(f))) return false;
       }
-
-      // Price filter
       if (b.price < priceMin || b.price > priceMax) return false;
-
       return true;
     });
 
-    // Sort
-    if (sort === 'az')         filtered.sort((a, b) => a.title.localeCompare(b.title));
-    else if (sort === 'za')    filtered.sort((a, b) => b.title.localeCompare(a.title));
+    if (sort === 'az')              filtered.sort((a, b) => a.title.localeCompare(b.title));
+    else if (sort === 'za')         filtered.sort((a, b) => b.title.localeCompare(a.title));
     else if (sort === 'price-low')  filtered.sort((a, b) => a.price - b.price);
     else if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
-    else if (sort === 'newest') filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    else if (sort === 'newest')     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     currentPage = 1;
     renderPage();
@@ -486,7 +597,6 @@
       return;
     }
 
-    // Store for cart.js addToCart
     window._allBooks = allBooks;
 
     grid.innerHTML = page.map(b => `
@@ -549,7 +659,6 @@
     document.getElementById('sort-select').value = 'featured';
     document.getElementById('pageTitle').textContent = 'Catalogue';
     document.getElementById('activeFilterPill').style.display = 'none';
-    // Clear URL params
     history.replaceState({}, '', 'shop.html');
     applyFilters();
   }
