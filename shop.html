@@ -370,7 +370,7 @@
           ? rawAge
           : (rawAge ? [rawAge] : []);
 
-        const rawGenre   = f.genre ?? f.genres ?? [];
+        const rawGenre   = f.theme ?? [];
         const genreArray = Array.isArray(rawGenre)
           ? rawGenre
           : (rawGenre ? [rawGenre] : []);
