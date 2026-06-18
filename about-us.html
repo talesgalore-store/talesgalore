@@ -1,0 +1,341 @@
+<p><meta charset="UTF-8"> <meta content="width=device-width, initial-scale=1.0" name="viewport"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;700&amp;display=swap"></p>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FDFAF4;
+    --warm:    #F5EDD8;
+    --gold:    #C8923A;
+    --gold-lt: #E8B96A;
+    --ink:     #8B5E3C;
+    --muted:   #7A6A52;
+    --rule:    #E2D5BC;
+  }
+
+  body {
+    background: var(--cream);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    line-height: 1.8;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--ink);
+    padding: 48px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '📚';
+    font-size: 120px;
+    position: absolute;
+    opacity: 0.06;
+    top: -20px;
+    left: -20px;
+    transform: rotate(-15deg);
+  }
+
+  header::after {
+    content: '✨';
+    font-size: 90px;
+    position: absolute;
+    opacity: 0.06;
+    bottom: -10px;
+    right: 20px;
+    transform: rotate(10deg);
+  }
+
+  .logo-tag {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    border: 1px solid rgba(200,146,58,0.4);
+    padding: 5px 18px;
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  header h1 span { color: var(--gold-lt); }
+
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    margin-top: 10px;
+    letter-spacing: 0.06em;
+    font-weight: 300;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* ── Opening story ── */
+  .story {
+    background: var(--warm);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 28px 32px;
+    margin-bottom: 52px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.9;
+    position: relative;
+  }
+
+  .story::before {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.3;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 48px; }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .section-heading .icon {
+    width: 36px;
+    height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 4px;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: #3D3020;
+    line-height: 1.85;
+    margin-bottom: 12px;
+  }
+
+  .section p strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  /* ── Age grid ── */
+  .age-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .age-card {
+    background: #fff;
+    border: 1.5px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .age-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+
+  .age-card .age-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .age-card .age-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Promise list ── */
+  .promise-list {
+    list-style: none;
+    margin-top: 14px;
+  }
+
+  .promise-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+    color: #3D3020;
+  }
+
+  .promise-list li:last-child { border-bottom: none; }
+
+  .promise-list li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 13px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--rule), transparent);
+    margin: 48px 0;
+  }
+
+  /* ── Sign-off ── */
+  .signoff {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 36px 40px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .signoff p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 18px;
+    line-height: 1.8;
+  }
+
+  .signoff .names {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--gold-lt);
+    margin-bottom: 4px;
+  }
+
+  .signoff .team {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  @media (max-width: 500px) {
+    .story { padding: 20px 20px 20px 24px; font-size: 15px; }
+    .age-grid { grid-template-columns: 1fr 1fr; }
+    .signoff { padding: 28px 22px; }
+  }
+</style>
+<header>
+<div class="logo-tag">Our Story</div>
+<h1>Tales<span>Galore</span>
+</h1>
+</header>
+<div class="container">
+<!-- Opening story -->
+<div class="story">By naming TalesGalore what it is, we would like to tell our own story of bringing up two inquisitive kids. As parents we must always have a tale ready — to channelize their energies in the right direction, to teach them life values, to calm them down, to bring a smile to their faces, to put them to sleep. The essence lies in gaiety, abundance and fulfilment. We enjoy serendipitous selection of books for our kids and through this venture, we would like to pass on the same joy of finding that one book you didn't know you were looking for. So dive in and start your treasure hunt!!</div>
+<!-- Our Philosophy -->
+<div class="section">
+<div class="section-heading">
+<div class="icon">🌿</div>
+<h2>Our Philosophy</h2>
+</div>
+<p>In this fast-moving era of gadgets, AI and social media, we want to slow down and embrace simplicity. At TalesGalore, we believe that childhood is built on stories. The giggles over silly characters, the wide-eyed wonder at magical worlds — these are the moments that shape imagination and nurture lifelong readers.</p>
+<p><strong>Every child deserves access to beautiful stories that spark curiosity, empathy and joy — and that's what we are here for.</strong> Stories don't just entertain; they provide a medium to create bonds and help children see themselves — and others — in novel ways.</p>
+</div>
+<hr class="divider">
+<!-- What We Offer -->
+<div class="section">
+<div class="section-heading">
+<div class="icon">📖</div>
+<h2>What We Offer</h2>
+</div>
+<p>From first board books for tiny explorers to adventurous reads for growing minds, our collection travels all the way from the UK to your homes — these are pre-loved books, thoughtfully chosen, carrying a little history and a lot of heart.</p>
+<div class="age-grid">
+<div class="age-card">
+<div class="age-label">Age 0–2</div>
+<div class="age-desc">First books filled with colours, textures and sounds.</div>
+</div>
+<div class="age-card">
+<div class="age-label">Age 3–5</div>
+<div class="age-desc">Picture books that spark laughter and imagination.</div>
+</div>
+<div class="age-card">
+<div class="age-label">Age 6–8</div>
+<div class="age-desc">Early readers that build confidence and curiosity.</div>
+</div>
+<div class="age-card">
+<div class="age-label">Age 9–12</div>
+<div class="age-desc">Chapter books that encourage independence and big thinking.</div>
+</div>
+</div>
+<p style="margin-top: 18px;">Each title is selected to support reading growth while keeping the magic alive.</p>
+</div>
+<hr class="divider">
+<!-- More Than a Store -->
+<div class="section">
+<div class="section-heading">
+<div class="icon">🏡</div>
+<h2>More Than a Store</h2>
+</div>
+<p>When you shop with TalesGalore, you are supporting a small business built with passion and purpose.</p>
+<p>Every order helps us continue doing what we love — connecting children with stories that stay with them long after the last page is turned.</p>
+</div>
+<hr class="divider">
+<!-- Our Promise -->
+<div class="section">
+<div class="section-heading">
+<div class="icon">🤝</div>
+<h2>Our Promise</h2>
+</div>
+<ul class="promise-list">
+<li>Pack every order with care.</li>
+<li>Stay connected to our community.</li>
+<li>Gentle customer support, always.</li>
+</ul>
+</div>
+<!-- Sign-off -->
+<div class="signoff">
+<p>Thank you for being part of our story. We hope the books you find here become treasured chapters in your lives.</p>
+<div class="names">Kaneeka &amp; Naman</div>
+<div class="team">Team TalesGalore</div>
+</div>
+</div>
