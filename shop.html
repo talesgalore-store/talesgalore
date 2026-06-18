@@ -6,7 +6,7 @@
   <title>Catalogue – TalesGalore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
   <style>
     body { background: #faf7f2; }
 
@@ -39,148 +39,64 @@
       .mobile-filter-btn { display: flex !important; }
     }
 
-    /* ── Sidebar ── */
     .sidebar { position: sticky; top: 100px; }
-
-    .filter-group {
-      border-bottom: 1px solid #e5e0d8;
-      padding: 16px 0;
-    }
+    .filter-group { border-bottom: 1px solid #e5e0d8; padding: 16px 0; }
     .filter-group:first-child { padding-top: 0; }
-
     .filter-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; user-select: none;
     }
     .filter-heading h3 {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #1a1a1a;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #1a1a1a;
     }
-    .filter-heading .chevron {
-      font-size: 0.7rem;
-      color: #999;
-      transition: transform .2s;
-    }
+    .filter-heading .chevron { font-size: 0.7rem; color: #999; transition: transform .2s; }
     .filter-heading.open .chevron { transform: rotate(180deg); }
-
-    .filter-options {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .filter-options { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
     .filter-options label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      color: #444;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; color: #444; cursor: pointer;
     }
     .filter-options label:hover { color: #1a1a1a; }
-    .filter-options input[type="checkbox"] {
-      accent-color: #1a1a1a;
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
+    .filter-options input[type="checkbox"] { accent-color: #1a1a1a; width: 14px; height: 14px; flex-shrink: 0; }
     .filter-count { color: #aaa; font-size: 0.78rem; }
 
-    .price-range {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-top: 10px;
-    }
+    .price-range { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
     .price-range input {
-      width: 80px;
-      border: 1px solid #e5e0d8;
-      padding: 6px 8px;
-      font-size: 0.82rem;
-      font-family: 'Lato', sans-serif;
-      background: #fff;
-      outline: none;
+      width: 80px; border: 1px solid #e5e0d8; padding: 6px 8px;
+      font-size: 0.82rem; font-family: 'Lato', sans-serif; background: #fff; outline: none;
     }
     .price-range input:focus { border-color: #1a1a1a; }
     .price-range span { font-size: 0.82rem; color: #999; }
 
     .clear-filters {
-      display: inline-block;
-      margin-top: 20px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #888;
-      text-decoration: underline;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
+      display: inline-block; margin-top: 20px; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: #888;
+      text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0;
     }
     .clear-filters:hover { color: #1a1a1a; }
 
-    /* ── Main content ── */
-    .catalogue-main {}
-
     .catalogue-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
     }
-    .product-count {
-      font-size: 0.85rem;
-      color: #666;
-    }
-    .sort-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .product-count { font-size: 0.85rem; color: #666; }
+    .sort-wrap { display: flex; align-items: center; gap: 10px; }
     .sort-wrap label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #888;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #888;
     }
     .sort-wrap select {
-      border: 1px solid #e5e0d8;
-      background: #fff;
-      padding: 7px 12px;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.85rem;
-      color: #333;
-      outline: none;
-      cursor: pointer;
+      border: 1px solid #e5e0d8; background: #fff; padding: 7px 12px;
+      font-family: 'Lato', sans-serif; font-size: 0.85rem; color: #333; outline: none; cursor: pointer;
     }
 
     .mobile-filter-btn {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      background: #1a1a1a;
-      color: #fff;
-      border: none;
-      padding: 10px 18px;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
+      display: none; align-items: center; gap: 8px; background: #1a1a1a; color: #fff;
+      border: none; padding: 10px 18px; font-family: 'Lato', sans-serif; font-size: 0.82rem;
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
     }
 
-    /* ── Product Grid ── */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -188,91 +104,55 @@
     }
 
     .product-card {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      background: #fff;
-      border: 1px solid #f0ece4;
-      transition: box-shadow .2s, transform .2s;
-      cursor: pointer;
+      display: flex; flex-direction: column; gap: 10px;
+      background: #fff; border: 1px solid #f0ece4;
+      transition: box-shadow .2s, transform .2s; cursor: pointer;
     }
-    .product-card:hover {
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
-    }
-    .product-img-wrap {
-      width: 100%;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      background: #faf7f2;
-    }
-    .product-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .3s;
-    }
+    .product-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .product-img-wrap { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #faf7f2; }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
     .product-card:hover .product-img-wrap img { transform: scale(1.04); }
     .product-info { padding: 10px 12px 14px; }
     .product-info h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: #1a1a1a;
-      line-height: 1.35;
-      margin-bottom: 6px;
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-weight: 600;
+      color: #1a1a1a; line-height: 1.35; margin-bottom: 6px;
     }
     .product-condition {
-      font-size: 0.72rem;
-      color: #6b8f71;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
+      font-size: 0.72rem; color: #6b8f71; text-transform: uppercase;
+      letter-spacing: 0.05em; margin-bottom: 4px;
     }
-    .product-price {
-      font-size: 0.9rem;
-      color: #555;
-      font-weight: 700;
+    .product-price { font-size: 0.9rem; color: #555; font-weight: 700; }
+    .product-add-btn {
+      width: 100%; margin-top: 8px; background: #5C7A5E; color: white; border: none;
+      padding: 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; cursor: pointer; font-family: 'Lato', sans-serif;
+      transition: background .2s;
     }
+    .product-add-btn:hover { background: #4a6650; }
+    .product-add-btn.added { background: #D4A853; color: #1a1a1a; }
 
-    /* States */
     .catalogue-loading, .catalogue-empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 60px 20px;
-      color: #888;
-      font-size: 0.95rem;
+      grid-column: 1 / -1; text-align: center; padding: 60px 20px;
+      color: #888; font-size: 0.95rem;
     }
 
-    /* Pagination */
     .pagination {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 40px;
-      flex-wrap: wrap;
+      display: flex; justify-content: center; gap: 8px; margin-top: 40px; flex-wrap: wrap;
     }
     .page-btn {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #e5e0d8;
-      background: #fff;
-      font-size: 0.85rem;
-      color: #333;
-      cursor: pointer;
-      transition: background .2s, border-color .2s;
-      font-family: 'Lato', sans-serif;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border: 1px solid #e5e0d8; background: #fff; font-size: 0.85rem; color: #333;
+      cursor: pointer; transition: background .2s, border-color .2s; font-family: 'Lato', sans-serif;
     }
-    .page-btn:hover, .page-btn.active {
-      background: #1a1a1a;
-      color: #fff;
-      border-color: #1a1a1a;
-    }
+    .page-btn:hover, .page-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
     .page-btn:disabled { opacity: 0.3; cursor: default; }
+
+    /* Active filter pill in page hero */
+    .active-filter-pill {
+      display: inline-block; background: #5C7A5E; color: white;
+      font-size: 0.78rem; font-weight: 700; padding: 4px 12px;
+      border-radius: 20px; margin-top: 8px; letter-spacing: 0.04em;
+    }
   </style>
 </head>
 <body>
@@ -302,16 +182,15 @@
       </a>
     </div>
     <div class="header-actions">
-      <a href="#" class="header-link">Log in</a>
-      <a href="#" class="header-cart">
+      <a href="cart.html" class="header-cart">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        Cart
+        Cart <span id="cartCount" style="background:#C4622D;color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-left:4px;">0</span>
       </a>
     </div>
   </div>
   <nav class="site-nav">
     <a href="index.html">Home</a>
-    <a href="shop.html">Catalogue</a>
+    <a href="shop.html" class="active">Catalogue</a>
     <a href="contact.html">Contact Us</a>
     <a href="literary-games.html">Literary Games</a>
     <a href="why-talesgalore.html">Why TalesGalore?</a>
@@ -320,7 +199,8 @@
 
 <!-- Page Hero -->
 <div class="page-hero">
-  <h1>Collection: Products</h1>
+  <h1 id="pageTitle">Catalogue</h1>
+  <span id="activeFilterPill" class="active-filter-pill" style="display:none"></span>
 </div>
 
 <!-- Catalogue Layout -->
@@ -331,51 +211,55 @@
 
     <div class="filter-group">
       <div class="filter-heading open" onclick="toggleFilter(this)">
-        <h3>Availability</h3>
-        <span class="chevron">▼</span>
-      </div>
-      <div class="filter-options">
-        <label><input type="checkbox" value="instock" onchange="applyFilters()"/> In stock <span class="filter-count">(348)</span></label>
-        <label><input type="checkbox" value="outofstock" onchange="applyFilters()"/> Out of stock <span class="filter-count">(1)</span></label>
-      </div>
-    </div>
-
-    <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
-        <h3>Price</h3>
-        <span class="chevron">▼</span>
+        <h3>Price</h3><span class="chevron">▼</span>
       </div>
       <div class="price-range">
         <span>₹</span>
         <input type="number" id="priceMin" placeholder="0" min="0" onchange="applyFilters()"/>
         <span>—</span>
-        <input type="number" id="priceMax" placeholder="450" min="0" onchange="applyFilters()"/>
+        <input type="number" id="priceMax" placeholder="max" min="0" onchange="applyFilters()"/>
       </div>
     </div>
 
     <div class="filter-group">
       <div class="filter-heading open" onclick="toggleFilter(this)">
-        <h3>Book Condition</h3>
-        <span class="chevron">▼</span>
+        <h3>Book Condition</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options">
-        <label><input type="checkbox" value="Like New" onchange="applyFilters()"/> Like New <span class="filter-count">(298)</span></label>
-        <label><input type="checkbox" value="Very Good" onchange="applyFilters()"/> Very Good <span class="filter-count">(52)</span></label>
-        <label><input type="checkbox" value="Good" onchange="applyFilters()"/> Good <span class="filter-count">(1)</span></label>
+      <div class="filter-options" id="conditionFilters">
+        <label><input type="checkbox" value="Like New" onchange="applyFilters()"/> Like New</label>
+        <label><input type="checkbox" value="Very Good" onchange="applyFilters()"/> Very Good</label>
+        <label><input type="checkbox" value="Good" onchange="applyFilters()"/> Good</label>
+        <label><input type="checkbox" value="Acceptable" onchange="applyFilters()"/> Acceptable</label>
       </div>
     </div>
 
     <div class="filter-group">
       <div class="filter-heading open" onclick="toggleFilter(this)">
-        <h3>Suggested Age</h3>
-        <span class="chevron">▼</span>
+        <h3>Suggested Age</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options">
-        <label><input type="checkbox" value="Age 0-2" onchange="applyFilters()"/> Age 0-2 <span class="filter-count">(19)</span></label>
-        <label><input type="checkbox" value="Age 3-5" onchange="applyFilters()"/> Age 3-5 <span class="filter-count">(172)</span></label>
-        <label><input type="checkbox" value="Age 6-8" onchange="applyFilters()"/> Age 6-8 <span class="filter-count">(87)</span></label>
-        <label><input type="checkbox" value="Age 9-12" onchange="applyFilters()"/> Age 9-12 <span class="filter-count">(62)</span></label>
-        <label><input type="checkbox" value="Age 13 & above" onchange="applyFilters()"/> Age 13 &amp; above <span class="filter-count">(9)</span></label>
+      <!-- BUG FIX 1 & 3: values match exactly what Contentful stores in suggestedAge array -->
+      <div class="filter-options" id="ageFilters">
+        <label><input type="checkbox" value="Age 0-2"          onchange="applyFilters()"/> Age 0–2</label>
+        <label><input type="checkbox" value="Age 3-5"          onchange="applyFilters()"/> Age 3–5</label>
+        <label><input type="checkbox" value="Age 6-8"          onchange="applyFilters()"/> Age 6–8</label>
+        <label><input type="checkbox" value="Age 9-12"         onchange="applyFilters()"/> Age 9–12</label>
+        <label><input type="checkbox" value="Age 13 & above"   onchange="applyFilters()"/> Age 13+</label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-heading open" onclick="toggleFilter(this)">
+        <h3>Genre</h3><span class="chevron">▼</span>
+      </div>
+      <div class="filter-options" id="genreFilters">
+        <label><input type="checkbox" value="Tickles & Chuckles"   onchange="applyFilters()"/> Tickles &amp; Chuckles</label>
+        <label><input type="checkbox" value="Activity & Educational" onchange="applyFilters()"/> Activity &amp; Educational</label>
+        <label><input type="checkbox" value="Faith & Festivals"    onchange="applyFilters()"/> Faith &amp; Festivals</label>
+        <label><input type="checkbox" value="Vehicles & Machines"  onchange="applyFilters()"/> Vehicles &amp; Machines</label>
+        <label><input type="checkbox" value="Sensory & Moveables"  onchange="applyFilters()"/> Sensory &amp; Moveables</label>
+        <label><input type="checkbox" value="Morals & Values"      onchange="applyFilters()"/> Morals &amp; Values</label>
+        <label><input type="checkbox" value="Fantasy & Fairy Tales" onchange="applyFilters()"/> Fantasy &amp; Fairy Tales</label>
+        <label><input type="checkbox" value="Adventure"            onchange="applyFilters()"/> Adventure</label>
       </div>
     </div>
 
@@ -395,8 +279,8 @@
           <label for="sort-select">Sort by:</label>
           <select id="sort-select" onchange="applyFilters()">
             <option value="featured">Featured</option>
-            <option value="az">Alphabetically, A-Z</option>
-            <option value="za">Alphabetically, Z-A</option>
+            <option value="az">Alphabetically, A–Z</option>
+            <option value="za">Alphabetically, Z–A</option>
             <option value="price-low">Price, low to high</option>
             <option value="price-high">Price, high to low</option>
             <option value="newest">Date, new to old</option>
@@ -416,35 +300,34 @@
 
 <!-- Footer -->
 <footer class="site-footer">
-  <div class="footer-inner">
+  <div class="footer-inner" style="max-width:1200px;margin:0 auto;padding:48px 24px 0;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;">
     <div class="footer-col">
-      <h4>Quick links</h4>
-      <ul>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Return Policy</a></li>
-      </ul>
-    </div>
-    <div class="footer-col footer-subscribe">
-      <h4>Subscribe to our emails</h4>
-      <form onsubmit="return false" class="subscribe-form">
-        <input type="email" placeholder="Email" aria-label="Email"/>
-        <button type="submit">→</button>
-      </form>
-      <div class="footer-social">
-        <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
+      <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem.png?v=1774461512&width=200" alt="TalesGalore" style="height:56px;filter:brightness(0) invert(1);margin-bottom:12px;" onerror="this.style.display='none'"/>
+      <p style="font-size:14px;color:#B8BDB8;">Pre-loved children's books, re-homed with care.</p>
+      <div style="display:flex;gap:14px;margin-top:12px;">
+        <a href="https://www.facebook.com/TalesGalore" target="_blank" style="color:#B8BDB8;font-size:13px;">Facebook</a>
+        <a href="https://www.instagram.com/talesgalore.store" target="_blank" style="color:#B8BDB8;font-size:13px;">Instagram</a>
       </div>
     </div>
+    <div class="footer-col">
+      <h4 style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:white;margin-bottom:14px;">Quick Links</h4>
+      <ul style="list-style:none;padding:0;">
+        <li style="margin-bottom:8px;"><a href="shop.html" style="font-size:14px;color:#B8BDB8;">Catalogue</a></li>
+        <li style="margin-bottom:8px;"><a href="why-talesgalore.html" style="font-size:14px;color:#B8BDB8;">Why TalesGalore?</a></li>
+        <li style="margin-bottom:8px;"><a href="literary-games.html" style="font-size:14px;color:#B8BDB8;">Literary Games</a></li>
+        <li style="margin-bottom:8px;"><a href="contact.html" style="font-size:14px;color:#B8BDB8;">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:white;margin-bottom:14px;">Subscribe</h4>
+      <form onsubmit="handleNewsletter(event)" style="display:flex;flex-direction:column;gap:10px;">
+        <input type="email" placeholder="Email" style="background:#2a2a28;border:1px solid #3a3a38;color:white;padding:10px 14px;font-size:14px;" required/>
+        <button type="submit" style="background:#5C7A5E;color:white;border:none;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">Subscribe</button>
+      </form>
+    </div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026, TalesGalore</span>
-    <a href="#">Privacy policy</a>
-    <a href="#">Refund policy</a>
+  <div class="footer-bottom" style="text-align:center;padding:20px;font-size:13px;color:#666;margin-top:40px;border-top:1px solid #2a2a28;">
+    <p>© 2026, TalesGalore &nbsp;·&nbsp; <a href="privacy-policy.html" style="color:#666;">Privacy policy</a> &nbsp;·&nbsp; <a href="return-policy.html" style="color:#666;">Refund policy</a></p>
   </div>
 </footer>
 
@@ -452,77 +335,138 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<script src="js/cart.js"></script>
 <script>
-  // ── Config ──
-  const SPACE_ID    = 'tx11zsju5n7c';
+  const SPACE_ID     = 'tx11zsju5n7c';
   const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
-  const PER_PAGE    = 16;
+  const PER_PAGE     = 16;
 
-  let allBooks   = [];
-  let filtered   = [];
+  let allBooks    = [];
+  let filtered    = [];
   let currentPage = 1;
 
-  // ── Fetch from Contentful ──
+  // ── Fetch ──────────────────────────────────────────────────────────────────
   async function loadBooks() {
     try {
-      const res = await fetch(
+      const res  = await fetch(
         `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?content_type=book&limit=1000&access_token=${ACCESS_TOKEN}&include=1`
       );
       const data = await res.json();
 
+      // Build asset map
       const assets = {};
       (data.includes?.Asset || []).forEach(a => {
         assets[a.sys.id] = 'https:' + a.fields.file.url;
       });
 
-      allBooks = (data.items || []).map(item => ({
-        title:     item.fields.title     || 'Untitled',
-        author:    item.fields.author    || '',
-        price:     parseFloat(item.fields.price) || 0,
-        condition: item.fields.condition || '',
-        age:       item.fields.suggestedAge || '',
-        image:     item.fields.coverImage?.sys?.id
-                     ? assets[item.fields.coverImage.sys.id]
-                     : null,
-        date:      item.sys.createdAt,
-      }));
+      // BUG FIX 1: read suggestedAge (the real field name from Contentful)
+      // and normalise to always be an array regardless of whether Contentful
+      // returns a string or an array.
+      allBooks = (data.items || []).map(item => {
+        const f        = item.fields;
+        const rawAge   = f.suggestedAge ?? f.suggestedAges ?? [];
+        // Normalise: string → single-element array; undefined/null → []
+        const ageArray = Array.isArray(rawAge)
+          ? rawAge
+          : (rawAge ? [rawAge] : []);
 
+        const rawGenre   = f.genre ?? f.genres ?? [];
+        const genreArray = Array.isArray(rawGenre)
+          ? rawGenre
+          : (rawGenre ? [rawGenre] : []);
+
+        return {
+          id:        item.sys.id,
+          title:     f.title     || 'Untitled',
+          author:    f.author    || '',
+          price:     parseFloat(f.price) || 0,
+          condition: f.condition || '',
+          // BUG FIX 2: store as array so multi-age books filter correctly
+          ages:      ageArray,
+          genres:    genreArray,
+          inStock:   f.inStock !== false,
+          image:     f.coverImage?.sys?.id ? assets[f.coverImage.sys.id] : null,
+          date:      item.sys.createdAt,
+        };
+      });
+
+      // BUG FIX 3: read URL params AFTER books are loaded so pre-check works
+      readUrlParams();
       applyFilters();
+
     } catch (e) {
+      console.error(e);
       document.getElementById('products-grid').innerHTML =
         '<div class="catalogue-empty">Could not load books. Please try again later.</div>';
       document.getElementById('product-count').textContent = '0 products';
     }
   }
 
-  // ── Filter & Sort ──
+  // ── BUG FIX 3: Read URL params and pre-tick the right checkboxes ──────────
+  function readUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const age    = params.get('age');   // e.g. "Age 13 & above"
+    const genre  = params.get('genre'); // e.g. "Tickles & Chuckles"
+
+    if (age) {
+      const cb = document.querySelector(`#ageFilters input[value="${age}"]`);
+      if (cb) cb.checked = true;
+      // Update page title pill
+      document.getElementById('pageTitle').textContent = age;
+      showPill(age);
+    }
+    if (genre) {
+      const cb = document.querySelector(`#genreFilters input[value="${genre}"]`);
+      if (cb) cb.checked = true;
+      document.getElementById('pageTitle').textContent = genre;
+      showPill(genre);
+    }
+  }
+
+  function showPill(label) {
+    const pill = document.getElementById('activeFilterPill');
+    pill.textContent = label;
+    pill.style.display = 'inline-block';
+  }
+
+  // ── Filter & Sort ──────────────────────────────────────────────────────────
   function applyFilters() {
-    const conditions  = [...document.querySelectorAll('input[value="Like New"], input[value="Very Good"], input[value="Good"]')]
-                          .filter(c => c.checked).map(c => c.value);
-    const ages        = [...document.querySelectorAll('input[value^="Age"]')]
-                          .filter(c => c.checked).map(c => c.value);
-    const priceMin    = parseFloat(document.getElementById('priceMin').value) || 0;
-    const priceMax    = parseFloat(document.getElementById('priceMax').value) || Infinity;
-    const sort        = document.getElementById('sort-select').value;
+    const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
+    const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
+    const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
+    const priceMin          = parseFloat(document.getElementById('priceMin').value) || 0;
+    const priceMax          = parseFloat(document.getElementById('priceMax').value) || Infinity;
+    const sort              = document.getElementById('sort-select').value;
 
     filtered = allBooks.filter(b => {
-      if (conditions.length && !conditions.includes(b.condition)) return false;
-      if (ages.length && !ages.includes(b.age)) return false;
+      // Condition filter
+      if (checkedConditions.length && !checkedConditions.includes(b.condition)) return false;
+
+      // BUG FIX 2: array intersection — book must have at least ONE of the
+      // checked ages (handles multi-age books correctly)
+      if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
+
+      // Genre filter — same array-intersection logic
+      if (checkedGenres.length && !checkedGenres.some(g => b.genres.includes(g))) return false;
+
+      // Price filter
       if (b.price < priceMin || b.price > priceMax) return false;
+
       return true;
     });
 
-    if (sort === 'az')         filtered.sort((a,b) => a.title.localeCompare(b.title));
-    else if (sort === 'za')    filtered.sort((a,b) => b.title.localeCompare(a.title));
-    else if (sort === 'price-low')  filtered.sort((a,b) => a.price - b.price);
-    else if (sort === 'price-high') filtered.sort((a,b) => b.price - a.price);
-    else if (sort === 'newest') filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
+    // Sort
+    if (sort === 'az')         filtered.sort((a, b) => a.title.localeCompare(b.title));
+    else if (sort === 'za')    filtered.sort((a, b) => b.title.localeCompare(a.title));
+    else if (sort === 'price-low')  filtered.sort((a, b) => a.price - b.price);
+    else if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
+    else if (sort === 'newest') filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     currentPage = 1;
     renderPage();
   }
 
-  // ── Render ──
+  // ── Render ─────────────────────────────────────────────────────────────────
   function renderPage() {
     const grid  = document.getElementById('products-grid');
     const count = document.getElementById('product-count');
@@ -533,23 +477,30 @@
     count.textContent = `${total} product${total !== 1 ? 's' : ''}`;
 
     if (total === 0) {
-      grid.innerHTML = '<div class="catalogue-empty">No books match your filters.</div>';
+      grid.innerHTML = '<div class="catalogue-empty">No books match your filters. Try clearing them!</div>';
       document.getElementById('pagination').innerHTML = '';
       return;
     }
+
+    // Store for cart.js addToCart
+    window._allBooks = allBooks;
 
     grid.innerHTML = page.map(b => `
       <div class="product-card">
         <div class="product-img-wrap">
           ${b.image
             ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
-            : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>`
-          }
+            : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>`}
         </div>
         <div class="product-info">
           <h3>${b.title}</h3>
+          ${b.author ? `<div style="font-size:0.78rem;color:#888;margin-bottom:4px;">${b.author}</div>` : ''}
           ${b.condition ? `<div class="product-condition">${b.condition}</div>` : ''}
           <div class="product-price">₹ ${b.price.toFixed(2)}</div>
+          ${b.inStock
+            ? `<button class="product-add-btn" onclick="addToCart('${b.id}', event)">Add to Cart</button>`
+            : `<div style="margin-top:8px;font-size:0.75rem;color:#aaa;text-align:center;text-transform:uppercase;letter-spacing:0.05em;">Sold</div>`
+          }
         </div>
       </div>
     `).join('');
@@ -562,15 +513,15 @@
     const pag   = document.getElementById('pagination');
     if (pages <= 1) { pag.innerHTML = ''; return; }
 
-    let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+    let html = `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
     for (let i = 1; i <= pages; i++) {
       if (i === 1 || i === pages || Math.abs(i - currentPage) <= 1) {
-        html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
       } else if (Math.abs(i - currentPage) === 2) {
         html += `<span class="page-btn" style="border:none;background:none;cursor:default">…</span>`;
       }
     }
-    html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
+    html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === pages ? 'disabled' : ''}>›</button>`;
     pag.innerHTML = html;
   }
 
@@ -580,7 +531,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── Filter accordion ──
+  // ── Accordion ──────────────────────────────────────────────────────────────
   function toggleFilter(heading) {
     heading.classList.toggle('open');
     const opts = heading.nextElementSibling;
@@ -592,6 +543,10 @@
     document.getElementById('priceMin').value = '';
     document.getElementById('priceMax').value = '';
     document.getElementById('sort-select').value = 'featured';
+    document.getElementById('pageTitle').textContent = 'Catalogue';
+    document.getElementById('activeFilterPill').style.display = 'none';
+    // Clear URL params
+    history.replaceState({}, '', 'shop.html');
     applyFilters();
   }
 
@@ -600,7 +555,13 @@
     sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
   }
 
-  // ── Init ──
+  function handleNewsletter(e) {
+    e.preventDefault();
+    e.target.querySelector('input').value = '';
+    alert('Thanks for subscribing!');
+  }
+
+  // ── Init ───────────────────────────────────────────────────────────────────
   loadBooks();
 </script>
 </body>
