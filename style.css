@@ -1323,9 +1323,29 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 
 .collection-track {
-    display: flex;
-    gap: 20px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    align-items: flex-start;
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+}
+
+.collection-track::-webkit-scrollbar {
+  display:none;
+}
+
+#genre-track .collection-card {
+  flex:0 0 calc((100% - 100px)/6);
+  min-width:180px;
+}
+
+#age-track {
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  flex-wrap:wrap;
+}
+
+#age-track .collection-card {
+  flex:0 0 200px;
 }
