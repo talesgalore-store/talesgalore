@@ -1483,22 +1483,18 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 .announcement-bar{
   background:#8B5E3C;
   color:white;
-  height:40px;
+  text-align:center;
+  padding:10px;
+  min-height:40px;
   display:flex;
-  align-items:center;
   justify-content:center;
-  overflow:hidden;
-  position:relative;
+  align-items:center;
 }
 
 .announcement-message{
-  position:absolute;
-  opacity:0;
-  transition:opacity 1s ease;
-  text-align:center;
-  width:100%;
+  display:none;
 }
 
 .announcement-message.active{
-  opacity:1;
+  display:block;
 }
