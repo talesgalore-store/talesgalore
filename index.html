@@ -274,34 +274,16 @@
 </section>
 
 <!-- Literary Corner -->
-<section class="literary-corner">
-  <div class="literary-corner-inner">
-    <div class="lc-blog">
-      <h2>The Literary Corner</h2>
-      <div class="lc-date-filter">
-        <label>Browse by date</label>
-        <select onchange="return false">
-          <option>Today</option>
-          <option>This Week</option>
-          <option>This Month</option>
-          <option>All Time</option>
-        </select>
-      </div>
-      <div class="lc-post">
-        <div class="lc-post-title">Opening the pages…</div>
-      </div>
-    </div>
-    <div class="lc-reviews">
-      <h3>Reviews</h3>
-      <div class="lc-star-row">
-        <span class="lc-stars">☆☆☆☆☆</span>
-        <span class="lc-star-count">0.00 ★ (0)</span>
-      </div>
-      <span class="lc-verified">Verified</span>
-    </div>
-  </div>
-</section>
+<div id="literary-corner-container"></div>
 
+<script>
+fetch('literary-corner.html')
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById('literary-corner-container').innerHTML = html;
+  });
+</script>
+  
 <!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner">
