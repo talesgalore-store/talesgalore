@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>The Great Book Race — TalesGalore</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FDFAF4;--warm:#F5EDD8;--gold:#C8923A;--gold-lt:#E8B96A;--ink:#8B5E3C;--muted:#7A6A52;--rule:#E2D5BC;--dark:#3D2B0E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1a2e;font-family:'Lato',sans-serif;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+.tg-header{background:var(--ink);padding:14px 24px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.badge{background:var(--gold);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.tg-header h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff}
+.tg-header h1 span{color:var(--gold-lt)}
+.tg-header a{margin-left:auto;color:var(--rule);text-decoration:none;font-size:13px}
+.tg-header a:hover{color:var(--gold-lt)}
+
+/* Game area */
+.game-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:14px}
+.canvas-wrap{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 60px rgba(200,146,58,.25),0 20px 60px rgba(0,0,0,.5)}
+#gc{display:block;cursor:crosshair}
+
+/* SCREENS */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.screen.off{display:none}
+.screen-bg{background:linear-gradient(160deg,rgba(61,43,14,.96),rgba(26,26,46,.97))}
+
+/* Character select */
+.sel-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,40px);font-weight:700;text-align:center;margin-bottom:6px}
+.sel-title em{color:var(--gold-lt);font-style:italic}
+.sel-sub{color:var(--gold-lt);font-size:14px;margin-bottom:22px;text-align:center;opacity:.8}
+.char-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+.char-card{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;cursor:pointer;text-align:center;width:118px;transition:all .2s}
+.char-card:hover{border-color:var(--gold);background:rgba(200,146,58,.15);transform:translateY(-3px)}
+.char-card.sel{border-color:var(--gold-lt);background:rgba(232,185,106,.2)}
+.char-card .ce{font-size:36px;display:block;margin-bottom:6px}
+.char-card .cn{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#fff}
+.char-card .cs{font-size:11px;color:var(--gold-lt);margin-top:2px}
+.rules-strip{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+.rule-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,.7)}
+.rule-pill span{color:var(--gold-lt);font-weight:700}
+.btn-go{background:var(--gold);color:#fff;font-family:'Lato',sans-serif;font-weight:900;font-size:18px;padding:14px 44px;border:none;border-radius:12px;cursor:pointer;letter-spacing:1px;transition:all .2s;text-transform:uppercase}
+.btn-go:hover{background:#a8762e;transform:scale(1.05)}
+
+/* Countdown */
+.cd-num{font-family:'Playfair Display',serif;font-size:clamp(60px,15vw,120px);font-weight:700;color:#fff;text-shadow:0 0 40px rgba(232,185,106,.6);animation:cdPop .7s ease-out}
+@keyframes cdPop{0%{transform:scale(2);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* Finish */
+.fin-trophy{font-size:64px;margin-bottom:12px}
+.fin-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,36px);font-weight:700;margin-bottom:6px;text-align:center}
+.fin-sub{color:var(--gold-lt);font-size:14px;margin-bottom:20px;text-align:center}
+.lap-table{background:rgba(255,255,255,.07);border-radius:12px;padding:16px 20px;min-width:260px;margin-bottom:18px}
+.lap-table h4{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold-lt);margin-bottom:10px;text-align:center}
+.lr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
+.lr:last-child{border-bottom:none}
+.lr.best{color:var(--gold-lt);font-weight:700}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{padding:11px 24px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:'Lato',sans-serif;transition:all .2s;border:none}
+.btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{background:#a8762e}
+.btn-out{background:transparent;border:2px solid var(--gold);color:var(--gold)}.btn-out:hover{background:var(--gold);color:#fff}
+
+/* HUD */
+.hud{position:absolute;top:0;left:0;right:0;pointer-events:none;padding:10px 12px;display:none}
+.hud-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.hud-box{background:rgba(26,26,46,.82);border:1px solid rgba(232,185,106,.25);border-radius:9px;padding:6px 12px;text-align:center;backdrop-filter:blur(4px)}
+.hud-box .hl{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.5);margin-bottom:2px}
+.hud-box .hv{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;line-height:1;color:#fff}
+.hud-box .hv.gold{color:var(--gold-lt)}
+.pos-badge{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(26,26,46,.9);border:1px solid rgba(232,185,106,.3);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--gold-lt)}
+
+/* Off-track flash */
+.offtrack-warn{position:absolute;inset:0;background:rgba(200,50,50,.12);pointer-events:none;display:none}
+.boost-overlay{position:absolute;inset:0;background:rgba(0,150,255,.07);pointer-events:none;display:none}
+
+/* Mobile controls */
+.mobile-ctrl{display:none;flex-direction:column;align-items:center;gap:8px}
+.ctrl-row{display:flex;gap:8px}
+.cb{width:58px;height:58px;border-radius:10px;background:rgba(139,94,60,.6);border:2px solid rgba(200,146,58,.4);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:background .1s}
+.cb:active,.cb.on{background:rgba(200,146,58,.8)}
+
+/* Race positions popup */
+.pop{position:absolute;pointer-events:none;font-weight:700;font-size:15px;font-family:'Lato',sans-serif;animation:popUp .9s ease-out forwards}
+@keyframes popUp{0%{transform:translateY(0) scale(.8);opacity:1}100%{transform:translateY(-50px) scale(1.1);opacity:0}}
+
+.tg-footer{background:var(--dark);color:var(--rule);text-align:center;padding:18px;font-size:12px;flex-shrink:0}
+.tg-footer em{color:var(--gold);font-style:italic;font-family:'Playfair Display',serif;display:block;margin-bottom:3px;font-size:13px}
+
+@media(max-width:520px){.char-card{width:90px;padding:10px 8px}.char-card .ce{font-size:28px}.rules-strip{gap:8px}}
+@media(max-width:400px){.char-row{gap:8px}.char-card{width:80px}}
+</style>
+</head>
+<body>
+
+<header class="tg-header">
+  <span class="badge">Games</span>
+  <h1>Tales<span>Galore</span></h1>
+  <a href="/pages/literary-games">← All Games</a>
+</header>
+
+<div class="game-area">
+  <div class="canvas-wrap" id="cw">
+    <canvas id="gc" width="800" height="500"></canvas>
+
+    <!-- HUD -->
+    <div class="hud" id="hud">
+      <div class="hud-row">
+        <div class="hud-box"><div class="hl">Lap</div><div class="hv gold" id="hLap">1/3</div></div>
+        <div class="hud-box"><div class="hl">Lap Time</div><div class="hv" id="hTime">0:00.0</div></div>
+        <div class="hud-box"><div class="hl">Best Lap</div><div class="hv gold" id="hBest">—:——</div></div>
+        <div class="hud-box"><div class="hl">Speed</div><div class="hv" id="hSpd">0</div></div>
+        <div class="hud-box"><div class="hl">Stars ⭐</div><div class="hv gold" id="hStars">0</div></div>
+      </div>
+    </div>
+    <div class="pos-badge" id="posBadge" style="display:none">P1 of 3</div>
+    <div class="offtrack-warn" id="otWarn"></div>
+    <div class="boost-overlay" id="boostOl"></div>
+    <div id="popLayer" style="position:absolute;inset:0;pointer-events:none"></div>
+
+    <!-- CHARACTER SELECT -->
+    <div class="screen screen-bg" id="scrSel">
+      <div class="sel-title">🏎️ The Great <em>Book Race</em></div>
+      <div class="sel-sub">3 laps · collect stars · hit boost pads · beat the AI!</div>
+      <div class="char-row" id="charRow"></div>
+      <div class="rules-strip">
+        <div class="rule-pill"><span>↑↓←→</span> or WASD to drive</div>
+        <div class="rule-pill"><span>P</span> to pause</div>
+        <div class="rule-pill"><span>⭐</span> collect stars on track</div>
+        <div class="rule-pill"><span>⚡</span> blue pads = speed boost</div>
+      </div>
+      <button class="btn-go" onclick="startCountdown()">Start Race →</button>
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div class="screen screen-bg off" id="scrCD">
+      <div class="cd-num" id="cdNum">3</div>
+    </div>
+
+    <!-- PAUSE -->
+    <div class="screen off" style="background:rgba(0,0,0,.7)" id="scrPause">
+      <div style="font-family:'Playfair Display',serif;font-size:32px;margin-bottom:20px">⏸ Paused</div>
+      <button class="btn btn-gold" onclick="togglePause()">Resume Race</button>
+    </div>
+
+    <!-- FINISH -->
+    <div class="screen screen-bg off" id="scrFin">
+      <div class="fin-trophy" id="finTrophy">🏆</div>
+      <div class="fin-title" id="finTitle">Race Complete!</div>
+      <div class="fin-sub" id="finSub">Well driven!</div>
+      <div class="lap-table" id="lapTable"></div>
+      <div class="btn-row">
+        <button class="btn btn-gold" onclick="doRestart()">Race Again</button>
+        <button class="btn btn-out" onclick="location.href='/pages/literary-games'">All Games</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile controls -->
+  <div class="mobile-ctrl" id="mCtrl">
+    <div class="ctrl-row">
+      <div style="width:58px"></div>
+      <div class="cb" id="cbUp" ontouchstart="mk('u',1);return false" ontouchend="mk('u',0)">▲</div>
+      <div style="width:58px"></div>
+    </div>
+    <div class="ctrl-row">
+      <div class="cb" id="cbL" ontouchstart="mk('l',1);return false" ontouchend="mk('l',0)">◀</div>
+      <div class="cb" id="cbD" ontouchstart="mk('d',1);return false" ontouchend="mk('d',0)">▼</div>
+      <div class="cb" id="cbR" ontouchstart="mk('r',1);return false" ontouchend="mk('r',0)">▶</div>
+    </div>
+  </div>
+</div>
+
+<footer class="tg-footer">
+  <em>— TalesGalore Literary Games —</em>
+  Stories worth rediscovering · Godrej Woods, Navi Mumbai
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  THE GREAT BOOK RACE  ·  TalesGalore
+// ═══════════════════════════════════════════════════
+const cv=document.getElementById('gc'), ctx=cv.getContext('2d');
+const CW=800, CH=500;
+
+// ── Polyfill roundRect ──────────────────────────────
+if(!CanvasRenderingContext2D.prototype.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+    const R=Math.min(r,w/2,h/2);
+    this.beginPath();
+    this.moveTo(x+R,y);this.lineTo(x+w-R,y);this.arcTo(x+w,y,x+w,y+R,R);
+    this.lineTo(x+w,y+h-R);this.arcTo(x+w,y+h,x+w-R,y+h,R);
+    this.lineTo(x+R,y+h);this.arcTo(x,y+h,x,y+h-R,R);
+    this.lineTo(x,y+R);this.arcTo(x,y,x+R,y,R);
+    this.closePath();return this;
+  };
+}
+
+// ── Characters ─────────────────────────────────────
+const CHARS=[
+  {name:'The Gruffalo',emoji:'👹',sub:'Monster racer',body:'#7B3FA0',dark:'#4A2263',light:'#B06FD0'},
+  {name:'Peter Rabbit',emoji:'🐰',sub:'Blue speedster',body:'#1A5FA8',dark:'#0D3A6B',light:'#3A8FDE'},
+  {name:'Matilda',     emoji:'📚',sub:'Red rocket',   body:'#B02020',dark:'#6B1010',light:'#E03030'},
+  {name:'The BFG',    emoji:'🌟',sub:'Green giant',  body:'#1E7A3A',dark:'#0F4820',light:'#2EAA50'},
+];
+let selChar=0;
+
+// ── Track control points (Catmull-Rom closed loop) ──
+const CP=[
+  [148,218],[258,202],[390,196],[522,202],
+  [638,214],[700,236],[724,272],[719,312],
+  [699,348],[664,368],
+  [604,382],[524,376],
+  [464,356],[438,326],[418,301],[394,322],[374,352],
+  [334,387],[284,407],[224,412],[168,401],[128,376],
+  [98,342],[82,296],[84,260],
+  [92,232],[112,216]
+];
+const THW=54; // track half-width
+const LAPS=3;
+
+// ── Catmull-Rom spline ──────────────────────────────
+function cr(p0,p1,p2,p3,t){
+  const t2=t*t,t3=t2*t;
+  return[
+    .5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+    .5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)
+  ];
+}
+function genTP(spk=16){
+  const n=CP.length,pts=[];
+  for(let i=0;i<n;i++){
+    const p0=CP[(i-1+n)%n],p1=CP[i],p2=CP[(i+1)%n],p3=CP[(i+2)%n];
+    for(let j=0;j<spk;j++) pts.push(cr(p0,p1,p2,p3,j/spk));
+  }
+  return pts;
+}
+
+let TP=[];
+
+function nearTP(x,y){
+  let mi=1e9,idx=0;
+  for(let i=0;i<TP.length;i++){
+    const dx=TP[i][0]-x,dy=TP[i][1]-y,d=dx*dx+dy*dy;
+    if(d<mi){mi=d;idx=i;}
+  }
+  return{d:Math.sqrt(mi),idx};
+}
+
+// ── Pre-render track ────────────────────────────────
+let trackCv=null;
+function buildTrack(){
+  const tc=document.createElement('canvas');
+  tc.width=CW;tc.height=CH;
+  const g=tc.getContext('2d');
+
+  // Grass bg
+  g.fillStyle='#1E5C26';
+  g.fillRect(0,0,CW,CH);
+  // Grass texture
+  g.fillStyle='rgba(0,0,0,.1)';
+  for(let y=0;y<CH;y+=22){
+    g.fillRect(0,y,CW,11);
+  }
+  // Decorative outer boundary
+  g.strokeStyle='rgba(255,255,255,.06)';
+  g.lineWidth=1;
+  g.strokeRect(14,14,CW-28,CH-28);
+
+  function tPath(g){
+    g.beginPath();
+    g.moveTo(TP[0][0],TP[0][1]);
+    for(let i=1;i<TP.length;i++) g.lineTo(TP[i][0],TP[i][1]);
+    g.closePath();
+  }
+
+  // Kerb (red/white stripe)
+  g.lineWidth=(THW+14)*2;g.lineCap='round';g.lineJoin='round';
+  g.strokeStyle='#CC1111';
+  tPath(g);g.stroke();
+  g.strokeStyle='#FFFFFF';
+  g.setLineDash([26,26]);
+  tPath(g);g.stroke();
+  g.setLineDash([]);
+
+  // Asphalt
+  g.strokeStyle='#32323E';
+  g.lineWidth=THW*2;
+  tPath(g);g.stroke();
+
+  // Asphalt subtle highlight
+  g.strokeStyle='rgba(255,255,255,.025)';
+  g.lineWidth=THW*2;
+  g.setLineDash([6,10]);
+  tPath(g);g.stroke();
+  g.setLineDash([]);
+
+  // Edge white lines
+  g.strokeStyle='rgba(255,255,255,.22)';
+  g.lineWidth=THW*2;
+  g.setLineDash([1,(THW*2-1)]);
+  tPath(g);g.stroke();
+  g.setLineDash([]);
+  // (outer edge)
+  g.strokeStyle='rgba(255,255,255,.18)';
+  g.lineWidth=(THW+14)*2;
+  g.setLineDash([1,((THW+14)*2-1)]);
+  tPath(g);g.stroke();
+  g.setLineDash([]);
+
+  // Center dashes
+  g.strokeStyle='rgba(255,255,255,.38)';
+  g.lineWidth=2;g.lineCap='butt';
+  g.setLineDash([16,14]);
+  tPath(g);g.stroke();
+  g.setLineDash([]);
+
+  // Start/Finish line
+  const sf=TP[0],sf2=TP[5];
+  const sfa=Math.atan2(sf2[1]-sf[1],sf2[0]-sf[0]);
+  g.save();
+  g.translate(sf[0],sf[1]);
+  g.rotate(sfa+Math.PI/2);
+  const sq=8,cols=Math.ceil((THW*2+2)/sq)+1;
+  for(let ci=0;ci<cols;ci++){
+    for(let ri=0;ri<2;ri++){
+      g.fillStyle=((ci+ri)%2===0)?'#111':'#EEE';
+      g.fillRect(-THW+ci*sq,-sq/2+ri*sq,sq,sq);
+    }
+  }
+  // Finish pole
+  g.fillStyle='#C8923A';
+  g.fillRect(-THW-10,-THW*1.2,10,THW*2.4);
+  g.restore();
+
+  // Circuit label
+  g.font='bold 10px Arial';
+  g.fillStyle='rgba(255,255,255,.1)';
+  g.textAlign='center';
+  g.fillText('TALESGALORE GRAND CIRCUIT',CW/2,CH-8);
+
+  return tc;
+}
+
+// ── Stars ───────────────────────────────────────────
+class Star{
+  constructor(){this.place();this.anim=Math.random()*Math.PI*2;}
+  place(){
+    const idx=Math.floor(Math.random()*TP.length);
+    const a=Math.random()*Math.PI*2,r=10+Math.random()*20;
+    this.x=TP[idx][0]+Math.cos(a)*r;
+    this.y=TP[idx][1]+Math.sin(a)*r;
+    this.on=true;this.cd=0;
+  }
+  update(){
+    this.anim+=0.06;
+    if(!this.on){this.cd--;if(this.cd<=0)this.place();}
+  }
+  draw(g){
+    if(!this.on)return;
+    g.save();
+    g.translate(this.x,this.y);
+    g.rotate(this.anim*.3);
+    const s=9+Math.sin(this.anim)*1.5;
+    g.font=`${s*2}px serif`;
+    g.textAlign='center';g.textBaseline='middle';
+    g.fillText('⭐',0,0);
+    g.restore();
+  }
+  check(car){
+    if(!this.on)return false;
+    const dx=this.x-car.x,dy=this.y-car.y;
+    if(dx*dx+dy*dy<22*22){this.on=false;this.cd=360;return true;}
+    return false;
+  }
+}
+
+// ── Boost pads ──────────────────────────────────────
+class BoostPad{
+  constructor(tIdx){
+    const pt=TP[tIdx],pn=TP[(tIdx+6)%TP.length];
+    this.x=pt[0];this.y=pt[1];
+    this.angle=Math.atan2(pn[1]-pt[1],pn[0]-pt[0]);
+    this.on=true;this.cd=0;this.anim=0;
+  }
+  update(){
+    this.anim+=0.05;
+    if(!this.on){this.cd--;if(this.cd<=0)this.on=true;}
+  }
+  draw(g){
+    g.save();
+    g.translate(this.x,this.y);
+    g.rotate(this.angle);
+    if(this.on){
+      const p=.7+Math.sin(this.anim)*.3;
+      g.globalAlpha=p;
+      g.fillStyle='rgba(0,180,255,.9)';
+      g.beginPath();g.roundRect(-28,-11,56,22,5);g.fill();
+      g.fillStyle='rgba(0,100,200,.6)';
+      g.beginPath();g.roundRect(-26,-9,52,18,4);g.fill();
+      g.globalAlpha=1;
+      g.font='bold 14px sans-serif';
+      g.textAlign='center';g.textBaseline='middle';
+      g.fillStyle='#fff';
+      g.fillText('⚡ BOOST',0,0);
+    } else {
+      g.globalAlpha=.3;
+      g.fillStyle='#444';
+      g.beginPath();g.roundRect(-28,-11,56,22,5);g.fill();
+      g.globalAlpha=1;
+    }
+    g.restore();
+  }
+  check(car){
+    if(!this.on)return false;
+    const dx=this.x-car.x,dy=this.y-car.y;
+    if(dx*dx+dy*dy<30*30){this.on=false;this.cd=300;return true;}
+    return false;
+  }
+}
+
+// ── Car class ───────────────────────────────────────
+class Car{
+  constructor(tOff,ch,isAI){
+    const idx=((tOff%TP.length)+TP.length)%TP.length;
+    const pt=TP[idx],pn=TP[(idx+4)%TP.length];
+    this.x=pt[0];this.y=pt[1];
+    this.angle=Math.atan2(pn[1]-pt[1],pn[0]-pt[0]);
+    this.spd=0;
+    this.ch=ch;this.isAI=isAI;
+    // Lap tracking
+    this.lapN=1;this.lapTimes=[];this.lapT=null;
+    this.prog=idx/TP.length;this.lastProg=this.prog;
+    this.halfPassed=false;this.done=false;
+    this.starsGot=0;
+    // Boost
+    this.boosting=false;this.boostT=0;
+    // AI
+    this.aiIdx=idx;
+    // Visuals
+    this.marks=[];this.wobble=0;
+    this.onTrk=true;
+    // Race position
+    this.raceProgress=0;
+  }
+  get maxSpd(){return this.boosting?10:7.8;}
+  
+  update(keys){
+    if(this.done)return;
+    if(this.isAI) this._ai();
+    else this._player(keys);
+    // Boost
+    if(this.boosting){this.boostT--;if(this.boostT<=0)this.boosting=false;}
+    // Move
+    this.x+=Math.cos(this.angle)*this.spd;
+    this.y+=Math.sin(this.angle)*this.spd;
+    // Clamp to canvas
+    this.x=Math.max(5,Math.min(CW-5,this.x));
+    this.y=Math.max(5,Math.min(CH-5,this.y));
+    // Track check
+    const nr=nearTP(this.x,this.y);
+    this.onTrk=nr.d<THW;
+    if(!this.onTrk){
+      this.spd*=.82;
+      if(this.spd>2.2)this.spd=2.2;
+      this.wobble+=(Math.random()-.5)*.04;
+      if(this.marks.length<40) this.marks.push({x:this.x,y:this.y,a:.5});
+    }
+    this.marks.forEach(m=>m.a*=.95);
+    this.marks=this.marks.filter(m=>m.a>.02);
+    this.wobble*=.85;
+    // Lap detection
+    this.prog=nr.idx/TP.length;
+    if(this.prog>.38&&this.prog<.62) this.halfPassed=true;
+    if(this.lastProg>.88&&this.prog<.12&&this.halfPassed){
+      if(this.lapT!==null){
+        const lt=(performance.now()-this.lapT)/1000;
+        this.lapTimes.push(lt);
+        this.lapN++;
+        if(!this.isAI&&this.lapN>LAPS){this.done=true;}
+      }
+      this.lapT=performance.now();
+      this.halfPassed=false;
+    }
+    this.lastProg=this.prog;
+    // Race progress (for position calculation)
+    this.raceProgress=(this.lapN-1)+this.prog;
+  }
+  
+  _player(k){
+    if(k.u) this.spd+=.2;
+    else if(k.d){
+      if(this.spd>.4) this.spd-=.28;
+      else if(this.spd>-1.8) this.spd-=.1;
+    }
+    this.spd*=.977;
+    if(Math.abs(this.spd)<.04) this.spd=0;
+    this.spd=Math.max(-this.maxSpd*.4,Math.min(this.maxSpd,this.spd));
+    if(Math.abs(this.spd)>.25){
+      const sf=(this.spd/this.maxSpd)*.052;
+      if(k.l) this.angle-=sf*1.9+this.wobble;
+      if(k.r) this.angle+=sf*1.9+this.wobble;
+    }
+  }
+  
+  _ai(){
+    const tgt=TP[this.aiIdx];
+    const dx=tgt[0]-this.x,dy=tgt[1]-this.y;
+    if(dx*dx+dy*dy<28*28) this.aiIdx=(this.aiIdx+4)%TP.length;
+    const ta=Math.atan2(dy,dx);
+    let da=ta-this.angle;
+    while(da>Math.PI)da-=Math.PI*2;
+    while(da<-Math.PI)da+=Math.PI*2;
+    this.angle+=Math.sign(da)*Math.min(Math.abs(da),.07);
+    const aiMax=5.2-Math.abs(da)*1.8;
+    if(this.spd<aiMax) this.spd+=.1;
+    this.spd*=.975;
+    this.spd=Math.max(0,Math.min(6.2,this.spd));
+  }
+  
+  draw(g){
+    // Tire marks
+    this.marks.forEach(m=>{
+      g.fillStyle=`rgba(20,15,10,${m.a})`;
+      g.beginPath();g.arc(m.x,m.y,2,0,Math.PI*2);g.fill();
+    });
+    g.save();
+    g.translate(this.x,this.y);
+    g.rotate(this.angle+Math.PI/2+this.wobble);
+    const cW=18,cH=30;
+    const ch=this.ch;
+    // Shadow
+    g.fillStyle='rgba(0,0,0,.35)';
+    g.beginPath();g.ellipse(3,5,cW*.55,cH*.38,0,0,Math.PI*2);g.fill();
+    // Body
+    g.fillStyle=ch.body;
+    g.beginPath();g.roundRect(-cW/2,-cH/2,cW,cH,5);g.fill();
+    // Hood
+    g.fillStyle=ch.dark;
+    g.beginPath();g.roundRect(-cW/2+2,-cH/2,cW-4,cH*.48,4);g.fill();
+    // Windshield
+    g.fillStyle='rgba(180,220,255,.75)';
+    g.beginPath();g.roundRect(-cW/2+4,-cH/2+4,cW-8,9,2);g.fill();
+    // Cockpit stripe
+    g.fillStyle=ch.light;
+    g.fillRect(-2,-cH*.1,4,cH*.35);
+    // Wheels
+    g.fillStyle='#111';
+    [[-cW/2-3,-cH/3],[cW/2-2,-cH/3],[-cW/2-3,cH/4],[cW/2-2,cH/4]].forEach(([wx,wy])=>{
+      g.beginPath();g.roundRect(wx,wy,5,10,2);g.fill();
+      g.fillStyle='#333';g.beginPath();g.roundRect(wx+1,wy+1,3,2,1);g.fill();
+      g.fillStyle='#111';
+    });
+    // Exhaust glow when boosting
+    if(this.boosting){
+      g.fillStyle='rgba(255,100,0,.9)';
+      g.beginPath();g.moveTo(-4,cH/2);g.lineTo(4,cH/2);g.lineTo(0,cH/2+12+Math.random()*8);g.fill();
+      g.fillStyle='rgba(255,220,0,.8)';
+      g.beginPath();g.moveTo(-2,cH/2);g.lineTo(2,cH/2);g.lineTo(0,cH/2+7+Math.random()*5);g.fill();
+    }
+    // Emoji
+    g.font='11px serif';g.textAlign='center';g.textBaseline='middle';
+    g.fillText(ch.emoji,0,2);
+    g.restore();
+  }
+}
+
+// ── Minimap ─────────────────────────────────────────
+function drawMinimap(cars){
+  const mx=CW-148,my=CH-96,mw=134,mh=82;
+  ctx.fillStyle='rgba(20,20,35,.85)';
+  ctx.beginPath();ctx.roundRect(mx,my,mw,mh,8);ctx.fill();
+  ctx.strokeStyle='rgba(200,146,58,.3)';ctx.lineWidth=1;ctx.stroke();
+
+  const bx={min:70,max:740,miny:190,maxy:420};
+  const sx=mw*.86/(bx.max-bx.min),sy=mh*.86/(bx.maxy-bx.miny);
+  const ox=mx+mw*.07,oy=my+mh*.07;
+  function tm(x,y){return[ox+(x-bx.min)*sx,oy+(y-bx.miny)*sy];}
+
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=3.5;ctx.lineCap='round';
+  ctx.beginPath();
+  const[sx0,sy0]=tm(TP[0][0],TP[0][1]);
+  ctx.moveTo(sx0,sy0);
+  for(let i=4;i<TP.length;i+=4){const[px,py]=tm(TP[i][0],TP[i][1]);ctx.lineTo(px,py);}
+  ctx.closePath();ctx.stroke();
+
+  cars.forEach((car,i)=>{
+    const[cx,cy]=tm(car.x,car.y);
+    ctx.fillStyle=i===0?'#FFD700':car.ch.body;
+    ctx.beginPath();ctx.arc(cx,cy,i===0?4:3,0,Math.PI*2);ctx.fill();
+    if(i===0){ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();}
+  });
+}
+
+// ── Game state ───────────────────────────────────────
+let state='select';
+let player=null,aiCars=[],stars=[],boosts=[];
+let keys={u:0,d:0,l:0,r:0};
+let mk_mobile={u:0,d:0,l:0,r:0};
+let raf=null;
+let finDrawn=false;
+
+// ── Init ─────────────────────────────────────────────
+function init(){
+  TP=genTP(16);
+  trackCv=buildTrack();
+  buildCharSel();
+  resizeCv();
+  // Draw initial track
+  ctx.drawImage(trackCv,0,0);
+}
+
+function buildCharSel(){
+  const row=document.getElementById('charRow');
+  row.innerHTML='';
+  CHARS.forEach((ch,i)=>{
+    const d=document.createElement('div');
+    d.className='char-card'+(i===selChar?' sel':'');
+    d.innerHTML=`<span class="ce">${ch.emoji}</span><div class="cn">${ch.name}</div><div class="cs">${ch.sub}</div>`;
+    d.onclick=()=>{selChar=i;document.querySelectorAll('.char-card').forEach((c,j)=>c.classList.toggle('sel',j===i));};
+    row.appendChild(d);
+  });
+}
+
+// ── Countdown & start ───────────────────────────────
+function startCountdown(){
+  showScr('scrCD');
+  // Setup objects
+  player=new Car(0,CHARS[selChar],false);
+  player.lapT=null; // Start timing on GO
+
+  // AI: start offset behind
+  const aiOff1=Math.floor(TP.length*.92);
+  const aiOff2=Math.floor(TP.length*.84);
+  aiCars=[
+    new Car(aiOff1,CHARS[(selChar+1)%CHARS.length],true),
+    new Car(aiOff2,CHARS[(selChar+2)%CHARS.length],true),
+  ];
+  aiCars.forEach(c=>{c.lapT=null;});
+
+  // Stars
+  stars=Array.from({length:9},()=>new Star());
+
+  // Boost pads
+  const bpT=Math.floor(TP.length);
+  boosts=[
+    new BoostPad(Math.floor(bpT*.15)),
+    new BoostPad(Math.floor(bpT*.48)),
+    new BoostPad(Math.floor(bpT*.78)),
+  ];
+
+  // Draw one frame
+  renderFrame();
+
+  let n=3;
+  const el=document.getElementById('cdNum');
+  el.textContent=n;
+  const tick=setInterval(()=>{
+    n--;
+    if(n>0){
+      el.textContent=n;
+      el.style.animation='none';
+      requestAnimationFrame(()=>{el.style.animation='cdPop .7s ease-out';});
+    } else {
+      el.textContent='GO!';
+      clearInterval(tick);
+      setTimeout(()=>go(),700);
+    }
+  },900);
+}
+
+function go(){
+  state='racing';
+  showScr(null);
+  document.getElementById('hud').style.display='block';
+  document.getElementById('posBadge').style.display='block';
+  document.getElementById('mCtrl').style.display='flex';
+  player.lapT=performance.now();
+  aiCars.forEach(c=>c.lapT=performance.now());
+  loop();
+}
+
+// ── Main loop ────────────────────────────────────────
+function loop(){
+  if(state!=='racing')return;
+  const k={u:keys.u||mk_mobile.u,d:keys.d||mk_mobile.d,l:keys.l||mk_mobile.l,r:keys.r||mk_mobile.r};
+
+  // Update
+  player.update(k);
+  aiCars.forEach(c=>c.update(null));
+  stars.forEach(s=>s.update());
+  boosts.forEach(b=>b.update());
+
+  // Collect stars
+  stars.forEach(s=>{
+    if(s.check(player)){
+      player.starsGot++;
+      popup('⭐ +STAR!',player.x,player.y,'#FFD700');
+    }
+  });
+
+  // Boost pads
+  boosts.forEach(b=>{
+    if(b.check(player)){
+      player.boosting=true;player.boostT=100;
+      player.spd=Math.min(player.spd+3,player.maxSpd);
+      popup('⚡ BOOST!',player.x,player.y-20,'#00BFFF');
+    }
+  });
+
+  updateHUD();
+  renderFrame();
+
+  if(player.done){finish();return;}
+  raf=requestAnimationFrame(loop);
+}
+
+function updateHUD(){
+  document.getElementById('hLap').textContent=`${Math.min(player.lapN,LAPS)}/${LAPS}`;
+  const et=player.lapT?(performance.now()-player.lapT)/1000:0;
+  document.getElementById('hTime').textContent=fmt(et);
+  const bl=player.lapTimes.length?Math.min(...player.lapTimes):null;
+  document.getElementById('hBest').textContent=bl?fmt(bl):'—:——';
+  document.getElementById('hSpd').textContent=Math.abs(Math.round(player.spd*16));
+  document.getElementById('hStars').textContent=player.starsGot;
+  // Position
+  const allCars=[player,...aiCars].sort((a,b)=>b.raceProgress-a.raceProgress);
+  const pos=allCars.indexOf(player)+1;
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('posBadge').textContent=`${medals[pos-1]||''} P${pos} of ${allCars.length+1}`;
+  // Effects
+  document.getElementById('otWarn').style.display=player.onTrk?'none':'block';
+  document.getElementById('boostOl').style.display=player.boosting?'block':'none';
+}
+
+function renderFrame(){
+  ctx.clearRect(0,0,CW,CH);
+  ctx.drawImage(trackCv,0,0);
+  boosts.forEach(b=>b.draw(ctx));
+  stars.forEach(s=>s.draw(ctx));
+  aiCars.forEach(c=>c.draw(ctx));
+  player.draw(ctx);
+  drawMinimap([player,...aiCars]);
+  // Off-track label
+  if(!player.onTrk){
+    ctx.fillStyle='rgba(220,60,60,.9)';
+    ctx.font='bold 15px Lato,sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('OFF TRACK — SLOW DOWN',CW/2,46);
+  }
+  // Speed blur at high speed + boost
+  if(player.spd>6.5||player.boosting){
+    const alpha=(player.spd-6.5)/8*0.3+(player.boosting?.12:0);
+    ctx.fillStyle=`rgba(0,120,255,${Math.min(alpha,.18)})`;
+    ctx.fillRect(0,0,CW,CH);
+    // Speed lines
+    ctx.strokeStyle='rgba(255,255,255,.06)';
+    ctx.lineWidth=1;
+    for(let i=0;i<8;i++){
+      const y=Math.random()*CH;
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(CW,y);ctx.stroke();
+    }
+  }
+}
+
+// ── Finish ───────────────────────────────────────────
+function finish(){
+  state='finished';
+  cancelAnimationFrame(raf);
+  document.getElementById('hud').style.display='none';
+  document.getElementById('posBadge').style.display='none';
+  document.getElementById('mCtrl').style.display='none';
+
+  const lt=player.lapTimes;
+  const total=lt.reduce((a,b)=>a+b,0);
+  const best=Math.min(...lt);
+  const bestIdx=lt.indexOf(best);
+
+  // Determine position at finish
+  const allProg=[player,...aiCars].sort((a,b)=>b.raceProgress-a.raceProgress);
+  const finalPos=allProg.indexOf(player)+1;
+
+  let html='<h4>📋 Lap Times</h4>';
+  lt.forEach((t,i)=>{
+    html+=`<div class="lr${i===bestIdx?' best':''}"><span>Lap ${i+1}${i===bestIdx?' ⭐':''}</span><span>${fmt(t)}</span></div>`;
+  });
+  html+=`<div class="lr" style="font-weight:700;margin-top:4px;border-bottom:none"><span>Total</span><span>${fmt(total)}</span></div>`;
+  html+=`<div class="lr" style="color:var(--gold-lt);border-bottom:none"><span>⭐ Stars</span><span>${player.starsGot}</span></div>`;
+  document.getElementById('lapTable').innerHTML=html;
+
+  const trophies=['🏆','🥈','🥉'];
+  const msgs=['Flawless victory!','Brilliant race!','Great effort!'];
+  const subs=[
+    `Best lap ${fmt(best)} — a champion!`,
+    `${player.starsGot} stars, ${lt.length} laps — superb!`,
+    `Can you beat ${fmt(best)} on your best lap?`
+  ];
+  document.getElementById('finTrophy').textContent=trophies[finalPos-1]||'🏁';
+  document.getElementById('finTitle').textContent=`P${finalPos} — ${msgs[finalPos-1]||'Race Complete!'}`;
+  document.getElementById('finSub').textContent=subs[Math.floor(Math.random()*subs.length)];
+
+  showScr('scrFin');
+}
+
+// ── Helpers ──────────────────────────────────────────
+function fmt(s){
+  const m=Math.floor(s/60),sec=(s%60).toFixed(2).padStart(5,'0');
+  return`${m}:${sec}`;
+}
+
+function showScr(id){
+  ['scrSel','scrCD','scrPause','scrFin'].forEach(s=>{
+    document.getElementById(s).classList.toggle('off',s!==id);
+  });
+}
+
+function popup(txt,x,y,col){
+  const wrap=document.getElementById('cw');
+  const cr2=cv.getBoundingClientRect(),wr=wrap.getBoundingClientRect();
+  const sx=cv.width/cr2.width,sy=cv.height/cr2.height;
+  const el=document.createElement('div');
+  el.className='pop';
+  el.textContent=txt;
+  el.style.color=col;
+  el.style.left=(x/sx+(cr2.left-wr.left))+'px';
+  el.style.top=(y/sy+(cr2.top-wr.top)-10)+'px';
+  document.getElementById('popLayer').appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+
+function togglePause(){
+  if(state==='racing'){
+    state='paused';
+    cancelAnimationFrame(raf);
+    showScr('scrPause');
+  } else if(state==='paused'){
+    state='racing';
+    showScr(null);
+    document.getElementById('hud').style.display='block';
+    document.getElementById('posBadge').style.display='block';
+    loop();
+  }
+}
+
+function doRestart(){
+  cancelAnimationFrame(raf);
+  state='select';
+  document.getElementById('hud').style.display='none';
+  document.getElementById('posBadge').style.display='none';
+  document.getElementById('mCtrl').style.display='none';
+  showScr('scrSel');
+}
+
+// Mobile controls
+function mk(dir,v){
+  mk_mobile[dir]=v;
+  const ids={u:'cbUp',d:'cbD',l:'cbL',r:'cbR'};
+  document.getElementById(ids[dir])?.classList.toggle('on',!!v);
+}
+
+// Keys
+document.addEventListener('keydown',e=>{
+  if(['ArrowUp','w','W'].includes(e.key)){keys.u=1;e.preventDefault();}
+  if(['ArrowDown','s','S'].includes(e.key)){keys.d=1;e.preventDefault();}
+  if(['ArrowLeft','a','A'].includes(e.key)){keys.l=1;e.preventDefault();}
+  if(['ArrowRight','d','D'].includes(e.key)){keys.r=1;e.preventDefault();}
+  if(['p','P','Escape'].includes(e.key)&&(state==='racing'||state==='paused')) togglePause();
+});
+document.addEventListener('keyup',e=>{
+  if(['ArrowUp','w','W'].includes(e.key)) keys.u=0;
+  if(['ArrowDown','s','S'].includes(e.key)) keys.d=0;
+  if(['ArrowLeft','a','A'].includes(e.key)) keys.l=0;
+  if(['ArrowRight','d','D'].includes(e.key)) keys.r=0;
+});
+
+// Responsive
+function resizeCv(){
+  const avail=Math.min(window.innerWidth-32,CW);
+  cv.style.width=avail+'px';
+  cv.style.height=(CH*avail/CW)+'px';
+}
+window.addEventListener('resize',resizeCv);
+resizeCv();
+
+// Detect touch device
+if('ontouchstart' in window){
+  document.querySelector('.rules-strip').innerHTML=
+    '<div class="rule-pill"><span>On-screen buttons</span> to drive</div>'+
+    '<div class="rule-pill"><span>⭐</span> collect stars</div>'+
+    '<div class="rule-pill"><span>⚡</span> blue = boost</div>';
+}
+
+// ── Boot ─────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
