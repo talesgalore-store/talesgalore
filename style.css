@@ -1313,3 +1313,19 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   .logo { position: static; transform: none; }
   .header-inner { justify-content: space-between; }
 }
+
+.collection-card img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.collection-track {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    align-items: flex-start;
+}
