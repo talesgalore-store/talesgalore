@@ -1,238 +1,341 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Why TalesGalore?</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
-  <style>
-    .page-hero {
-      background: #faf7f2;
-      text-align: center;
-      padding: 60px 24px 48px;
-      border-bottom: 1px solid #e5e0d8;
-    }
-    .page-hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      color: #1a1a1a;
-    }
-
-    .why-content {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 60px 24px 80px;
-    }
-
-    .why-block {
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-      margin-bottom: 48px;
-      padding-bottom: 48px;
-      border-bottom: 1px solid #e5e0d8;
-    }
-    .why-block:last-of-type { border-bottom: none; }
-
-    .why-icon {
-      font-size: 2.2rem;
-      flex-shrink: 0;
-      margin-top: 4px;
-    }
-
-    .why-text h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 12px;
-    }
-    .why-text p {
-      font-size: 0.97rem;
-      color: #555;
-      line-height: 1.85;
-      margin-bottom: 10px;
-    }
-    .why-text p:last-child { margin-bottom: 0; }
-
-    .signature-section {
-      background: #1a1a1a;
-      color: #fff;
-      border-radius: 8px;
-      padding: 40px 40px 36px;
-      margin-top: 56px;
-    }
-    .signature-section .label {
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #c8a96e;
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
-    .signature-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-style: italic;
-      margin-bottom: 20px;
-      color: #fff;
-    }
-    .signature-section p {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.9;
-      margin-bottom: 14px;
-    }
-    .signature-section strong { color: #fff; }
-    .sign-off {
-      margin-top: 28px;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: #c8a96e;
-    }
-  </style>
-</head>
 <body>
 
-<!-- Announcement Bar -->
-<div class="announcement-bar">
-  <div class="announcement-track">
-    <span>All parcels to be shipped via India Post &nbsp;&nbsp;✦&nbsp;&nbsp; Free Pick-up from Store! &nbsp;&nbsp;✦&nbsp;&nbsp; Every Story Deserves a Second Home! &nbsp;&nbsp;✦&nbsp;&nbsp; All parcels to be shipped via India Post &nbsp;&nbsp;✦&nbsp;&nbsp; Free Pick-up from Store! &nbsp;&nbsp;✦&nbsp;&nbsp; Every Story Deserves a Second Home! &nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-  </div>
-</div>
 
-<!-- Header -->
-<header class="site-header">
-  <div class="header-inner">
-    <div class="header-social">
-      <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      </a>
-    </div>
-    <div class="header-logo">
-      <a href="index.html">
-        <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem_6ea6503f-fce9-411e-8212-1c408f35bc62.png?v=1775539894" alt="TalesGalore" class="logo-img"/>
-        <span class="logo-wordmark">TalesGalore</span>
-      </a>
-    </div>
-    <div class="header-actions">
-      <a href="#" class="header-link">Log in</a>
-      <a href="#" class="header-cart">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        Cart
-      </a>
-    </div>
-  </div>
-  <nav class="site-nav">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Catalogue</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="literary-games.html">Literary Games</a>
-    <a href="why-talesgalore.html">Why TalesGalore?</a>
-  </nav>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why TalesGalore</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FDFAF4;
+    --warm:    #F5EDD8;
+    --gold:    #C8923A;
+    --gold-lt: #E8B96A;
+    --ink:     #8B5E3C;
+    --muted:   #7A6A52;
+    --rule:    #E2D5BC;
+  }
+
+  body {
+    background: var(--cream);
+    font-family: 'Lato', sans-serif;
+    color: #2C2416;
+    line-height: 1.8;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--ink);
+    padding: 48px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '📚';
+    font-size: 120px;
+    position: absolute;
+    opacity: 0.06;
+    top: -20px;
+    left: -20px;
+    transform: rotate(-15deg);
+  }
+
+  header::after {
+    content: '✨';
+    font-size: 90px;
+    position: absolute;
+    opacity: 0.06;
+    bottom: -10px;
+    right: 20px;
+    transform: rotate(10deg);
+  }
+
+  .logo-tag {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    border: 1px solid rgba(200,146,58,0.4);
+    padding: 5px 18px;
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  header h1 span { color: var(--gold-lt); }
+
+  /* ── Container ── */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* ── Opening quote ── */
+  .story {
+    background: var(--warm);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 28px 32px;
+    margin-bottom: 52px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: #2C2416;
+    line-height: 1.9;
+    position: relative;
+  }
+
+  .story::before {
+    content: '\201C';
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.3;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 48px; }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .section-heading .icon {
+    width: 36px;
+    height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C2416;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 4px;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: #3D3020;
+    line-height: 1.85;
+    margin-bottom: 12px;
+  }
+
+  .section p strong { color: #2C2416; font-weight: 700; }
+
+  /* ── Notice box ── */
+  .notice {
+    background: #FFF8EC;
+    border: 1.5px solid var(--gold);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 18px 0;
+    font-size: 15px;
+    color: #3D3020;
+    line-height: 1.8;
+  }
+
+  .notice strong { color: var(--ink); }
+
+  /* ── Story Beneath the Story spotlight ── */
+  .spotlight {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin: 0;
+    color: #fff;
+  }
+
+  .spotlight .spot-tag {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    border: 1px solid rgba(200,146,58,0.4);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  .spotlight h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--gold-lt);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .spotlight p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.85;
+    margin-bottom: 12px;
+  }
+
+  .spotlight p:last-child { margin-bottom: 0; }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--rule), transparent);
+    margin: 48px 0;
+  }
+
+  /* ── Sign-off ── */
+  .signoff {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 36px 40px;
+    text-align: center;
+    color: #fff;
+    margin-top: 52px;
+  }
+
+  .signoff p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 18px;
+    line-height: 1.8;
+  }
+
+  .signoff .names {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--gold-lt);
+    margin-bottom: 4px;
+  }
+
+  .signoff .team {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  @media (max-width: 500px) {
+    .story { padding: 20px 20px 20px 24px; font-size: 15px; }
+    .spotlight { padding: 28px 22px; }
+    .signoff { padding: 28px 22px; }
+  }
+</style>
+
+
+
+<header>
+  <div class="logo-tag">Why Choose Us</div>
+  <h1>Tales<span>Galore</span>
+</h1>
 </header>
 
-<!-- Page Hero -->
-<div class="page-hero">
-  <h1>Why TalesGalore?</h1>
-</div>
+<div class="container">
 
-<!-- Main Content -->
-<div class="why-content">
+  <!-- Opening quote -->
+  <div class="story">
+    TalesGalore was created with a simple belief: that children's books are not just products to be traded, but stories meant to be cherished, rediscovered, and passed along. It approaches pre-loved children's books with much care and thoughtfulness.
+  </div>
 
-  <div class="why-block">
-    <div class="why-icon">📖</div>
-    <div class="why-text">
+  <!-- Curated Collection -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="icon">📖</div>
       <h2>A Curated Collection for Young Readers</h2>
-      <p>We value quality over quantity. We have created adequate filters that will help navigate what is truly worth bringing into a child's reading world. Each time we match a book with your interests, we consider it a victory.</p>
-      <p>We have put up our catalogue on the website for you to browse at your own pace. The motivation behind this is not to clog your phone's memory or risk missing out on other important updates.</p>
     </div>
+    <p>We value quality over quantity. We have created adequate filters that will help navigate what is truly worth bringing into a child's reading world. Each time we match a book with your interests, we consider it a victory.</p>
+    <p>We have put up our catalogue on the website for you to browse at your own pace. The motivation behind this is not to clog your phone's memory or risk missing out on other important updates.</p>
   </div>
 
-  <div class="why-block">
-    <div class="why-icon">🌿</div>
-    <div class="why-text">
+  <hr class="divider">
+
+  <!-- Giving Stories Another Life -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="icon">🌿</div>
       <h2>Giving Beautiful Stories Another Life</h2>
-      <p>Each book that finds a new home continues its journey with another child, another family, and another set of memories — bringing warmth and nostalgia to their shelves.</p>
-      <p>Children's books are rarely meant to be read just once. They are meant to be revisited and treasured. Pre-loved books carry the same magic as new ones, while also promoting sustainability and affordability.</p>
     </div>
+    <p>Each book that finds a new home continues its journey with another child, another family, and another set of memories — bringing warmth and nostalgia to their shelves.</p>
+    <p>Children's books are rarely meant to be read just once. They are meant to be revisited and treasured. Pre-loved books carry the same magic as new ones, while also promoting sustainability and affordability.</p>
   </div>
 
-  <div class="why-block">
-    <div class="why-icon">✦</div>
-    <div class="why-text">
+  <hr class="divider">
+
+  <!-- Quality -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="icon">✦</div>
       <h2>Quality You Can Feel Confident About</h2>
-      <p>A common concern with pre-loved books is condition. TalesGalore takes care to ensure that books are presented honestly and with transparency so that parents know exactly what they are receiving.</p>
     </div>
+    <p>A common concern with pre-loved books is condition. TalesGalore takes care to ensure that books are presented honestly and with transparency so that parents know exactly what they are receiving.</p>
   </div>
 
-  <div class="why-block">
-    <div class="why-icon">🏡</div>
-    <div class="why-text">
+  <hr class="divider">
+
+  <!-- Built Around Reading -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="icon">🏡</div>
       <h2>A Place Built Around the Love of Reading</h2>
-      <p>Many online platforms are built for speed and scale. TalesGalore was built around the love of reading. It is a place where stories matter, where children's literature is celebrated, and where discovering books can feel calm and intentional rather than overwhelming.</p>
-      <p><strong>But TalesGalore offers something even more unique.</strong></p>
+    </div>
+    <p>Many online platforms are built for speed and scale. TalesGalore was built around the love of reading. It is a place where stories matter, where children's literature is celebrated, and where discovering books can feel calm and intentional rather than overwhelming.</p>
+    <div class="notice">
+      <strong>But TalesGalore offers something even more unique.</strong>
     </div>
   </div>
 
-  <!-- Signature Feature -->
-  <div class="signature-section">
-    <div class="label">Our Signature Feature</div>
-    <h3>The Story Beneath the Story</h3>
-    <p>Every book contains the story written on its pages — but great books also contain something deeper. At TalesGalore, we call this <strong>"The Story Beneath the Story."</strong></p>
-    <p>This feature invites readers and parents to look beyond the plot and explore the psychology of the book — the ideas, emotions, and subtle themes that many readers might overlook at first glance. Children's stories are often layered with insights about courage, friendship, fear, imagination, kindness, and growing up.</p>
-    <p>It might reveal how a character's journey reflects a child's emotional growth, how a simple adventure quietly teaches resilience, or how a playful narrative introduces complex ideas in a way that young minds can understand.</p>
-    <p>This will be part of your delivery package. For parents, it offers a richer way to engage with the stories they share with their children. For young readers, it can open doors to conversations and reflections that make reading even more rewarding. Where it would not be possible, we will gift add-ons that will bring out their creativity and enhance their little minds to look at the book holistically.</p>
+  <hr class="divider">
+
+  <!-- Story Beneath the Story -->
+  <div class="section">
+    <div class="spotlight">
+      <div class="spot-tag">Our Signature Feature</div>
+      <h3>The Story Beneath the Story</h3>
+      <p>Every book contains the story written on its pages — but great books also contain something deeper. At TalesGalore, we call this <strong style="color:var(--gold-lt);">"The Story Beneath the Story."</strong></p>
+      <p>This feature invites readers and parents to look beyond the plot and explore the psychology of the book — the ideas, emotions, and subtle themes that many readers might overlook at first glance. Children's stories are often layered with insights about courage, friendship, fear, imagination, kindness, and growing up.</p>
+      <p>It might reveal how a character's journey reflects a child's emotional growth, how a simple adventure quietly teaches resilience, or how a playful narrative introduces complex ideas in a way that young minds can understand.</p>
+      <p>This will be part of your delivery package. For parents, it offers a richer way to engage with the stories they share with their children. For young readers, it can open doors to conversations and reflections that make reading even more rewarding. Where it would not be possible, we will gift add-ons that will bring out their creativity and enhance their little minds to look at the book holistically.</p>
+    </div>
+  </div>
+
+  <!-- Sign-off -->
+  <div class="signoff">
     <p>Thank you for choosing TalesGalore — where every book has a story, and every story has a little magic waiting to be discovered.</p>
-    <div class="sign-off">With warmth,<br>Team TalesGalore</div>
+    <div class="names">With warmth</div>
+    <div class="team">Team TalesGalore</div>
   </div>
 
 </div>
-
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>Quick links</h4>
-      <ul>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Return Policy</a></li>
-      </ul>
-    </div>
-    <div class="footer-col footer-subscribe">
-      <h4>Subscribe to our emails</h4>
-      <form onsubmit="return false" class="subscribe-form">
-        <input type="email" placeholder="Email" aria-label="Email"/>
-        <button type="submit">→</button>
-      </form>
-      <div class="footer-social">
-        <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026, TalesGalore</span>
-    <a href="#">Privacy policy</a>
-    <a href="#">Refund policy</a>
-  </div>
-</footer>
-
-<a href="https://api.whatsapp.com/send?phone=+919810280654&text=Hey! I'd like to know more about TalesGalore!" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
 
 </body>
-</html>
