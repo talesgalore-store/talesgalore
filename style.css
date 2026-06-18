@@ -1386,3 +1386,67 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     text-align: center;
     margin-top: 12px;
 }
+
+.site-header{
+  background:#fff;
+  border-bottom:1px solid #eee;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.header-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:12px 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.header-logo{
+  flex-shrink:0;
+}
+
+.logo-img{
+  height:70px;
+  width:auto;
+  display:block;
+}
+
+.logo-wordmark{
+  display:none;
+}
+
+.site-nav{
+  display:flex;
+  gap:28px;
+  flex:1;
+  justify-content:center;
+}
+
+.site-nav a{
+  text-decoration:none;
+  color:#333;
+  font-size:15px;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+.site-nav a:hover{
+  color:#c8862a;
+}
+
+.header-social,
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.header-cart,
+.header-link{
+  text-decoration:none;
+  color:#333;
+}
