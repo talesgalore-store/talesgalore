@@ -6,132 +6,9 @@
   <title>Catalogue – TalesGalore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="style.css"/>
   <style>
     body { background: #faf7f2; }
-
-    /* ── ANNOUNCEMENT BAR ── */
-    .announcement-bar {
-      background: #5C7A5E;
-      color: white;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 9px 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .announcement-track {
-      display: inline-block;
-      animation: marquee 30s linear infinite;
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ── HEADER ── */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #fff;
-      border-bottom: 1px solid #e5e0d8;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    /* Override the broken rule in style.css */
-    .header-inner {
-      display: block !important;
-      height: auto !important;
-      padding: 0 !important;
-      flex-direction: unset !important;
-      gap: unset !important;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .header-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 24px;
-      border-bottom: 1px solid #f0ece4;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    .social-links a {
-      color: #888;
-      display: flex;
-      align-items: center;
-      transition: color 0.15s;
-    }
-    .social-links a:hover { color: #5C7A5E; }
-
-    .cart-icon {
-      display: flex !important;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #1a1a1a;
-      background: #EAF0E8;
-      padding: 7px 14px;
-      border-radius: 20px;
-      transition: background 0.15s;
-    }
-    .cart-icon:hover { background: #d8e4d6; }
-    .cart-count {
-      background: #C4622D;
-      color: white;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .header-main-row {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      padding: 10px 24px;
-    }
-
-    .logo {
-      display: flex !important;
-      align-items: center;
-      flex-shrink: 0;
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: #5C7A5E;
-    }
-    .logo-img {
-      height: 52px;
-      width: auto;
-    }
-
-    .main-nav {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-    }
-    .main-nav a {
-      font-size: 14px;
-      font-weight: 500;
-      color: #666;
-      transition: color 0.15s;
-      white-space: nowrap;
-    }
-    .main-nav a:hover,
-    .main-nav a.active { color: #5C7A5E; }
 
     /* ── PAGE HERO ── */
     .page-hero {
@@ -162,7 +39,6 @@
       .catalogue-layout { grid-template-columns: 1fr; }
       .sidebar { display: none; }
       .mobile-filter-btn { display: flex !important; }
-      .main-nav { display: none; }
     }
 
     /* ── SIDEBAR FILTERS ── */
@@ -186,7 +62,6 @@
     }
     .filter-options label:hover { color: #1a1a1a; }
     .filter-options input[type="checkbox"] { accent-color: #1a1a1a; width: 14px; height: 14px; flex-shrink: 0; }
-    .filter-count { color: #aaa; font-size: 0.78rem; }
 
     .price-range { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
     .price-range input {
@@ -233,9 +108,10 @@
     }
 
     .product-card {
-      display: flex; flex-direction: column; gap: 10px;
+      display: flex; flex-direction: column;
       background: #fff; border: 1px solid #f0ece4;
       transition: box-shadow .2s, transform .2s; cursor: pointer;
+      text-decoration: none; color: inherit;
     }
     .product-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
     .product-img-wrap { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #faf7f2; }
@@ -294,36 +170,37 @@
   </div>
 </div>
 
-<!-- Header -->
+<!-- Header — identical structure to index.html so style.css applies correctly -->
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-top-row">
-      <div class="social-links">
-        <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-      </div>
-      <a href="cart.html" class="cart-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        Cart <span id="cartCount" class="cart-count">0</span>
+    <div class="header-social">
+      <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       </a>
     </div>
-    <div class="header-main-row">
-      <a href="index.html" class="logo">
+    <div class="header-logo">
+      <a href="index.html">
         <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem_6ea6503f-fce9-411e-8212-1c408f35bc62.png?v=1775539894" alt="TalesGalore" class="logo-img"/>
+        <span class="logo-wordmark">TalesGalore</span>
       </a>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="shop.html" class="active">Catalogue</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="literary-games.html">Literary Games</a>
-        <a href="why-talesgalore.html">Why TalesGalore?</a>
-      </nav>
+    </div>
+    <div class="header-actions">
+      <a href="cart.html" class="header-cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Cart <span id="cartCount" style="background:#C4622D;color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-left:4px;">0</span>
+      </a>
     </div>
   </div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="shop.html" class="active">Catalogue</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="literary-games.html">Literary Games</a>
+    <a href="why-talesgalore.html">Why TalesGalore?</a>
+  </nav>
 </header>
 
 <!-- Page Hero -->
@@ -367,11 +244,11 @@
         <h3>Suggested Age</h3><span class="chevron">▼</span>
       </div>
       <div class="filter-options" id="ageFilters">
-        <label><input type="checkbox" value="Age 0-2"         onchange="applyFilters()"/> Age 0–2</label>
-        <label><input type="checkbox" value="Age 3-5"         onchange="applyFilters()"/> Age 3–5</label>
-        <label><input type="checkbox" value="Age 6-8"         onchange="applyFilters()"/> Age 6–8</label>
-        <label><input type="checkbox" value="Age 9-12"        onchange="applyFilters()"/> Age 9–12</label>
-        <label><input type="checkbox" value="Age 13 & above"  onchange="applyFilters()"/> Age 13+</label>
+        <label><input type="checkbox" value="Age 0-2"        onchange="applyFilters()"/> Age 0–2</label>
+        <label><input type="checkbox" value="Age 3-5"        onchange="applyFilters()"/> Age 3–5</label>
+        <label><input type="checkbox" value="Age 6-8"        onchange="applyFilters()"/> Age 6–8</label>
+        <label><input type="checkbox" value="Age 9-12"       onchange="applyFilters()"/> Age 9–12</label>
+        <label><input type="checkbox" value="Age 13 & above" onchange="applyFilters()"/> Age 13+</label>
       </div>
     </div>
 
@@ -473,7 +350,6 @@
   let filtered    = [];
   let currentPage = 1;
 
-  // ── Fetch ──────────────────────────────────────────────────────────────────
   async function loadBooks() {
     try {
       const res  = await fetch(
@@ -481,7 +357,6 @@
       );
       const data = await res.json();
 
-      // Build asset map
       const assets = {};
       (data.includes?.Asset || []).forEach(a => {
         assets[a.sys.id] = 'https:' + a.fields.file.url;
@@ -490,9 +365,7 @@
       allBooks = (data.items || []).map(item => {
         const f        = item.fields;
         const rawAge   = f.suggestedAge ?? f.suggestedAges ?? [];
-        const ageArray = Array.isArray(rawAge)
-          ? rawAge
-          : (rawAge ? [rawAge] : []);
+        const ageArray = Array.isArray(rawAge) ? rawAge : (rawAge ? [rawAge] : []);
 
         const rawGenre   = f.theme ?? [];
         const genreArray = (Array.isArray(rawGenre) ? rawGenre : (rawGenre ? [rawGenre] : []))
@@ -524,7 +397,6 @@
     }
   }
 
-  // ── Read URL params and pre-tick checkboxes ────────────────────────────────
   function readUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const age    = params.get('age');
@@ -550,7 +422,6 @@
     pill.style.display = 'inline-block';
   }
 
-  // ── Filter & Sort ──────────────────────────────────────────────────────────
   function applyFilters() {
     const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
     const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
@@ -581,7 +452,6 @@
     renderPage();
   }
 
-  // ── Render ─────────────────────────────────────────────────────────────────
   function renderPage() {
     const grid  = document.getElementById('products-grid');
     const count = document.getElementById('product-count');
@@ -645,7 +515,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── Accordion ──────────────────────────────────────────────────────────────
   function toggleFilter(heading) {
     heading.classList.toggle('open');
     const opts = heading.nextElementSibling;
@@ -674,7 +543,6 @@
     alert('Thanks for subscribing!');
   }
 
-  // ── Init ───────────────────────────────────────────────────────────────────
   loadBooks();
 </script>
 </body>
