@@ -1,0 +1,26 @@
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const messages = document.querySelectorAll(".announcement-message");
+  if (messages.length === 0) return;
+  let current = 0;
+  setInterval(() => {
+    messages[current].classList.remove("active");
+    current = (current + 1) % messages.length;
+    messages[current].classList.add("active");
+  }, 5000);
+});
+</script>
+
+<div class="announcement-bar">
+  <div class="announcement-message active">
+    🚚 All Parcels to be shipped via India Post
+  </div>
+
+  <div class="announcement-message">
+    📚 Free Pick-up from Store!
+  </div>
+
+  <div class="announcement-message">
+    ✨ Every Story Deserves a Second Home
+  </div>
+</div>
