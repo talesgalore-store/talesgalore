@@ -1471,3 +1471,11 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
         grid-template-columns:1fr;
     }
 }
+
+.age-section .section-title{
+    text-align:center;
+}
+
+.genre-section .section-title{
+    text-align:center;
+}
