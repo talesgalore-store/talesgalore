@@ -1,0 +1,201 @@
+{% comment %}
+  Literary Corner — One daily entry with date picker
+  INSTALL: Upload literary-data.js to Assets, this file to Sections.
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+
+<style>
+  #lc-{{ section.id }}{
+    background:#fdf8f0;
+    padding:{{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    font-family:'Crimson Text',Georgia,serif;
+    border-top:1px solid rgba(200,134,42,.15);
+    border-bottom:1px solid rgba(200,134,42,.15);
+  }
+  .lc-header{max-width:860px;margin:0 auto;padding:0 24px 14px;display:flex;align-items:center;gap:14px}
+  .lc-header-rule{flex:1;height:1px;background:linear-gradient(to right,rgba(200,134,42,.3),transparent)}
+  .lc-header-rule.left{background:linear-gradient(to left,rgba(200,134,42,.3),transparent)}
+  .lc-header-title{font-family:'Playfair Display',Georgia,serif;font-size:17px;font-weight:700;color:#1c1410;letter-spacing:-.01em;white-space:nowrap}
+  .lc-header-title span{color:#1c1410}
+  .lc-datebar{max-width:860px;margin:0 auto;padding:0 24px 16px;display:flex;align-items:center;gap:10px}
+  .lc-datebar label{font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:.2em;color:#9a8a7a;white-space:nowrap}
+  .lc-datepicker{border:1px solid rgba(200,134,42,.35);background:#fff;color:#2e2218;font-family:'Crimson Text',Georgia,serif;font-size:13px;padding:5px 10px;border-radius:2px;cursor:pointer;outline:none}
+  .lc-datepicker:focus{border-color:#c8862a}
+  .lc-today-btn{font-family:'IM Fell English SC',serif;font-size:9px;letter-spacing:.18em;padding:5px 14px;border-radius:2px;border:1px solid rgba(200,134,42,.35);background:none;color:#c8862a;cursor:pointer;white-space:nowrap}
+  .lc-today-btn:hover{background:#c8862a;color:#fdf8f0;border-color:#c8862a}
+  .lc-inner{max-width:860px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:160px 1fr;gap:0;align-items:stretch}
+  .lc-image-col{position:relative;overflow:hidden;border-radius:3px 0 0 3px;background:#2a2018;min-height:180px}
+  .lc-image-col img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:sepia(35%) contrast(1.1) brightness(.9);display:block}
+  .lc-image-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:64px;font-weight:700;color:rgba(200,134,42,.4)}
+  .lc-body{padding:24px 28px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+  .lc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .lc-badge{font-family:'IM Fell English SC',serif;font-size:9px;letter-spacing:.22em;padding:3px 10px;border-radius:2px;border:1px solid;white-space:nowrap}
+  .lc-badge.quote   {color:#c8862a;border-color:rgba(200,134,42,.35)}
+  .lc-badge.anecdote{color:#5a7a5a;border-color:rgba(90,122,90,.35)}
+  .lc-badge.fact    {color:#4a6a8a;border-color:rgba(74,106,138,.35)}
+  .lc-tag{font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:.15em;color:#9a8a7a}
+  .lc-date-label{font-family:'IM Fell English SC',serif;font-size:10px;letter-spacing:.12em;color:#b0a090;margin-left:auto}
+  .lc-text{font-size:16.5px;line-height:1.65;color:#2e2218}
+  .lc-text.is-quote{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:18px;padding-left:18px;position:relative}
+  .lc-text.is-quote::before{content:'\201C';position:absolute;left:-4px;top:-8px;font-size:52px;color:rgba(200,134,42,.3);line-height:1;font-style:normal}
+  .lc-author-row{display:flex;align-items:center;gap:10px;padding-top:8px;border-top:1px solid rgba(200,134,42,.12)}
+  .lc-avatar-wrap{width:30px;height:30px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(200,134,42,.3);flex-shrink:0;background:#2a2018;display:flex;align-items:center;justify-content:center}
+  .lc-avatar-wrap img{width:100%;height:100%;object-fit:cover;object-position:top}
+  .lc-avatar-letter{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#c8862a}
+  .lc-author-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#1c1410}
+  .lc-author-sub{font-size:11px;color:#9a8a7a;margin-top:1px}
+  .lc-loading{text-align:center;padding:32px;color:#9a8a7a;font-style:italic;font-size:15px}
+  .lc-fade{animation:lc-in .4s ease forwards;opacity:0}
+  @keyframes lc-in{to{opacity:1}}
+  @media(max-width:600px){
+    .lc-inner{grid-template-columns:1fr}
+    .lc-image-col{height:160px}
+    .lc-body{padding:18px 20px}
+    .lc-datebar{flex-wrap:wrap}
+  }
+</style>
+
+<section id="lc-{{ section.id }}">
+  <div class="lc-header">
+    <div class="lc-header-rule left"></div>
+    <div class="lc-header-title">The Literary <span>Corner</span></div>
+    <div class="lc-header-rule"></div>
+  </div>
+  <div class="lc-datebar">
+    <label for="lc-pick-{{ section.id }}">Browse by date</label>
+    <input type="date" id="lc-pick-{{ section.id }}" class="lc-datepicker">
+    <button class="lc-today-btn" id="lc-today-{{ section.id }}">Today</button>
+  </div>
+  <div class="lc-inner" id="lc-content-{{ section.id }}">
+    <div class="lc-loading" style="grid-column:1/-1">Opening the pages&hellip;</div>
+  </div>
+</section>
+
+{{ 'literary-data.js' | asset_url | script_tag }}
+
+<script>
+(function(){
+  var SID='{{ section.id }}';
+  var imgCache={};
+
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+  function setImage(entry, imgEl, letterEl){
+    var wiki=entry.wiki;
+    if(imgCache[wiki]){
+      if(imgCache[wiki]==='none'){letterEl.style.display='flex';imgEl.style.display='none';}
+      else{imgEl.src=imgCache[wiki];imgEl.style.display='block';letterEl.style.display='none';}
+      return;
+    }
+    // Wikipedia REST API — CORS-enabled, designed for external use
+    fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+wiki)
+      .then(function(r){return r.json()})
+      .then(function(d){
+        var src=(d.thumbnail&&d.thumbnail.source)?d.thumbnail.source:null;
+        if(src){
+          imgCache[wiki]=src;
+          imgEl.src=src;
+          imgEl.style.display='block';
+          letterEl.style.display='none';
+        } else {
+          imgCache[wiki]='none';
+          letterEl.style.display='flex';
+          imgEl.style.display='none';
+        }
+      })
+      .catch(function(){
+        imgCache[wiki]='none';
+        letterEl.style.display='flex';
+        imgEl.style.display='none';
+      });
+  }
+
+  function render(dateObj){
+    var D=window.LITERARY_DATA;
+    if(!D||!D.pool||!D.days)return;
+    var mm=String(dateObj.getMonth()+1).padStart(2,'0');
+    var dd=String(dateObj.getDate()).padStart(2,'0');
+    var key=mm+'-'+dd;
+    var day=D.days[key];
+    if(!day)return;
+    var e=D.pool[day.e];
+    if(!e)return;
+    var dateStr=dateObj.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+    var isQ=e.type==='quote';
+    var labels={quote:'Quote',anecdote:'Anecdote',fact:'Fact'};
+    var initial=esc((e.author||'?').charAt(0));
+
+    document.getElementById('lc-content-'+SID).innerHTML=
+      '<div class="lc-image-col lc-fade">'
+      +'<img id="lc-img-'+SID+'" style="display:none" alt="'+esc(e.author)+'">'
+      +'<div class="lc-image-fallback" id="lc-letter-'+SID+'">'+initial+'</div>'
+      +'</div>'
+      +'<div class="lc-body lc-fade" style="animation-delay:.1s">'
+      +'<div class="lc-meta">'
+      +'<span class="lc-badge '+esc(e.type)+'">'+(labels[e.type]||e.type)+'</span>'
+      +'<span class="lc-tag">'+esc(e.tag)+'</span>'
+      +'<span class="lc-date-label">'+dateStr+'</span>'
+      +'</div>'
+      +'<p class="lc-text'+(isQ?' is-quote':'')+'">'+(isQ?'':'')+esc(e.content)+'</p>'
+      +'<div class="lc-author-row">'
+      +'<div class="lc-avatar-wrap">'
+      +'<img id="lc-av-'+SID+'" style="display:none" alt="'+esc(e.author)+'">'
+      +'<span class="lc-avatar-letter" id="lc-avletter-'+SID+'">'+initial+'</span>'
+      +'</div>'
+      +'<div><p class="lc-author-name">'+esc(e.author)+'</p>'
+      +'<p class="lc-author-sub">'+esc(e.nationality)+' · '+esc(e.author_dates)+(e.source?' · <em>'+esc(e.source)+'</em>':'')+'</p>'
+      +'</div></div></div>';
+
+    // Fetch Wikipedia image for both the main panel and the avatar
+    var imgEl=document.getElementById('lc-img-'+SID);
+    var letterEl=document.getElementById('lc-letter-'+SID);
+    var avEl=document.getElementById('lc-av-'+SID);
+    var avLetterEl=document.getElementById('lc-avletter-'+SID);
+
+    if(imgEl&&letterEl){
+      setImage(e, imgEl, letterEl);
+    }
+    // Mirror same image to avatar once main loads
+    imgEl&&imgEl.addEventListener('load',function(){
+      if(avEl){avEl.src=this.src;avEl.style.display='block';}
+      if(avLetterEl){avLetterEl.style.display='none';}
+    });
+  }
+
+  function init(){
+    var now=new Date();
+    var picker=document.getElementById('lc-pick-'+SID);
+    var y=now.getFullYear();
+    picker.value=y+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    picker.max=y+'-12-31';
+    picker.min=y+'-01-01';
+    render(now);
+    picker.addEventListener('change',function(){
+      if(!this.value)return;
+      var p=this.value.split('-');
+      render(new Date(+p[0],+p[1]-1,+p[2]));
+    });
+    document.getElementById('lc-today-'+SID).addEventListener('click',function(){
+      var t=new Date();
+      picker.value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+      render(t);
+    });
+  }
+
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Literary Corner",
+  "tag": "section",
+  "settings": [
+    {"type":"range","id":"padding_top",   "label":"Padding Top",   "min":16,"max":80,"step":4,"default":40,"unit":"px"},
+    {"type":"range","id":"padding_bottom","label":"Padding Bottom","min":16,"max":80,"step":4,"default":40,"unit":"px"}
+  ],
+  "presets":[{"name":"Literary Corner"}]
+}
+{% endschema %}
