@@ -1,183 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TalesGalore — Pre-Loved Books for Children</title>
-  <meta name="description" content="Curated pre-loved children's books at affordable prices. Shop by age group or genre." />
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>TalesGalore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="logo">TalesGalore</a>
-      <nav class="main-nav">
-        <a href="shop.html">Shop</a>
-        <a href="shop.html?filter=age">By Age</a>
-        <a href="shop.html?filter=genre">By Genre</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="header-actions">
-        <a href="cart.html" class="cart-icon">
-          🛒 <span class="cart-count" id="cartCount">0</span>
+<!-- Announcement Bar -->
+<div class="announcement-bar">
+  <div class="announcement-track">
+    <span>All parcels to be shipped via India Post &nbsp;&nbsp;✦&nbsp;&nbsp; Free Pick-up from Store! &nbsp;&nbsp;✦&nbsp;&nbsp; Every Story Deserves a Second Home! &nbsp;&nbsp;✦&nbsp;&nbsp; All parcels to be shipped via India Post &nbsp;&nbsp;✦&nbsp;&nbsp; Free Pick-up from Store! &nbsp;&nbsp;✦&nbsp;&nbsp; Every Story Deserves a Second Home! &nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-social">
+      <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+    <div class="header-logo">
+      <a href="#">
+        <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem_6ea6503f-fce9-411e-8212-1c408f35bc62.png?v=1775539894" alt="TalesGalore" class="logo-img"/>
+        <span class="logo-wordmark">TalesGalore</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <a href="#" class="header-link">Log in</a>
+      <a href="#" class="header-cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Cart
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="#">Home</a>
+    <a href="#">Catalogue</a>
+    <a href="#">Contact Us</a>
+    <a href="#">Literary Games</a>
+    <a href="#">Why TalesGalore?</a>
+  </nav>
+</header>
+
+<!-- Hero Banner -->
+<section class="hero-banner">
+  <img src="https://talesgalore.com/cdn/shop/files/TalesGalore_Banner.png?v=1773602056&width=1500" alt="TalesGalore Banner" class="hero-img"/>
+</section>
+
+<!-- Mission -->
+<section class="mission-section">
+  <div class="mission-inner">
+    <h2>Our Mission</h2>
+    <p>Re-homing pre-loved books - here's a storyland where tales can live on and find new seekers.</p>
+    <blockquote>"If you don't like to read, you haven't found the right book." <cite>— J.K. Rowling</cite></blockquote>
+    <a href="#" class="btn-primary">Shop all</a>
+  </div>
+</section>
+
+<!-- Shop by Age -->
+<section class="collection-section">
+  <h2 class="section-heading">Shop by Age</h2>
+  <div class="collection-slider">
+    <div class="collection-track" id="age-track">
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/age_0_2_icon_78e2b322-a9ee-4307-a57d-e719d6855a0b.png?v=1773637036&width=400" alt="Age 0-2"/>
+        <span>Collection for Age 0-2</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/age_3_5_icon_ecf607bf-7e71-4676-9e8c-274eaad582e0.png?v=1773637110&width=400" alt="Age 3-5"/>
+        <span>Collection for Age 3-5</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/age_6_8_icon_ebb8ab52-10ea-49fe-9847-868b8d9ee138.png?v=1773637148&width=400" alt="Age 6-8"/>
+        <span>Collection for Age 6-8</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/age_9_12_icon_a536a862-f52d-474a-92a8-3b198ccf128b.png?v=1773637185&width=400" alt="Age 9-12"/>
+        <span>Collection for Age 9-12</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Age_13_above.png?v=1775194127&width=400" alt="Age 13+"/>
+        <span>Collection for Age 13 &amp; above</span>
+      </a>
+    </div>
+    <button class="slider-btn prev" onclick="slide('age-track',-1)">&#8249;</button>
+    <button class="slider-btn next" onclick="slide('age-track',1)">&#8250;</button>
+  </div>
+</section>
+
+<!-- Shop by Genre -->
+<section class="collection-section">
+  <h2 class="section-heading">Shop by Genre</h2>
+  <div class="collection-slider">
+    <div class="collection-track" id="genre-track">
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Tickles_Chuckles.png?v=1773820346&width=400" alt="Tickles & Chuckles"/>
+        <span>Tickles &amp; Chuckles</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Activity_Educational.png?v=1773820312&width=400" alt="Activity & Educational"/>
+        <span>Activity &amp; Educational</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Faith_Festivals.png?v=1773723939&width=400" alt="Faith & Festivals"/>
+        <span>Faith &amp; Festivals</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Vehicles_and_Machines.png?v=1773651134&width=400" alt="Vehicles & Machines"/>
+        <span>Vehicles &amp; Machines</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Sensory_Moveable.png?v=1773820329&width=400" alt="Sensory & Moveables"/>
+        <span>Sensory &amp; Moveables</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Morals_Values.png?v=1773820359&width=400" alt="Morals & Values"/>
+        <span>Morals &amp; Values</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Princess_and_Fairies.png?v=1773651152&width=400" alt="Fantasy & Fairy Tales"/>
+        <span>Fantasy &amp; Fairy Tales</span>
+      </a>
+      <a href="#" class="collection-card">
+        <img src="https://talesgalore.com/cdn/shop/collections/Adventure.png?v=1773651170&width=400" alt="Adventure"/>
+        <span>Adventure</span>
+      </a>
+    </div>
+    <button class="slider-btn prev" onclick="slide('genre-track',-1)">&#8249;</button>
+    <button class="slider-btn next" onclick="slide('genre-track',1)">&#8250;</button>
+  </div>
+</section>
+
+<!-- Latest Arrivals Marquee -->
+<section class="arrivals-section">
+  <h2 class="section-heading">Latest Arrivals</h2>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <a href="#">The Usborne Book of Origami — ₹60</a>
+      <a href="#">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
+      <a href="#">Mates, Dates and Inflatable Bras — ₹100</a>
+      <a href="#">Thomas Has a Secret — ₹59</a>
+      <a href="#">Sticker Maths for School — ₹72</a>
+      <a href="#">Little Miss Sunshine and the Wicked Witch — ₹59</a>
+      <a href="#">Gordon Goes Too Fast — ₹59</a>
+      <a href="#">Little Miss Princess and the Very Special Party — ₹59</a>
+      <a href="#">Little Miss Princess and the Pea — ₹59</a>
+      <a href="#">Mr. Happy and the Wizard — ₹99</a>
+      <a href="#">A Children's Treasury of Milligan — ₹450</a>
+      <a href="#">The Great Fairy Bake Off — ₹250</a>
+      <a href="#">Cinderella — ₹150</a>
+      <a href="#">Goat Goes to Playgroup — ₹175</a>
+      <!-- duplicate for seamless loop -->
+      <a href="#">The Usborne Book of Origami — ₹60</a>
+      <a href="#">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
+      <a href="#">Mates, Dates and Inflatable Bras — ₹100</a>
+      <a href="#">Thomas Has a Secret — ₹59</a>
+      <a href="#">Sticker Maths for School — ₹72</a>
+      <a href="#">Little Miss Sunshine and the Wicked Witch — ₹59</a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-section">
+  <h2 class="section-heading">Featured products</h2>
+  <div class="products-grid">
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/funny.jpg?v=1775303115&width=533" alt="Funny Fish"/>
+      </div>
+      <div class="product-info">
+        <h3>Funny Fish</h3>
+        <p class="product-price">₹ 45.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/Dino_in_my_Bathtub.jpg?v=1775384223&width=533" alt="There's a Dinosaur in My Bathtub"/>
+      </div>
+      <div class="product-info">
+        <h3>There's a Dinosaur in My Bathtub</h3>
+        <p class="product-price">₹ 175.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/royal_rebecca_12ded718-09c2-40a0-99b7-d7e2250b3eb5.jpg?v=1774124286&width=533" alt="Royal Rebecca"/>
+      </div>
+      <div class="product-info">
+        <h3>Royal Rebecca</h3>
+        <p class="product-price">₹ 125.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/view_archive_83710857-ba1e-44c9-98af-9f47c9cba223.jpg?v=1775320521&width=533" alt="I Am Not Sleepy"/>
+      </div>
+      <div class="product-info">
+        <h3>I Am Not Sleepy and I Will Not Go to Bed</h3>
+        <p class="product-price">₹ 150.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/9780241245194-us.jpg?v=1774123134&width=533" alt="Peppa Pig"/>
+      </div>
+      <div class="product-info">
+        <h3>Peppa Pig: Peppa and Her Golden Boots</h3>
+        <p class="product-price">₹ 120.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/9780230015500-us.jpg?v=1774123128&width=533" alt="Tyrannosaurus Drip"/>
+      </div>
+      <div class="product-info">
+        <h3>Tyrannosaurus Drip</h3>
+        <p class="product-price">₹ 175.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/wipw.jpg?v=1775321889&width=533" alt="Wipe-Clean ABC"/>
+      </div>
+      <div class="product-info">
+        <h3>Wipe-Clean: Let's Learn ABC</h3>
+        <p class="product-price">₹ 250.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/LoveliestHugs.jpg?v=1775301121&width=533" alt="The Littlest Things Give the Loveliest Hugs"/>
+      </div>
+      <div class="product-info">
+        <h3>The Littlest Things Give the Loveliest Hugs</h3>
+        <p class="product-price">₹ 150.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/pea.webp?v=1779092513&width=533" alt="Little Miss Princess and the Pea"/>
+      </div>
+      <div class="product-info">
+        <h3>Little Miss Princess and the Pea</h3>
+        <p class="product-price">₹ 59.00</p>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://talesgalore.com/cdn/shop/files/miss_princess.jpg?v=1779082449&width=533" alt="Little Miss Princess Party"/>
+      </div>
+      <div class="product-info">
+        <h3>Little Miss Princess and the Very Special Party</h3>
+        <p class="product-price">₹ 59.00</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Quick links</h4>
+      <ul>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Return Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-subscribe">
+      <h4>Subscribe to our emails</h4>
+      <form onsubmit="return false" class="subscribe-form">
+        <input type="email" placeholder="Email" aria-label="Email"/>
+        <button type="submit">→</button>
+      </form>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
       </div>
     </div>
-  </header>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026, TalesGalore</span>
+    <a href="#">Privacy policy</a>
+    <a href="#">Refund policy</a>
+  </div>
+</footer>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <span class="hero-eyebrow">Pre-loved · Affordable · Curated</span>
-      <h1>Stories that find<br/>their next reader</h1>
-      <p>Carefully selected second-hand books for children of all ages. Because every book deserves a second chapter.</p>
-      <a href="shop.html" class="btn btn-primary">Browse Books</a>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-badge">📚</div>
-    </div>
-  </section>
+<!-- WhatsApp Button -->
+<a href="https://api.whatsapp.com/send?phone=+919810280654&text=Hey! I'd like to know more about TalesGalore!" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
-  <!-- SHOP BY AGE -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Shop by Age</h2>
-      <div class="age-grid">
-        <a href="shop.html?age=0-2" class="age-card">
-          <span class="age-emoji">🍼</span>
-          <span class="age-label">Ages 0–2</span>
-        </a>
-        <a href="shop.html?age=3-5" class="age-card">
-          <span class="age-emoji">🌱</span>
-          <span class="age-label">Ages 3–5</span>
-        </a>
-        <a href="shop.html?age=6-8" class="age-card">
-          <span class="age-emoji">🚀</span>
-          <span class="age-label">Ages 6–8</span>
-        </a>
-        <a href="shop.html?age=9-12" class="age-card">
-          <span class="age-emoji">🔭</span>
-          <span class="age-label">Ages 9–12</span>
-        </a>
-        <a href="shop.html?age=13+" class="age-card">
-          <span class="age-emoji">🌍</span>
-          <span class="age-label">Ages 13+</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- SHOP BY GENRE -->
-  <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">Shop by Genre</h2>
-      <div class="genre-grid">
-        <a href="shop.html?genre=Picture Books" class="genre-card">Picture Books</a>
-        <a href="shop.html?genre=Early Readers" class="genre-card">Early Readers</a>
-        <a href="shop.html?genre=Fiction" class="genre-card">Fiction</a>
-        <a href="shop.html?genre=Non-Fiction" class="genre-card">Non-Fiction</a>
-        <a href="shop.html?genre=Science & Nature" class="genre-card">Science & Nature</a>
-        <a href="shop.html?genre=Fantasy & Adventure" class="genre-card">Fantasy & Adventure</a>
-        <a href="shop.html?genre=Comics & Graphic Novels" class="genre-card">Comics & Graphic Novels</a>
-        <a href="shop.html?genre=Educational" class="genre-card">Educational</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- LATEST ARRIVALS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Latest Arrivals</h2>
-        <a href="shop.html" class="view-all">View all →</a>
-      </div>
-      <div class="products-grid" id="latestProducts">
-        <div class="loading">Loading books...</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY TALESGALORE -->
-  <section class="section section-alt">
-    <div class="container why-grid">
-      <div class="why-text">
-        <h2>Why TalesGalore?</h2>
-        <p>We believe every child deserves access to great books — without breaking the bank. Each book is hand-checked for quality before it finds its next home.</p>
-        <ul class="why-list">
-          <li>✅ Every book quality-checked</li>
-          <li>✅ Affordable prices in INR</li>
-          <li>✅ Curated by age & genre</li>
-          <li>✅ Fast delivery across India</li>
-          <li>✅ Eco-friendly — give books a second life</li>
-        </ul>
-        <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
-      </div>
-      <div class="why-visual">
-        <div class="why-stat">
-          <span class="stat-number">500+</span>
-          <span class="stat-label">Books available</span>
-        </div>
-        <div class="why-stat">
-          <span class="stat-number">5</span>
-          <span class="stat-label">Age groups</span>
-        </div>
-        <div class="why-stat">
-          <span class="stat-number">8</span>
-          <span class="stat-label">Genres</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-col">
-        <h3 class="footer-logo">TalesGalore</h3>
-        <p>Pre-loved books for curious children.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="shop.html">Shop All</a></li>
-          <li><a href="shop.html?filter=age">By Age</a></li>
-          <li><a href="shop.html?filter=genre">By Genre</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Help</h4>
-        <ul>
-          <li><a href="contact.html">Returns & Exchanges</a></li>
-          <li><a href="contact.html">Shipping Info</a></li>
-          <li><a href="contact.html">WhatsApp Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Stay in touch</h4>
-        <form class="newsletter-form" onsubmit="handleNewsletter(event)">
-          <input type="email" placeholder="Your email" required />
-          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
-        </form>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 TalesGalore. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- WHATSAPP BUTTON -->
-  <a href="https://wa.me/919810280654" class="whatsapp-btn" target="_blank" title="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  </a>
-
-  <script src="js/contentful.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/home.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
