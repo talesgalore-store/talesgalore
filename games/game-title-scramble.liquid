@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Title Scramble — TalesGalore Literary Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FDFAF4;--warm:#F5EDD8;--gold:#C8923A;--gold-lt:#E8B96A;--ink:#8B5E3C;--muted:#7A6A52;--rule:#E2D5BC;--dark:#3D2B0E;--success:#4A7C59;--danger:#B03030}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--cream);font-family:'Lato',sans-serif;color:var(--dark);min-height:100vh}
+.tg-header{background:var(--ink);padding:16px 28px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 10px rgba(61,43,14,.2)}
+.badge{background:var(--gold);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.tg-header h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff}
+.tg-header h1 span{color:var(--gold-lt)}
+.tg-header a.back{margin-left:auto;color:var(--rule);text-decoration:none;font-size:13px}
+.tg-header a.back:hover{color:var(--gold-lt)}
+
+.game-wrap{max-width:680px;margin:0 auto;padding:36px 20px 60px}
+
+.start-screen{text-align:center;padding:36px 0}
+.game-icon{font-size:70px;display:block;margin-bottom:18px;animation:spin 4s ease-in-out infinite}
+@keyframes spin{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.start-screen h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--dark);margin-bottom:12px}
+.start-screen p{color:var(--muted);font-size:16px;line-height:1.7;max-width:440px;margin:0 auto 28px}
+.rules{background:var(--warm);border:1.5px solid var(--rule);border-radius:12px;padding:18px 22px;text-align:left;margin-bottom:28px}
+.rules h4{font-family:'Playfair Display',serif;font-size:15px;color:var(--dark);margin-bottom:8px}
+.rules li{color:var(--muted);font-size:14px;margin-left:18px;margin-bottom:5px}
+.btn-primary{background:var(--gold);color:#fff;font-weight:700;font-size:16px;padding:13px 34px;border:none;border-radius:10px;cursor:pointer;transition:background .2s,transform .15s}
+.btn-primary:hover{background:#a8762e;transform:scale(1.03)}
+
+.progress-info{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+.progress-bar{background:var(--rule);border-radius:10px;height:7px;margin-bottom:20px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,#2E86C1,#52A67A);height:100%;border-radius:10px;transition:width .4s}
+.timer-row{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.timer-track{flex:1;background:var(--rule);border-radius:10px;height:10px;overflow:hidden}
+.timer-fill{height:100%;border-radius:10px;background:var(--success);transition:width 1s linear,background .5s}
+
+.round-card{background:#fff;border:1.5px solid var(--rule);border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(139,94,60,.07)}
+.round-label{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#2E86C1;text-transform:uppercase;margin-bottom:6px}
+.hint-text{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--muted);margin-bottom:22px;line-height:1.5}
+
+/* SCRAMBLED TILES */
+.scrambled-area{margin-bottom:20px}
+.area-label{font-size:12px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.tile-row{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;padding:10px;border:2px dashed var(--rule);border-radius:10px;background:var(--warm)}
+.tile{
+  background:#fff;border:2px solid var(--gold-lt);border-radius:8px;
+  padding:8px 14px;font-size:16px;font-weight:700;font-family:'Playfair Display',serif;
+  cursor:pointer;transition:transform .15s,border-color .15s,background .15s;
+  user-select:none;color:var(--dark);
+}
+.tile:hover{transform:translateY(-2px);border-color:var(--gold);background:var(--warm)}
+.tile.used{opacity:.3;pointer-events:none}
+.answer-row{display:flex;flex-wrap:wrap;gap:8px;min-height:50px;padding:10px;border:2px solid var(--rule);border-radius:10px;background:#fff;align-items:center}
+.answer-row.correct-row{border-color:var(--success);background:#EAF4EE}
+.answer-row.wrong-row{border-color:var(--danger);background:#FDECEA}
+.placed-tile{
+  background:var(--gold);color:#fff;border-radius:8px;
+  padding:8px 14px;font-size:16px;font-weight:700;font-family:'Playfair Display',serif;
+  cursor:pointer;transition:transform .15s;
+}
+.placed-tile:hover{transform:translateY(-2px);background:#a8762e}
+
+.action-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn-check{background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:background .2s}
+.btn-check:hover{background:#a8762e}
+.btn-clear{background:transparent;border:2px solid var(--rule);color:var(--muted);font-weight:700;font-size:13px;padding:10px 18px;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-clear:hover{border-color:var(--gold);color:var(--gold)}
+
+.feedback{padding:12px 16px;border-radius:10px;font-size:14px;margin-top:14px;display:none;line-height:1.5}
+.feedback.show{display:block}
+.feedback.correct-fb{background:#EAF4EE;border:1.5px solid var(--success);color:#2E6645}
+.feedback.wrong-fb{background:#FDECEA;border:1.5px solid var(--danger);color:#8B2020}
+.next-btn{display:none;margin-top:12px}
+.next-btn.show{display:inline-block}
+
+/* SCORE */
+.score-screen{text-align:center;padding:20px 0}
+.score-circle{width:130px;height:130px;border-radius:50%;background:var(--warm);border:4px solid #2E86C1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 22px;font-family:'Playfair Display',serif}
+.score-circle .big{font-size:38px;font-weight:700;color:var(--dark);line-height:1}
+.score-circle .out{font-size:14px;color:var(--muted)}
+.score-screen h2{font-family:'Playfair Display',serif;font-size:28px;color:var(--dark);margin-bottom:10px}
+.score-screen p{color:var(--muted);font-size:15px;max-width:420px;margin:0 auto 26px;line-height:1.7}
+.btn-secondary{background:transparent;border:2px solid var(--gold);color:var(--gold);font-weight:700;font-size:14px;padding:10px 22px;border-radius:8px;cursor:pointer;margin:0 6px;transition:all .2s}
+.btn-secondary:hover{background:var(--gold);color:#fff}
+
+.tg-footer{background:var(--dark);color:var(--rule);text-align:center;padding:26px 20px;font-size:13px}
+.tg-footer em{color:var(--gold);font-style:italic;font-family:'Playfair Display',serif;display:block;margin-bottom:5px}
+@media(max-width:480px){.game-wrap{padding:24px 14px 48px}.tile,.placed-tile{font-size:14px;padding:6px 10px}}
+</style>
+</head>
+<body>
+<header class="tg-header">
+  <span class="badge">Games</span>
+  <h1>Tales<span>Galore</span></h1>
+  <a class="back" href="literary-games.html">← All Games</a>
+</header>
+
+<div class="game-wrap">
+  <div id="startScreen" class="start-screen">
+    <span class="game-icon">🔀</span>
+    <h2>Title Scramble</h2>
+    <p>Famous children's book titles have been jumbled into mixed-up words. Click the word tiles to rearrange them into the correct title!</p>
+    <div class="rules">
+      <h4>📋 How to play</h4>
+      <ul>
+        <li>Click scrambled word tiles to place them in order</li>
+        <li>Click a placed tile to send it back to the scramble pile</li>
+        <li>Hit "Check Answer" when you're ready</li>
+        <li>30 seconds per title — work fast!</li>
+      </ul>
+    </div>
+    <button class="btn-primary" onclick="startGame()">Start Scramble →</button>
+  </div>
+
+  <div id="gameScreen" style="display:none">
+    <div class="progress-info">
+      <span id="roundLabel">Title 1 of 8</span>
+      <span id="scoreLabel">Score: 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="timer-row">
+      <span>⏱</span>
+      <div class="timer-track"><div class="timer-fill" id="timerFill" style="width:100%"></div></div>
+      <span id="timerNum" style="font-weight:700;font-size:14px;min-width:26px;text-align:right">30</span>
+    </div>
+
+    <div class="round-card">
+      <div class="round-label" id="roundNum">Title 1</div>
+      <div class="hint-text" id="hintText"></div>
+
+      <div class="scrambled-area">
+        <div class="area-label">Scrambled words — click to place</div>
+        <div class="tile-row" id="scramblePool"></div>
+      </div>
+
+      <div class="scrambled-area">
+        <div class="area-label">Your answer — click to remove</div>
+        <div class="answer-row" id="answerRow"></div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-check" onclick="checkAnswer()">Check Answer ✓</button>
+        <button class="btn-clear" onclick="clearAnswer()">Clear ↺</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <button class="btn-primary next-btn" id="nextBtn" onclick="nextRound()" style="margin-top:14px">Next Title →</button>
+    </div>
+  </div>
+
+  <div id="scoreScreen" style="display:none" class="score-screen">
+    <div class="score-circle">
+      <span class="big" id="finalScore">0</span>
+      <span class="out">/ 8</span>
+    </div>
+    <h2 id="resultTitle">Well done!</h2>
+    <p id="resultMsg"></p>
+    <button class="btn-primary" onclick="restartGame()">Play Again</button>
+    <button class="btn-secondary" onclick="location.href='literary-games.html'">All Games</button>
+  </div>
+</div>
+
+<footer class="tg-footer">
+  <em>— TalesGalore Literary Games —</em>
+  Stories worth rediscovering
+</footer>
+
+<script>
+const titles=[
+  {words:["THE","VERY","HUNGRY","CATERPILLAR"],hint:"Eric Carle's classic about a caterpillar eating his way through the week"},
+  {words:["CHARLIE","AND","THE","CHOCOLATE","FACTORY"],hint:"A boy with a golden ticket visits a wonderful sweet-making factory"},
+  {words:["WHERE","THE","WILD","THINGS","ARE"],hint:"Max puts on his wolf suit and sails to a land of monsters"},
+  {words:["THE","LION","THE","WITCH","AND","THE","WARDROBE"],hint:"Four children step through a magic wardrobe into a snowy land"},
+  {words:["GREEN","EGGS","AND","HAM"],hint:"Sam-I-Am tries to convince a grumpy character to try something new"},
+  {words:["THE","TIGER","WHO","CAME","TO","TEA"],hint:"An unexpected guest drinks everything in the house — including all the water from the tap!"},
+  {words:["GOODNIGHT","MISTER","TOM"],hint:"An evacuee boy is sent to live with a grumpy old man in the countryside"},
+  {words:["THE","ENORMOUS","CROCODILE"],hint:"A Roald Dahl story about a crafty reptile with a very nasty plan"},
+];
+
+let current=0,score=0,timer=null,timeLeft=30;
+let pool=[],answer=[];
+
+function startGame(){
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('gameScreen').style.display='block';
+  showRound();
+}
+
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+
+function showRound(){
+  const t=titles[current];
+  document.getElementById('roundLabel').textContent=`Title ${current+1} of ${titles.length}`;
+  document.getElementById('scoreLabel').textContent=`Score: ${score}`;
+  document.getElementById('progressFill').style.width=`${(current/titles.length)*100}%`;
+  document.getElementById('roundNum').textContent=`Title ${current+1}`;
+  document.getElementById('hintText').textContent=`💡 ${t.hint}`;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('nextBtn').className='next-btn';
+  document.getElementById('answerRow').className='answer-row';
+
+  pool=shuffle(t.words);
+  answer=[];
+  renderTiles();
+
+  timeLeft=30;
+  clearInterval(timer);
+  updateTimerUI();
+  timer=setInterval(()=>{
+    timeLeft--;
+    updateTimerUI();
+    if(timeLeft<=0){clearInterval(timer);timeOut();}
+  },1000);
+}
+
+function renderTiles(){
+  const poolEl=document.getElementById('scramblePool');
+  const ansEl=document.getElementById('answerRow');
+  poolEl.innerHTML='';
+  ansEl.innerHTML='';
+
+  pool.forEach((w,i)=>{
+    const t=document.createElement('div');
+    t.className='tile';
+    t.textContent=w;
+    t.onclick=()=>pickTile(i);
+    poolEl.appendChild(t);
+  });
+  answer.forEach((w,i)=>{
+    const t=document.createElement('div');
+    t.className='placed-tile';
+    t.textContent=w;
+    t.onclick=()=>returnTile(i);
+    ansEl.appendChild(t);
+  });
+}
+
+function pickTile(i){
+  const w=pool.splice(i,1)[0];
+  answer.push(w);
+  renderTiles();
+}
+function returnTile(i){
+  const w=answer.splice(i,1)[0];
+  pool.push(w);
+  renderTiles();
+}
+function clearAnswer(){
+  pool=[...pool,...answer];
+  answer=[];
+  renderTiles();
+}
+
+function checkAnswer(){
+  clearInterval(timer);
+  const correct=titles[current].words;
+  const isRight=answer.join(' ')===correct.join(' ');
+  const fb=document.getElementById('feedback');
+  const ar=document.getElementById('answerRow');
+
+  if(isRight){
+    score++;
+    ar.className='answer-row correct-row';
+    fb.textContent=`✅ Correct! The title is: ${correct.join(' ')}`;
+    fb.className='feedback show correct-fb';
+  } else {
+    ar.className='answer-row wrong-row';
+    fb.textContent=`❌ Not quite. The correct title is: ${correct.join(' ')}`;
+    fb.className='feedback show wrong-fb';
+  }
+  document.getElementById('scoreLabel').textContent=`Score: ${score}`;
+  document.getElementById('nextBtn').className='next-btn show';
+}
+
+function timeOut(){
+  const correct=titles[current].words;
+  const fb=document.getElementById('feedback');
+  fb.textContent=`⏰ Time's up! The title was: ${correct.join(' ')}`;
+  fb.className='feedback show wrong-fb';
+  document.getElementById('nextBtn').className='next-btn show';
+}
+
+function updateTimerUI(){
+  const pct=(timeLeft/30)*100;
+  const fill=document.getElementById('timerFill');
+  fill.style.width=pct+'%';
+  fill.style.background=timeLeft>15?'#4A7C59':timeLeft>7?'var(--gold)':'var(--danger)';
+  document.getElementById('timerNum').textContent=timeLeft;
+}
+
+function nextRound(){
+  current++;
+  if(current>=titles.length) showResult();
+  else showRound();
+}
+
+function showResult(){
+  clearInterval(timer);
+  document.getElementById('gameScreen').style.display='none';
+  document.getElementById('scoreScreen').style.display='block';
+  document.getElementById('finalScore').textContent=score;
+  const pct=score/titles.length;
+  let title,msg;
+  if(pct===1){title='🏆 Perfect Score!';msg='Every single title unscrambled — you are a true literary legend!';}
+  else if(pct>=.75){title='⭐ Word Wizard!';msg='Brilliantly done! Your knowledge of book titles is impressive indeed.';}
+  else if(pct>=.5){title='📚 Good Going!';msg='A solid performance! Keep exploring the shelves at TalesGalore and sharpen those skills.';}
+  else{title='🌱 Keep Scrambling!';msg='Every puzzle is a learning adventure. Try again and see how much you improve!';}
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultMsg').textContent=msg;
+}
+
+function restartGame(){
+  current=0;score=0;
+  document.getElementById('scoreScreen').style.display='none';
+  document.getElementById('gameScreen').style.display='block';
+  showRound();
+}
+</script>
+</body>
+</html>
