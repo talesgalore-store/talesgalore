@@ -1453,8 +1453,8 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 
 .mission-section{
     display:grid;
-    grid-template-columns: 40% 60%;
-    gap:40px;
+    grid-template-columns: 60% 40%;
+    gap:20px;
     align-items:center;
     max-width:1200px;
     margin:60px auto;
