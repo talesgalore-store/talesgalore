@@ -71,23 +71,29 @@
   <h2 class="section-heading">Shop by Age</h2>
   <div class="collection-slider">
     <div class="collection-track" id="age-track">
-      <a href="#" class="collection-card">
+      <!--
+        These are the FALLBACK / STATIC cards shown while Contentful loads,
+        or if there are no Contentful results for an age group.
+        app.js will INSERT dynamic book cards AFTER each of these collection cards.
+        The collection cards themselves (the age-group icons) are always shown.
+      -->
+      <a href="shop.html?age=Age+0-2" class="collection-card" data-age="Age 0-2">
         <img src="https://talesgalore.com/cdn/shop/collections/age_0_2_icon_78e2b322-a9ee-4307-a57d-e719d6855a0b.png?v=1773637036&width=400" alt="Age 0-2"/>
         <span>Collection for Age 0-2</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?age=Age+3-5" class="collection-card" data-age="Age 3-5">
         <img src="https://talesgalore.com/cdn/shop/collections/age_3_5_icon_ecf607bf-7e71-4676-9e8c-274eaad582e0.png?v=1773637110&width=400" alt="Age 3-5"/>
         <span>Collection for Age 3-5</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?age=Age+6-8" class="collection-card" data-age="Age 6-8">
         <img src="https://talesgalore.com/cdn/shop/collections/age_6_8_icon_ebb8ab52-10ea-49fe-9847-868b8d9ee138.png?v=1773637148&width=400" alt="Age 6-8"/>
         <span>Collection for Age 6-8</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?age=Age+9-12" class="collection-card" data-age="Age 9-12">
         <img src="https://talesgalore.com/cdn/shop/collections/age_9_12_icon_a536a862-f52d-474a-92a8-3b198ccf128b.png?v=1773637185&width=400" alt="Age 9-12"/>
         <span>Collection for Age 9-12</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?age=Age+13%2B" class="collection-card" data-age="Age 13+">
         <img src="https://talesgalore.com/cdn/shop/collections/Age_13_above.png?v=1775194127&width=400" alt="Age 13+"/>
         <span>Collection for Age 13 &amp; above</span>
       </a>
@@ -97,40 +103,45 @@
   </div>
 </section>
 
-<!-- Shop by Genre -->
+<!-- Shop by Genre/Theme -->
 <section class="collection-section">
   <h2 class="section-heading">Shop by Genre</h2>
   <div class="collection-slider">
     <div class="collection-track" id="genre-track">
-      <a href="#" class="collection-card">
+      <!--
+        Static genre/theme icons are always shown.
+        app.js appends dynamic book cards from Contentful after each.
+        data-theme must exactly match the value in your Contentful `theme` field.
+      -->
+      <a href="shop.html?theme=Tickles+%26+Chuckles" class="collection-card" data-theme="Tickles & Chuckles">
         <img src="https://talesgalore.com/cdn/shop/collections/Tickles_Chuckles.png?v=1773820346&width=400" alt="Tickles & Chuckles"/>
         <span>Tickles &amp; Chuckles</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Activity+%26+Educational" class="collection-card" data-theme="Activity & Educational">
         <img src="https://talesgalore.com/cdn/shop/collections/Activity_Educational.png?v=1773820312&width=400" alt="Activity & Educational"/>
         <span>Activity &amp; Educational</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Faith+%26+Festivals" class="collection-card" data-theme="Faith & Festivals">
         <img src="https://talesgalore.com/cdn/shop/collections/Faith_Festivals.png?v=1773723939&width=400" alt="Faith & Festivals"/>
         <span>Faith &amp; Festivals</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Vehicles+%26+Machines" class="collection-card" data-theme="Vehicles & Machines">
         <img src="https://talesgalore.com/cdn/shop/collections/Vehicles_and_Machines.png?v=1773651134&width=400" alt="Vehicles & Machines"/>
         <span>Vehicles &amp; Machines</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Sensory+%26+Moveables" class="collection-card" data-theme="Sensory & Moveables">
         <img src="https://talesgalore.com/cdn/shop/collections/Sensory_Moveable.png?v=1773820329&width=400" alt="Sensory & Moveables"/>
         <span>Sensory &amp; Moveables</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Morals+%26+Values" class="collection-card" data-theme="Morals & Values">
         <img src="https://talesgalore.com/cdn/shop/collections/Morals_Values.png?v=1773820359&width=400" alt="Morals & Values"/>
         <span>Morals &amp; Values</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Fantasy+%26+Fairy+Tales" class="collection-card" data-theme="Fantasy & Fairy Tales">
         <img src="https://talesgalore.com/cdn/shop/collections/Princess_and_Fairies.png?v=1773651152&width=400" alt="Fantasy & Fairy Tales"/>
         <span>Fantasy &amp; Fairy Tales</span>
       </a>
-      <a href="#" class="collection-card">
+      <a href="shop.html?theme=Adventure" class="collection-card" data-theme="Adventure">
         <img src="https://talesgalore.com/cdn/shop/collections/Adventure.png?v=1773651170&width=400" alt="Adventure"/>
         <span>Adventure</span>
       </a>
@@ -144,28 +155,22 @@
 <section class="arrivals-section">
   <h2 class="section-heading">Latest Arrivals</h2>
   <div class="marquee-wrapper">
-    <div class="marquee-track">
-      <a href="#">The Usborne Book of Origami — ₹60</a>
-      <a href="#">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
-      <a href="#">Mates, Dates and Inflatable Bras — ₹100</a>
-      <a href="#">Thomas Has a Secret — ₹59</a>
-      <a href="#">Sticker Maths for School — ₹72</a>
-      <a href="#">Little Miss Sunshine and the Wicked Witch — ₹59</a>
-      <a href="#">Gordon Goes Too Fast — ₹59</a>
-      <a href="#">Little Miss Princess and the Very Special Party — ₹59</a>
-      <a href="#">Little Miss Princess and the Pea — ₹59</a>
-      <a href="#">Mr. Happy and the Wizard — ₹99</a>
-      <a href="#">A Children's Treasury of Milligan — ₹450</a>
-      <a href="#">The Great Fairy Bake Off — ₹250</a>
-      <a href="#">Cinderella — ₹150</a>
-      <a href="#">Goat Goes to Playgroup — ₹175</a>
-      <!-- duplicate for seamless loop -->
-      <a href="#">The Usborne Book of Origami — ₹60</a>
-      <a href="#">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
-      <a href="#">Mates, Dates and Inflatable Bras — ₹100</a>
-      <a href="#">Thomas Has a Secret — ₹59</a>
-      <a href="#">Sticker Maths for School — ₹72</a>
-      <a href="#">Little Miss Sunshine and the Wicked Witch — ₹59</a>
+    <div class="marquee-track" id="arrivals-marquee">
+      <!-- Populated dynamically by app.js; static fallback below shown until then -->
+      <a href="shop.html">The Usborne Book of Origami — ₹60</a>
+      <a href="shop.html">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
+      <a href="shop.html">Mates, Dates and Inflatable Bras — ₹100</a>
+      <a href="shop.html">Thomas Has a Secret — ₹59</a>
+      <a href="shop.html">Sticker Maths for School — ₹72</a>
+      <a href="shop.html">Little Miss Sunshine and the Wicked Witch — ₹59</a>
+      <a href="shop.html">Gordon Goes Too Fast — ₹59</a>
+      <a href="shop.html">Little Miss Princess and the Very Special Party — ₹59</a>
+      <a href="shop.html">Little Miss Princess and the Pea — ₹59</a>
+      <a href="shop.html">Mr. Happy and the Wizard — ₹99</a>
+      <a href="shop.html">A Children's Treasury of Milligan — ₹450</a>
+      <a href="shop.html">The Great Fairy Bake Off — ₹250</a>
+      <a href="shop.html">Cinderella — ₹150</a>
+      <a href="shop.html">Goat Goes to Playgroup — ₹175</a>
     </div>
   </div>
 </section>
@@ -173,8 +178,9 @@
 <!-- Featured Products -->
 <section class="featured-section">
   <h2 class="section-heading">Featured products</h2>
-  <div class="products-grid">
-    <a href="#" class="product-card">
+  <div class="products-grid" id="featured-grid">
+    <!-- Populated dynamically by app.js; static fallback cards shown until then -->
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/funny.jpg?v=1775303115&width=533" alt="Funny Fish"/>
       </div>
@@ -183,7 +189,7 @@
         <p class="product-price">₹ 45.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/Dino_in_my_Bathtub.jpg?v=1775384223&width=533" alt="There's a Dinosaur in My Bathtub"/>
       </div>
@@ -192,7 +198,7 @@
         <p class="product-price">₹ 175.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/royal_rebecca_12ded718-09c2-40a0-99b7-d7e2250b3eb5.jpg?v=1774124286&width=533" alt="Royal Rebecca"/>
       </div>
@@ -201,7 +207,7 @@
         <p class="product-price">₹ 125.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/view_archive_83710857-ba1e-44c9-98af-9f47c9cba223.jpg?v=1775320521&width=533" alt="I Am Not Sleepy"/>
       </div>
@@ -210,7 +216,7 @@
         <p class="product-price">₹ 150.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/9780241245194-us.jpg?v=1774123134&width=533" alt="Peppa Pig"/>
       </div>
@@ -219,7 +225,7 @@
         <p class="product-price">₹ 120.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/9780230015500-us.jpg?v=1774123128&width=533" alt="Tyrannosaurus Drip"/>
       </div>
@@ -228,7 +234,7 @@
         <p class="product-price">₹ 175.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/wipw.jpg?v=1775321889&width=533" alt="Wipe-Clean ABC"/>
       </div>
@@ -237,7 +243,7 @@
         <p class="product-price">₹ 250.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/LoveliestHugs.jpg?v=1775301121&width=533" alt="The Littlest Things Give the Loveliest Hugs"/>
       </div>
@@ -246,7 +252,7 @@
         <p class="product-price">₹ 150.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/pea.webp?v=1779092513&width=533" alt="Little Miss Princess and the Pea"/>
       </div>
@@ -255,7 +261,7 @@
         <p class="product-price">₹ 59.00</p>
       </div>
     </a>
-    <a href="#" class="product-card">
+    <a href="shop.html" class="product-card">
       <div class="product-img-wrap">
         <img src="https://talesgalore.com/cdn/shop/files/miss_princess.jpg?v=1779082449&width=533" alt="Little Miss Princess Party"/>
       </div>
@@ -267,12 +273,9 @@
   </div>
 </section>
 
-<!-- Footer -->
 <!-- Literary Corner -->
 <section class="literary-corner">
   <div class="literary-corner-inner">
-
-    <!-- Left: Blog posts -->
     <div class="lc-blog">
       <h2>The Literary Corner</h2>
       <div class="lc-date-filter">
@@ -288,8 +291,6 @@
         <div class="lc-post-title">Opening the pages…</div>
       </div>
     </div>
-
-    <!-- Right: Reviews -->
     <div class="lc-reviews">
       <h3>Reviews</h3>
       <div class="lc-star-row">
@@ -298,10 +299,10 @@
       </div>
       <span class="lc-verified">Verified</span>
     </div>
-
   </div>
 </section>
 
+<!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-col">
