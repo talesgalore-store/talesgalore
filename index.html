@@ -1,345 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TalesGalore</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #FDF6EC;
+      --warm-tan: #E8D5B7;
+      --rust:     #B5541E;
+      --forest:   #3A5A40;
+      --bark:     #6B4226;
+      --ink:      #2C2416;
+      --light-bg: #FAF3E8;
+      --card-bg:  #FFF9F2;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    /* ── NAVBAR ── */
+    header {
+      background: var(--forest);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    nav { display: flex; gap: 1.6rem; align-items: center; }
+    nav a {
+      color: var(--warm-tan);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #fff; }
+    .nav-cart {
+      background: var(--rust);
+      color: #fff !important;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+    }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announce {
+      background: var(--rust);
+      color: #fff;
+      text-align: center;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 1rem;
+      font-weight: 600;
+    }
+
+    /* ── HERO: image LEFT, mission RIGHT ── */
+    .hero {
+      display: flex;
+      align-items: stretch;
+      min-height: 480px;
+      background: var(--light-bg);
+    }
+    .hero-image {
+      flex: 1.4;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-mission {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 3.5rem;
+      background: var(--light-bg);
+      border-left: 4px solid var(--warm-tan);
+    }
+    .hero-mission .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--rust);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .hero-mission h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      line-height: 1.25;
+      color: var(--bark);
+      margin-bottom: 1.2rem;
+    }
+    .hero-mission p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #5a4433;
+      margin-bottom: 1.6rem;
+    }
+    .hero-mission blockquote {
+      border-left: 3px solid var(--rust);
+      padding-left: 1rem;
+      font-style: italic;
+      color: var(--bark);
+      font-size: 0.92rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--rust);
+      color: #fff;
+      padding: 0.75rem 1.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn-primary:hover { background: var(--bark); }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      text-align: center;
+      padding: 3rem 1rem 1.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      color: var(--bark);
+      margin-bottom: 0.4rem;
+    }
+    .section-header p {
+      color: #7a6050;
+      font-size: 0.92rem;
+    }
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--rust);
+      margin: 0.7rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ── CAROUSEL ── */
+    .carousel-wrap {
+      padding: 0 2rem 3rem;
+      position: relative;
+    }
+    .carousel {
+      display: flex;
+      gap: 1.2rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 1rem;
+      scrollbar-width: none;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+
+    .carousel-card {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(107,66,38,0.10);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--warm-tan);
+    }
+    .carousel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(107,66,38,0.18);
+    }
+    .carousel-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-card .card-label {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--bark);
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      background: var(--card-bg);
+    }
+
+    /* Age carousel — warm amber band */
+    .age-section { background: #FEF3DC; }
+    .age-section .carousel-card { border-color: #E8C97A; background: #FFFBF0; }
+    .age-section .carousel-card .card-label { background: #FFFBF0; color: #7A4F00; }
+
+    /* Genre carousel — soft sage band */
+    .genre-section { background: #EDF4EE; }
+    .genre-section .carousel-card { border-color: #A8C5A0; background: #F5FAF5; }
+    .genre-section .carousel-card .card-label { background: #F5FAF5; color: var(--forest); }
+
+    /* Carousel nav arrows */
+    .carousel-nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .carousel-btn {
+      background: var(--rust);
+      border: none;
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .carousel-btn:hover { background: var(--bark); }
+
+    /* ── LATEST ARRIVALS GRID ── */
+    .arrivals-section { background: var(--light-bg); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1.2rem;
+      padding: 0 2rem 3rem;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--warm-tan);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(107,66,38,0.15);
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .product-info {
+      padding: 0.7rem 0.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-info h3 {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+    .product-price {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--rust);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest);
+      color: var(--warm-tan);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    footer h4 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+    }
+    footer a {
+      display: block;
+      color: var(--warm-tan);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: #fff; }
+    .footer-bottom {
+      background: var(--bark);
+      color: #c8a98a;
+      text-align: center;
+      font-size: 0.78rem;
+      padding: 0.8rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; min-height: auto; }
+      .hero-image { min-height: 240px; }
+      .hero-mission { padding: 2rem 1.5rem; border-left: none; border-top: 4px solid var(--warm-tan); }
+      .hero-mission h1 { font-size: 1.5rem; }
+      nav { display: none; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 0 1rem 2rem; }
+      .carousel-wrap { padding: 0 1rem 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Announcement Bar -->
-<div class="announcement-bar">
-  <div class="announcement-track">
-    <span>All parcels to be shipped via India Post &nbsp;&nbsp;✦&nbsp;&nbsp; Free Pick-up from Store! &nbsp;&nbsp;✦&nbsp;&nbsp; Every Story Deserves a Second Home! &nbsp;&nbsp;✦&nbsp;&nbsp; All parcels to be shipped via India Post &nbsp;&nbsp;✦&nbsp;&nbsp; Free Pick-up from Store! &nbsp;&nbsp;✦&nbsp;&nbsp; Every Story Deserves a Second Home! &nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-  </div>
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce">
+  Free Pick-up from Store! &nbsp;·&nbsp; Every Story Deserves a Second Home! &nbsp;·&nbsp; Free Shipping on orders above ₹449!
 </div>
 
-<!-- Header -->
-<header class="site-header">
-  <div class="header-inner">
-    <div class="header-social">
-      <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      </a>
-    </div>
-    <div class="header-logo">
-      <a href="index.html">
-        <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem_6ea6503f-fce9-411e-8212-1c408f35bc62.png?v=1775539894" alt="TalesGalore" class="logo-img"/>
-        <span class="logo-wordmark">TalesGalore</span>
-      </a>
-    </div>
-    <div class="header-actions">
-      <a href="#" class="header-link">Log in</a>
-      <a href="#" class="header-cart">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        Cart
-      </a>
-    </div>
-  </div>
-  <nav class="site-nav">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Catalogue</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="literary-games.html">Literary Games</a>
-    <a href="why-talesgalore.html">Why TalesGalore?</a>
+<!-- NAVBAR -->
+<header>
+  <a class="logo" href="/">TalesGalore</a>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/collections/all">Catalogue</a>
+    <a href="/pages/contact-us">Contact Us</a>
+    <a href="/pages/literary-games">Literary Games</a>
+    <a href="/pages/why-talesgalore">Why TalesGalore?</a>
+    <a href="/cart" class="nav-cart">🛒 Cart</a>
   </nav>
 </header>
 
-<!-- Hero Banner -->
-<section class="hero-banner">
-  <img src="https://talesgalore.com/cdn/shop/files/TalesGalore_Banner.png?v=1773602056&width=1500" alt="TalesGalore Banner" class="hero-img"/>
-</section>
-
-<!-- Mission -->
-<section class="mission-section">
-  <div class="mission-inner">
-    <h2>Our Mission</h2>
-    <p>Re-homing pre-loved books - here's a storyland where tales can live on and find new seekers.</p>
-    <blockquote>"If you don't like to read, you haven't found the right book." <cite>— J.K. Rowling</cite></blockquote>
-    <a href="shop.html" class="btn-primary">Shop all</a>
+<!-- HERO: Banner image LEFT + Mission RIGHT -->
+<section class="hero">
+  <div class="hero-image">
+    <img
+      src="https://talesgalore.com/cdn/shop/files/TalesGalore_Banner.png?v=1773602056&width=1200"
+      alt="TalesGalore — pre-loved children's books"
+    />
+  </div>
+  <div class="hero-mission">
+    <span class="eyebrow">Our Mission</span>
+    <h1>Re-homing pre-loved books</h1>
+    <p>
+      Here's a storyland where tales can live on and find new seekers.
+      We source quality UK imported children's books and give them a second home with readers who'll love them.
+    </p>
+    <blockquote>
+      "If you don't like to read, you haven't found the right book."
+      <br /><strong>— J.K. Rowling</strong>
+    </blockquote>
+    <a href="https://talesgalore.com/collections/all" class="btn-primary">Shop All Books</a>
   </div>
 </section>
 
-<!-- Shop by Age -->
-<section class="collection-section">
-  <h2 class="section-heading">Shop by Age</h2>
-  <div class="collection-slider">
-    <div class="collection-track" id="age-track">
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/age_0_2_icon_78e2b322-a9ee-4307-a57d-e719d6855a0b.png?v=1773637036&width=400" alt="Age 0-2"/>
-        <span>Collection for Age 0-2</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/age_3_5_icon_ecf607bf-7e71-4676-9e8c-274eaad582e0.png?v=1773637110&width=400" alt="Age 3-5"/>
-        <span>Collection for Age 3-5</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/age_6_8_icon_ebb8ab52-10ea-49fe-9847-868b8d9ee138.png?v=1773637148&width=400" alt="Age 6-8"/>
-        <span>Collection for Age 6-8</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/age_9_12_icon_a536a862-f52d-474a-92a8-3b198ccf128b.png?v=1773637185&width=400" alt="Age 9-12"/>
-        <span>Collection for Age 9-12</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Age_13_above.png?v=1775194127&width=400" alt="Age 13+"/>
-        <span>Collection for Age 13 &amp; above</span>
-      </a>
-    </div>
-    <button class="slider-btn prev" onclick="slide('age-track',-1)">&#8249;</button>
-    <button class="slider-btn next" onclick="slide('age-track',1)">&#8250;</button>
+<!-- SHOP BY AGE CAROUSEL -->
+<section class="age-section">
+  <div class="section-header">
+    <h2>Shop by Age</h2>
+    <div class="divider"></div>
   </div>
+  <div id="age-sections-container"></div>
 </section>
 
-<!-- Shop by Genre -->
-<section class="collection-section">
-  <h2 class="section-heading">Shop by Genre</h2>
-  <div class="collection-slider">
-    <div class="collection-track" id="genre-track">
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Tickles_Chuckles.png?v=1773820346&width=400" alt="Tickles & Chuckles"/>
-        <span>Tickles &amp; Chuckles</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Activity_Educational.png?v=1773820312&width=400" alt="Activity & Educational"/>
-        <span>Activity &amp; Educational</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Faith_Festivals.png?v=1773723939&width=400" alt="Faith & Festivals"/>
-        <span>Faith &amp; Festivals</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Vehicles_and_Machines.png?v=1773651134&width=400" alt="Vehicles & Machines"/>
-        <span>Vehicles &amp; Machines</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Sensory_Moveable.png?v=1773820329&width=400" alt="Sensory & Moveables"/>
-        <span>Sensory &amp; Moveables</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Morals_Values.png?v=1773820359&width=400" alt="Morals & Values"/>
-        <span>Morals &amp; Values</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Princess_and_Fairies.png?v=1773651152&width=400" alt="Fantasy & Fairy Tales"/>
-        <span>Fantasy &amp; Fairy Tales</span>
-      </a>
-      <a href="#" class="collection-card">
-        <img src="https://talesgalore.com/cdn/shop/collections/Adventure.png?v=1773651170&width=400" alt="Adventure"/>
-        <span>Adventure</span>
-      </a>
-    </div>
-    <button class="slider-btn prev" onclick="slide('genre-track',-1)">&#8249;</button>
-    <button class="slider-btn next" onclick="slide('genre-track',1)">&#8250;</button>
+<!-- SHOP BY THEME CAROUSEL -->
+<section class="genre-section">
+  <div class="section-header">
+    <h2>Shop by Theme</h2>
+    <div class="divider"></div>
   </div>
+  <div id="theme-sections-container"></div>
 </section>
 
-<!-- Latest Arrivals Marquee -->
+<!-- LATEST ARRIVALS -->
 <section class="arrivals-section">
-  <h2 class="section-heading">Latest Arrivals</h2>
-  <div class="marquee-wrapper">
-    <div class="marquee-track">
-      <a href="#">The Usborne Book of Origami — ₹60</a>
-      <a href="#">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
-      <a href="#">Mates, Dates and Inflatable Bras — ₹100</a>
-      <a href="#">Thomas Has a Secret — ₹59</a>
-      <a href="#">Sticker Maths for School — ₹72</a>
-      <a href="#">Little Miss Sunshine and the Wicked Witch — ₹59</a>
-      <a href="#">Gordon Goes Too Fast — ₹59</a>
-      <a href="#">Little Miss Princess and the Very Special Party — ₹59</a>
-      <a href="#">Little Miss Princess and the Pea — ₹59</a>
-      <a href="#">Mr. Happy and the Wizard — ₹99</a>
-      <a href="#">A Children's Treasury of Milligan — ₹450</a>
-      <a href="#">The Great Fairy Bake Off — ₹250</a>
-      <a href="#">Cinderella — ₹150</a>
-      <a href="#">Goat Goes to Playgroup — ₹175</a>
-      <!-- duplicate for seamless loop -->
-      <a href="#">The Usborne Book of Origami — ₹60</a>
-      <a href="#">Diary of a Wimpy Kid: Hard Luck — ₹120</a>
-      <a href="#">Mates, Dates and Inflatable Bras — ₹100</a>
-      <a href="#">Thomas Has a Secret — ₹59</a>
-      <a href="#">Sticker Maths for School — ₹72</a>
-      <a href="#">Little Miss Sunshine and the Wicked Witch — ₹59</a>
-    </div>
+  <div class="section-header">
+    <h2>Latest Arrivals</h2>
+    <p>Fresh finds just re-homed</p>
+    <div class="divider"></div>
+  </div>
+  <div class="products-grid" id="latest-grid">
+    <p style="padding:2rem;color:#999;">Loading books…</p>
+  </div>
+  <div style="text-align:center; padding-bottom: 2.5rem;">
+    <a href="https://talesgalore.com/collections/all" class="btn-primary">View All Books</a>
   </div>
 </section>
 
-<!-- Featured Products -->
-<section class="featured-section">
-  <h2 class="section-heading">Featured products</h2>
-  <div class="products-grid">
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/funny.jpg?v=1775303115&width=533" alt="Funny Fish"/>
-      </div>
-      <div class="product-info">
-        <h3>Funny Fish</h3>
-        <p class="product-price">₹ 45.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/Dino_in_my_Bathtub.jpg?v=1775384223&width=533" alt="There's a Dinosaur in My Bathtub"/>
-      </div>
-      <div class="product-info">
-        <h3>There's a Dinosaur in My Bathtub</h3>
-        <p class="product-price">₹ 175.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/royal_rebecca_12ded718-09c2-40a0-99b7-d7e2250b3eb5.jpg?v=1774124286&width=533" alt="Royal Rebecca"/>
-      </div>
-      <div class="product-info">
-        <h3>Royal Rebecca</h3>
-        <p class="product-price">₹ 125.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/view_archive_83710857-ba1e-44c9-98af-9f47c9cba223.jpg?v=1775320521&width=533" alt="I Am Not Sleepy"/>
-      </div>
-      <div class="product-info">
-        <h3>I Am Not Sleepy and I Will Not Go to Bed</h3>
-        <p class="product-price">₹ 150.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/9780241245194-us.jpg?v=1774123134&width=533" alt="Peppa Pig"/>
-      </div>
-      <div class="product-info">
-        <h3>Peppa Pig: Peppa and Her Golden Boots</h3>
-        <p class="product-price">₹ 120.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/9780230015500-us.jpg?v=1774123128&width=533" alt="Tyrannosaurus Drip"/>
-      </div>
-      <div class="product-info">
-        <h3>Tyrannosaurus Drip</h3>
-        <p class="product-price">₹ 175.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/wipw.jpg?v=1775321889&width=533" alt="Wipe-Clean ABC"/>
-      </div>
-      <div class="product-info">
-        <h3>Wipe-Clean: Let's Learn ABC</h3>
-        <p class="product-price">₹ 250.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/LoveliestHugs.jpg?v=1775301121&width=533" alt="The Littlest Things Give the Loveliest Hugs"/>
-      </div>
-      <div class="product-info">
-        <h3>The Littlest Things Give the Loveliest Hugs</h3>
-        <p class="product-price">₹ 150.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/pea.webp?v=1779092513&width=533" alt="Little Miss Princess and the Pea"/>
-      </div>
-      <div class="product-info">
-        <h3>Little Miss Princess and the Pea</h3>
-        <p class="product-price">₹ 59.00</p>
-      </div>
-    </a>
-    <a href="#" class="product-card">
-      <div class="product-img-wrap">
-        <img src="https://talesgalore.com/cdn/shop/files/miss_princess.jpg?v=1779082449&width=533" alt="Little Miss Princess Party"/>
-      </div>
-      <div class="product-info">
-        <h3>Little Miss Princess and the Very Special Party</h3>
-        <p class="product-price">₹ 59.00</p>
-      </div>
-    </a>
+<!-- FOOTER -->
+<footer>
+  <div>
+    <h4>TalesGalore</h4>
+    <p style="font-size:0.85rem; line-height:1.6; max-width:220px;">
+      An online bookstore for UK imported pre-loved children's books. Every story deserves a second home.
+    </p>
   </div>
-</section>
-
-<!-- Footer -->
-<!-- Literary Corner -->
-<section class="literary-corner">
-  <div class="literary-corner-inner">
-
-    <!-- Left: Blog posts -->
-    <div class="lc-blog">
-      <h2>The Literary Corner</h2>
-      <div class="lc-date-filter">
-        <label>Browse by date</label>
-        <select onchange="return false">
-          <option>Today</option>
-          <option>This Week</option>
-          <option>This Month</option>
-          <option>All Time</option>
-        </select>
-      </div>
-      <div class="lc-post">
-        <div class="lc-post-title">Opening the pages…</div>
-      </div>
-    </div>
-
-    <!-- Right: Reviews -->
-    <div class="lc-reviews">
-      <h3>Reviews</h3>
-      <div class="lc-star-row">
-        <span class="lc-stars">☆☆☆☆☆</span>
-        <span class="lc-star-count">0.00 ★ (0)</span>
-      </div>
-      <span class="lc-verified">Verified</span>
-    </div>
-
+  <div>
+    <h4>Quick Links</h4>
+    <a href="https://talesgalore.com/search">Search</a>
+    <a href="https://talesgalore.com/pages/about-us">About Us</a>
+    <a href="https://talesgalore.com/pages/return-policy">Return Policy</a>
+    <a href="https://talesgalore.com/pages/contact-us">Contact Us</a>
   </div>
-</section>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>Quick links</h4>
-      <ul>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Return Policy</a></li>
-      </ul>
-    </div>
-    <div class="footer-col footer-subscribe">
-      <h4>Subscribe to our emails</h4>
-      <form onsubmit="return false" class="subscribe-form">
-        <input type="email" placeholder="Email" aria-label="Email"/>
-        <button type="submit">→</button>
-      </form>
-      <div class="footer-social">
-        <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-      </div>
-    </div>
+  <div>
+    <h4>Collections</h4>
+    <a href="https://talesgalore.com/collections/collection-for-age-0-2">Age 0–2</a>
+    <a href="https://talesgalore.com/collections/collection-for-age-3-5">Age 3–5</a>
+    <a href="https://talesgalore.com/collections/collection-for-age-6-8">Age 6–8</a>
+    <a href="https://talesgalore.com/collections/collection-for-age-9-12">Age 9–12</a>
+    <a href="https://talesgalore.com/collections/collection-for-age-13-above">Age 13+</a>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026, TalesGalore</span>
-    <a href="#">Privacy policy</a>
-    <a href="#">Refund policy</a>
+  <div>
+    <h4>Follow Us</h4>
+    <a href="https://www.facebook.com/TalesGalore">Facebook</a>
+    <a href="https://www.instagram.com/talesgalore.store">Instagram</a>
+    <a href="https://api.whatsapp.com/send?phone=+91-9810280654&text=Hey! I'd like to know more about TalesGalore!">WhatsApp</a>
   </div>
 </footer>
+<div class="footer-bottom">© 2026 TalesGalore · All parcels shipped via India Post</div>
 
-<!-- WhatsApp Button -->
-<a href="https://api.whatsapp.com/send?phone=+919810280654&text=Hey! I'd like to know more about TalesGalore!" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+<script>
+  // ─────────────────────────────────────────────
+  // CONFIG — fill in your Contentful credentials
+  // ─────────────────────────────────────────────
+  const SPACE_ID    = 'YOUR_SPACE_ID';
+  const ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN';
+  const CONTENT_TYPE = 'book'; // change if your Content Type ID differs
 
-<script src="app.js"></script>
+  // Age groups in the order you want them displayed
+  const AGE_GROUPS = ['Age 0-2', 'Age 3-5', 'Age 6-8', 'Age 9-12', 'Age 13+'];
+
+  // ─────────────────────────────────────────────
+  // FETCH all books from Contentful (handles pagination)
+  // ─────────────────────────────────────────────
+  async function fetchAllBooks() {
+    const limit = 200;
+    let skip = 0;
+    let allItems = [];
+    let allAssets = {};
+
+    while (true) {
+      const url = new URL(`https://cdn.contentful.com/spaces/${SPACE_ID}/entries`);
+      url.searchParams.set('content_type', CONTENT_TYPE);
+      url.searchParams.set('select', 'sys.id,fields.title,fields.price,fields.suggestedAges,fields.theme,fields.coverImage');
+      url.searchParams.set('include', '1');
+      url.searchParams.set('limit', limit);
+      url.searchParams.set('skip', skip);
+
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }
+      });
+
+      if (!res.ok) {
+        console.error('Contentful fetch error:', res.status, await res.text());
+        break;
+      }
+
+      const data = await res.json();
+
+      // Collect assets (images)
+      (data.includes?.Asset || []).forEach(a => {
+        allAssets[a.sys.id] = 'https:' + a.fields.file.url;
+      });
+
+      allItems = allItems.concat(data.items);
+
+      if (allItems.length >= data.total) break;
+      skip += limit;
+    }
+
+    // Normalize each book entry
+    return allItems.map(item => ({
+      id:            item.sys.id,
+      title:         item.fields.title || 'Untitled',
+      price:         item.fields.price ?? null,
+      // suggestedAges is an array like ["Age 0-2", "Age 3-5"]
+      suggestedAges: Array.isArray(item.fields.suggestedAges)
+                       ? item.fields.suggestedAges
+                       : (item.fields.suggestedAges ? [item.fields.suggestedAges] : []),
+      // theme can be a string or array
+      theme:         Array.isArray(item.fields.theme)
+                       ? item.fields.theme
+                       : (item.fields.theme ? [item.fields.theme] : []),
+      imageUrl:      allAssets[item.fields.coverImage?.sys?.id] || '',
+      productUrl:    `https://talesgalore.com/products/${item.sys.id}`,
+    }));
+  }
+
+  // ─────────────────────────────────────────────
+  // GROUP books by a given array field
+  // Returns: { "Age 0-2": [book, ...], "Adventure": [book, ...], ... }
+  // ─────────────────────────────────────────────
+  function groupBy(books, fieldName) {
+    const groups = {};
+    books.forEach(book => {
+      const values = book[fieldName]; // always an array after normalization
+      values.forEach(val => {
+        if (!groups[val]) groups[val] = [];
+        groups[val].push(book);
+      });
+    });
+    return groups;
+  }
+
+  // ─────────────────────────────────────────────
+  // RENDER a single carousel block
+  // ─────────────────────────────────────────────
+  function renderCarouselBlock(label, books, carouselId) {
+    if (!books || books.length === 0) return '';
+
+    const cards = books.map(book => `
+      <a class="carousel-card" href="${book.productUrl}">
+        ${book.imageUrl
+          ? `<img src="${book.imageUrl}?w=400" alt="${escHtml(book.title)}" loading="lazy" />`
+          : `<div style="height:160px;background:#e8d5b7;display:flex;align-items:center;justify-content:center;font-size:2rem;">📖</div>`
+        }
+        <div class="card-label">${escHtml(book.title)}</div>
+      </a>
+    `).join('');
+
+    return `
+      <div style="padding: 0 2rem 0.5rem;">
+        <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;">${escHtml(label)}</h3>
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-nav">
+          <button class="carousel-btn" onclick="scrollCarousel('${carouselId}',-1)">&#8592;</button>
+          <button class="carousel-btn" onclick="scrollCarousel('${carouselId}',1)">&#8594;</button>
+        </div>
+        <div class="carousel" id="${carouselId}">${cards}</div>
+      </div>
+    `;
+  }
+
+  // ─────────────────────────────────────────────
+  // RENDER latest arrivals grid (last 8 added)
+  // ─────────────────────────────────────────────
+  function renderLatestGrid(books) {
+    const latest = books.slice(0, 8);
+    const el = document.getElementById('latest-grid');
+    if (!latest.length) {
+      el.innerHTML = '<p style="padding:2rem;color:#999;">No books found.</p>';
+      return;
+    }
+    el.innerHTML = latest.map(book => `
+      <a class="product-card" href="${book.productUrl}">
+        ${book.imageUrl
+          ? `<img src="${book.imageUrl}?w=400" alt="${escHtml(book.title)}" loading="lazy" />`
+          : `<div style="height:180px;background:#e8d5b7;display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>`
+        }
+        <div class="product-info">
+          <h3>${escHtml(book.title)}</h3>
+          ${book.price != null ? `<span class="product-price">₹${book.price}</span>` : ''}
+        </div>
+      </a>
+    `).join('');
+  }
+
+  // ─────────────────────────────────────────────
+  // MAIN — fetch, group, render
+  // ─────────────────────────────────────────────
+  async function init() {
+    try {
+      const books = await fetchAllBooks();
+
+      // ── Age carousels (in fixed order) ──────────
+      const byAge = groupBy(books, 'suggestedAges');
+      const ageContainer = document.getElementById('age-sections-container');
+      ageContainer.innerHTML = AGE_GROUPS
+        .filter(ag => byAge[ag]?.length)
+        .map((ag, i) => renderCarouselBlock(ag, byAge[ag], `age-carousel-${i}`))
+        .join('') || '<p style="padding:2rem;color:#999;">No books found.</p>';
+
+      // ── Theme carousels (auto-discovered, alphabetical) ──
+      const byTheme = groupBy(books, 'theme');
+      const themeContainer = document.getElementById('theme-sections-container');
+      themeContainer.innerHTML = Object.keys(byTheme)
+        .sort()
+        .filter(t => byTheme[t]?.length)
+        .map((theme, i) => renderCarouselBlock(theme, byTheme[theme], `theme-carousel-${i}`))
+        .join('') || '<p style="padding:2rem;color:#999;">No themes found.</p>';
+
+      // ── Latest arrivals grid ──────────────────
+      renderLatestGrid(books);
+
+    } catch (err) {
+      console.error('Failed to load books:', err);
+      document.getElementById('latest-grid').innerHTML =
+        '<p style="padding:2rem;color:#c00;">Could not load books. Check your Contentful credentials.</p>';
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  // HELPERS
+  // ─────────────────────────────────────────────
+  function scrollCarousel(id, dir) {
+    const el = document.getElementById(id);
+    el.scrollBy({ left: dir * 440, behavior: 'smooth' });
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  init();
+</script>
 </body>
 </html>
