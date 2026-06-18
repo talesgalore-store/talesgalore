@@ -8,6 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
 </head>
+
+<script>
+const messages = document.querySelectorAll('.announcement-message');
+let current = 0;
+setInterval(() => {
+  messages[current].classList.remove('active');
+  current = (current + 1) % messages.length;
+  messages[current].classList.add('active');
+}, 5000); // 5 seconds
+</script>
+  
 <body>
 
 <div class="announcement-bar">
