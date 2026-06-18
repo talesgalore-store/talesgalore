@@ -3,7 +3,7 @@
    Replace RAZORPAY_KEY_ID with your key
    ========================================= */
 
-const RAZORPAY_KEY_ID = 'YOUR_RAZORPAY_KEY_ID'; // 🔑 Replace this
+const RAZORPAY_KEY_ID = 'rzp_live_SUkydXEvJ1GdJV'; // 🔑 Replace this
 
 document.addEventListener('DOMContentLoaded', renderCart);
 
