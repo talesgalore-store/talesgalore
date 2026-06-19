@@ -662,6 +662,18 @@ return {
   }
 
   loadBooks();
+  const urlParams = new URLSearchParams(window.location.search);
+  const authorFilter = urlParams.get("author");
+
+  if (authorFilter) {
+    filtered = allBooks.filter(b =>
+    (b.authorName || []).includes(authorFilter)
+  );
+  } else {
+    filtered = allBooks;
+  }
+
+render();
 </script>
 </body>
 </html>
