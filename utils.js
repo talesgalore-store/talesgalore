@@ -33,7 +33,7 @@ function increaseQty(id) {
   let cart = getCart();
   const books = window.__BOOKS__;
   const book = books.find(b => b.id === id);
-
+  console.log("FOUND BOOK:", book);
   let item = cart.find(p => p.id === id);
   if (!item || !book) return;
 
