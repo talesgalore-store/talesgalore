@@ -294,7 +294,7 @@
       document.getElementById('breadcrumb-title').textContent = title;
 
       window._allBooks = [{ id, title, author, price, condition, image: imageUrl, inStock }];
-
+      console.log("FINAL IMAGE URL:", imageUrl);
       document.getElementById('page-content').innerHTML = `
         <div class="product-page">
           <div class="product-image-wrap">
