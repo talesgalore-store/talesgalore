@@ -7,6 +7,9 @@ function saveCart(cart) {
 }
 
 function addToCart(id) {
+  console.log("ADD TO CART CALLED");
+  console.log("ID:", id);
+  console.log("_allBooks:", window._allBooks);
   let cart = getCart();
 
   let item = cart.find(p => p.id === id);
