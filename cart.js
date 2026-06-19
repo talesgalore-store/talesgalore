@@ -125,34 +125,16 @@ function renderCart() {
 
 container.innerHTML = cart.map(item => `
   <div class="cart-item">
-    
-    <a href="product.html?id=${item.id}" style="display:flex;gap:12px;text-decoration:none;color:inherit;align-items:center;">
-      
-      <img 
-        src="${item.image}" 
-        width="80" 
-        style="border-radius:6px;object-fit:cover;"
-      />
-
-      <div>
-        <h3 style="margin:0;font-size:15px;">
-          ${item.title}
-        </h3>
-
-        <p style="margin:4px 0 0;color:#777;">
-          ₹${item.price}
-        </p>
+    <a href="product.html?id=${item.id}" class="cart-item-link">
+      <img src="${item.image}" width="80" />
+      <div class="cart-item-info">
+        <h3>${item.title}</h3>
+        <p>₹${item.price}</p>
       </div>
-
     </a>
-
-    <button 
-      onclick="removeFromCart('${item.id}')" 
-      style="margin-top:8px;background:#c4622d;color:#fff;border:none;padding:6px 10px;border-radius:4px;cursor:pointer;"
-    >
+    <button onclick="removeFromCart('${item.id}')">
       Remove
     </button>
-
   </div>
 `).join('');
 
