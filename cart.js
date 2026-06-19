@@ -180,7 +180,8 @@ function getCart() {
 }
 
 async function renderCart() {
-
+  console.log("PAGE CHECK:", window.location.pathname);
+console.log("cartItems:", document.getElementById("cartItems"));
   const cartIds = getCart();
   const books = await fetchBooks();
 
