@@ -107,3 +107,35 @@ function showToast(message) {
 
 // Initialise count on every page
 document.addEventListener('DOMContentLoaded', updateCartCount);
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  const summary = document.getElementById('cartSummary');
+  const cart = getCart();
+
+  if (!container) return;
+
+  if (cart.length === 0) {
+    container.innerHTML = "<p>Your cart is empty.</p>";
+    summary.style.display = "none";
+    return;
+  }
+
+  summary.style.display = "block";
+
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img src="${item.image}" width="80" />
+      <div>
+        <h3>${item.title}</h3>
+        <p>₹${item.price}</p>
+        <button onclick="removeFromCart('${item.id}')">Remove</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('cartSubtotal').textContent = '₹' + getCartTotal();
+  document.getElementById('cartTotal').textContent = '₹' + getCartTotal();
+}
+
+document.addEventListener("DOMContentLoaded", renderCart);
