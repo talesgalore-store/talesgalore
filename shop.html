@@ -461,19 +461,32 @@ const imgField = f.coverImage;
 
 let imageUrl = null;
 
-// Case 1: linked asset via includes
-if (imgField?.sys?.id && assets[imgField.sys.id]) {
-  imageUrl = assets[imgField.sys.id];
+// 1) If Contentful gives linked asset reference
+if (imgField?.sys?.id) {
+  imageUrl = assets[imgField.sys.id] || null;
 }
 
-// Case 2: direct embedded asset
+// 2) If Contentful gives array of assets (your case sometimes)
+else if (Array.isArray(imgField)) {
+  const first = imgField[0];
+
+  if (first?.sys?.id) {
+    imageUrl = assets[first.sys.id] || null;
+  }
+
+  else if (first?.fields?.file?.url) {
+    imageUrl = 'https:' + first.fields.file.url;
+  }
+}
+
+// 3) If embedded asset object
 else if (imgField?.fields?.file?.url) {
   imageUrl = imgField.fields.file.url.startsWith("//")
     ? "https:" + imgField.fields.file.url
     : imgField.fields.file.url;
 }
 
-// Case 3: plain string URL
+// 4) If plain string URL
 else if (typeof imgField === "string") {
   imageUrl = imgField.startsWith("//")
     ? "https:" + imgField
