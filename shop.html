@@ -466,7 +466,17 @@
           ages:      ageArray,
           genres:    genreArray,
           inStock:   f.inStock !== false,
-          image:     f.coverImage?.sys?.id ? assets[f.coverImage.sys.id] : null,
+          let imageUrl = null;
+          const imgField = f.coverImage;
+          if (imgField?.sys?.id) {
+           imageUrl = assets[imgField.sys.id] || null;
+          } 
+          else if (imgField?.fields?.file?.url) {
+           imageUrl = 'https:' + imgField.fields.file.url;
+          } 
+          else if (typeof imgField === 'string') {
+           imageUrl = imgField.startsWith('//') ? 'https:' + imgField : imgField;
+          }
           date:      item.sys.createdAt,
         };
       });
