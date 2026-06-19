@@ -242,36 +242,40 @@
       console.log("ALL FIELD KEYS:", Object.keys(f));
       console.log("FULL FIELDS OBJECT:", f);
       // Resolve image — try includes first, then fetch asset directly
-      let imageUrl = null;
+ let imageUrl = null;
 
-let assetId = null;
+const cover = f.coverImage;
 
-if (f.coverImage?.sys?.type === "Link" && f.coverImage?.sys?.linkType === "Asset") {
-  assetId = f.coverImage.sys.id;
-}
+console.log("COVER IMAGE RAW:", cover);
+
+// CASE 1: direct asset reference
+const assetId =
+  cover?.sys?.id ||
+  cover?.[0]?.sys?.id ||
+  null;
 
 console.log("EXTRACTED ASSET ID:", assetId);
 
-console.log("ASSET ID:", assetId);
-
 if (assetId) {
-  try {
-    // 1. Always try direct fetch first (MOST RELIABLE)
-    const assetRes = await fetch(
-      `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
-    );
+  const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
 
-    const assetData = await assetRes.json();
+  if (included?.fields?.file?.url) {
+    imageUrl = "https:" + included.fields.file.url;
+  } else {
+    try {
+      const assetRes = await fetch(
+        `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
+      );
+      const assetData = await assetRes.json();
 
-    console.log("DIRECT ASSET RESPONSE:", assetData);
+      console.log("ASSET RESPONSE:", assetData);
 
-    const fileUrl = assetData?.fields?.file?.url;
-
-    if (fileUrl) {
-      imageUrl = "https:" + fileUrl;
+      if (assetData?.fields?.file?.url) {
+        imageUrl = "https:" + assetData.fields.file.url;
+      }
+    } catch (err) {
+      console.warn("Asset fetch failed:", err);
     }
-  } catch (err) {
-    console.warn("Asset fetch failed:", err);
   }
 }
 
