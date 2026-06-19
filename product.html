@@ -317,8 +317,8 @@ console.log("FINAL IMAGE URL:", imageUrl);
 
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
-      const stockCount = parseInt(f.stockCount || 0);
-
+      const stockCount = parseInt(f.stockCount) || 0;
+      console.log("STOCK COUNT FROM CONTENTFUL:", stockCount);
       window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, inStock, stockCount }]; 
       console.log("BOOK DATA:", window._allBooks);
       console.log("FINAL IMAGE URL:", imageUrl);
