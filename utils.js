@@ -65,3 +65,8 @@ function decreaseQty(id) {
 
   saveCart(cart);
 }
+
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.increaseQty = increaseQty;
+window.decreaseQty = decreaseQty;
