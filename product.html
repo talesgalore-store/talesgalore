@@ -233,6 +233,10 @@
       const res  = await fetch(
         `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?sys.id=${id}&access_token=${ACCESS_TOKEN}&include=2`
       );
+      console.log("FULL ENTRY FROM CONTENTFUL:", data);
+      console.log("FIELDS OBJECT:", data.fields);
+      console.log("DESCRIPTION FIELD:", data.fields.bookDescription);
+      console.log("ALL FIELD KEYS:", Object.keys(data.fields));
       const data = await res.json();
 
       if (!data.items || !data.items.length) throw new Error('Book not found');
