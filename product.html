@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@contentful/rich-text-html-renderer@16/dist/rich-text-html-renderer.es5.min.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Book – TalesGalore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@contentful/rich-text-html-renderer@16/dist/rich-text-html-renderer.es5.min.js"></script>
   <style>
     :root {
       --cream: #FDFAF4; --warm: #F5EDD8;
@@ -15,81 +15,186 @@
       --ink-w: #8B5E3C; --rule: #E2D5BC;
     }
     body { background: var(--cream); }
+
     .product-page {
-      max-width: 960px; margin: 0 auto;
-      padding: 56px 24px 80px;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 48px; align-items: start;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 56px;
+      align-items: start;
     }
-    @media(max-width:680px){ .product-page{ grid-template-columns:1fr; } }
+    @media(max-width:700px) {
+      .product-page { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* Image */
     .product-image-wrap {
-      border-radius: 10px; overflow: hidden;
+      border-radius: 10px;
+      overflow: hidden;
       border: 1px solid var(--rule);
       background: var(--warm);
       aspect-ratio: 3/4;
+      position: sticky;
+      top: 100px;
     }
-    .product-image-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+    .product-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
     .product-image-placeholder {
-      width:100%; height:100%;
-      display:flex; align-items:center; justify-content:center;
-      font-size:5rem;
+      width: 100%; height: 100%;
+      display: flex; align-items: center;
+      justify-content: center; font-size: 5rem;
     }
+
+    /* Details */
     .product-details h1 {
-      font-family:'Playfair Display',serif;
-      font-size:clamp(1.6rem,4vw,2.2rem);
-      font-weight:700; color:#2C2416;
-      line-height:1.25; margin-bottom:8px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700; color: #2C2416;
+      line-height: 1.25; margin-bottom: 6px;
     }
     .product-author {
-      font-size:0.95rem; color:#888; margin-bottom:16px;
+      font-size: 0.9rem; color: #888;
+      margin-bottom: 18px;
     }
-    .product-condition-badge {
-      display:inline-block; font-size:0.7rem; font-weight:700;
-      letter-spacing:0.06em; text-transform:uppercase;
-      color:var(--gold); border:1px solid rgba(200,146,58,0.35);
-      padding:4px 12px; border-radius:20px; margin-bottom:20px;
-    }
+    .product-author a { color: var(--gold); text-decoration: none; }
+    .product-author a:hover { text-decoration: underline; }
+
     .product-price-large {
-      font-size:2rem; font-weight:700;
-      color:var(--ink-w); margin-bottom:24px;
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--ink-w); margin-bottom: 6px;
     }
-    .product-meta {
-      border-top:1px solid var(--rule);
-      padding-top:20px; margin-bottom:24px;
+    .product-badges {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 24px;
     }
-    .product-meta-row {
-      display:flex; gap:8px;
-      font-size:0.85rem; color:#6B5A47;
-      margin-bottom:10px;
+    .product-badge {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(200,146,58,0.35);
+      padding: 4px 12px; border-radius: 20px;
     }
-    .product-meta-row strong {
-      color:var(--ink-w); min-width:90px;
+    .product-badge.sold-out {
+      color: #999; border-color: #ddd;
     }
+
+    /* Add to cart */
     .add-to-cart-btn {
-      width:100%; padding:16px;
-      background:var(--ink-w); color:#fff;
-      border:none; font-family:'Lato',sans-serif;
-      font-size:14px; font-weight:700;
-      letter-spacing:0.08em; text-transform:uppercase;
-      cursor:pointer; border-radius:6px;
-      transition:background .2s; margin-bottom:12px;
+      width: 100%; padding: 16px;
+      background: var(--ink-w); color: #fff;
+      border: none; font-family: 'Lato', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; border-radius: 6px;
+      transition: background .2s; margin-bottom: 12px;
     }
-    .add-to-cart-btn:hover { background:var(--gold); }
-    .add-to-cart-btn:disabled {
-      background:#ccc; cursor:default;
+    .add-to-cart-btn:hover { background: var(--gold); }
+    .add-to-cart-btn:disabled { background: #ccc; cursor: default; }
+
+    .shipping-note {
+      font-size: 12px; color: #999;
+      text-align: center; margin-bottom: 28px;
     }
-    .back-link {
-      display:inline-flex; align-items:center; gap:6px;
-      font-size:0.82rem; color:var(--gold);
-      text-decoration:none; margin-bottom:32px;
-      font-weight:700; letter-spacing:0.04em;
+
+    /* Description */
+    .product-description {
+      font-size: 0.92rem; color: #4a3c2e;
+      line-height: 1.85;
+      border-top: 1px solid var(--rule);
+      padding-top: 24px; margin-bottom: 24px;
     }
-    .back-link:hover { color:var(--ink-w); }
+    .product-description p { margin-bottom: 14px; }
+    .product-description p:last-child { margin-bottom: 0; }
+
+    /* Note */
+    .product-note {
+      background: var(--warm);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: 0.82rem;
+      color: var(--ink-w);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .product-note strong {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    /* Tags */
+    .product-tags-section {
+      border-top: 1px solid var(--rule);
+      padding-top: 20px;
+      margin-bottom: 24px;
+    }
+    .product-tags-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-weight: 700;
+      color: #2C2416; margin-bottom: 12px;
+      font-style: italic;
+    }
+    .product-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .product-tag {
+      font-size: 0.78rem; color: var(--ink-w);
+      background: var(--warm);
+      border: 1px solid var(--rule);
+      padding: 4px 14px; border-radius: 20px;
+      text-decoration: none;
+      transition: background .2s, border-color .2s;
+    }
+    .product-tag:hover {
+      background: var(--gold); color: #fff;
+      border-color: var(--gold);
+    }
+
+    /* Meta table */
+    .product-meta-table {
+      border-top: 1px solid var(--rule);
+      padding-top: 20px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .product-meta-table tr td {
+      padding: 8px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    .product-meta-table tr:last-child td { border-bottom: none; }
+    .product-meta-table td:first-child {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      width: 120px;
+      padding-right: 16px;
+    }
+    .product-meta-table td:last-child { color: #4a3c2e; }
+
+    /* Back + breadcrumb */
+    .breadcrumb {
+      max-width: 1060px; margin: 0 auto;
+      padding: 20px 24px 0;
+      font-size: 0.8rem; color: #999;
+    }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
     .loading-state {
-      text-align:center; padding:80px 24px;
-      font-family:'Playfair Display',serif;
-      font-style:italic; color:var(--ink-w);
+      text-align: center; padding: 80px 24px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; color: var(--ink-w);
     }
   </style>
 </head>
@@ -133,6 +238,12 @@
     <a href="why-talesgalore.html">Why TalesGalore?</a>
   </nav>
 </header>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &nbsp;/&nbsp;
+  <a href="shop.html">Catalogue</a> &nbsp;/&nbsp;
+  <span id="breadcrumb-title">Book</span>
+</div>
 
 <div id="page-content">
   <div class="loading-state">Opening the book…</div>
@@ -186,7 +297,7 @@
       const data = await res.json();
       const f    = data.fields;
 
-      // Resolve image
+      // ── Resolve cover image ──
       let imageUrl = null;
       if (f.coverImage?.sys?.id) {
         const assetRes = await fetch(
@@ -196,47 +307,107 @@
         imageUrl = 'https:' + asset.fields.file.url;
       }
 
-      const title     = f.title     || 'Untitled';
-      const author    = f.author    || '';
-      const price     = parseFloat(f.price) || 0;
-      const condition = f.condition || '';
-      const inStock   = f.inStock   !== false;
-      const ages      = Array.isArray(f.suggestedAge) ? f.suggestedAge : (f.suggestedAge ? [f.suggestedAge] : []);
-      const genres    = Array.isArray(f.theme) ? f.theme : (f.theme ? [f.theme] : []);
+      // ── Fields ──
+      const title       = f.title       || 'Untitled';
+      const author      = f.author      || '';
+      const price       = parseFloat(f.price) || 0;
+      const condition   = f.condition   || '';
+      const binding     = f.binding     || '';
+      const inStock     = f.inStock     !== false;
+      const isbn        = f.isbn        || '';
+      const pageCount   = f.pageCount   || '';
+      const language    = f.language    || '';
+      const dimensions  = f.dimensions  || '';
+      const returnPolicy = f.returnPolicy || 'No Returns';
+
+      const ages   = Array.isArray(f.suggestedAge) ? f.suggestedAge
+                   : (f.suggestedAge ? [f.suggestedAge] : []);
+      const genres = Array.isArray(f.theme) ? f.theme
+                   : (f.theme ? [f.theme] : []);
+      const tags   = Array.isArray(f.tags) ? f.tags
+                   : (f.tags ? [f.tags] : []);
+
+      // ── Rich text description ──
       const description = f.description
         ? contentfulRichTextHtmlRenderer.documentToHtmlString(f.description)
         : '';
+
+      // ── Note from TalesGalore (plain text or rich text) ──
+      const note = f.note
+        ? (typeof f.note === 'string'
+            ? f.note
+            : contentfulRichTextHtmlRenderer.documentToHtmlString(f.note))
+        : '';
+
       document.title = `${title} – TalesGalore`;
+      document.getElementById('breadcrumb-title').textContent = title;
 
       document.getElementById('page-content').innerHTML = `
-        <div style="max-width:960px;margin:0 auto;padding:32px 24px 0;">
-          <a href="javascript:history.back()" class="back-link">← Back</a>
-        </div>
         <div class="product-page">
+
+          <!-- Left: Image -->
           <div class="product-image-wrap">
             ${imageUrl
               ? `<img src="${imageUrl}" alt="${title}"/>`
               : `<div class="product-image-placeholder">📖</div>`}
           </div>
+
+          <!-- Right: Details -->
           <div class="product-details">
+
             <h1>${title}</h1>
-            ${author ? `<div class="product-author">by ${author}</div>` : ''}
-            ${condition ? `<div class="product-condition-badge">${condition}</div>` : ''}
+
+            ${author ? `<div class="product-author">By: <a href="shop.html?author=${encodeURIComponent(author)}">${author}</a></div>` : ''}
+
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
-            <div class="product-meta">
-              ${ages.length ? `<div class="product-meta-row"><strong>Age</strong>${ages.join(', ')}</div>` : ''}
-              ${genres.length ? `<div class="product-meta-row"><strong>Genre</strong>${genres.join(', ')}</div>` : ''}
+
+            <div class="product-badges">
+              ${binding   ? `<span class="product-badge">${binding}</span>` : ''}
+              ${condition ? `<span class="product-badge">${condition}</span>` : ''}
+              ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>` : ''}
             </div>
+
             ${inStock
               ? `<button class="add-to-cart-btn" onclick="addToCart('${id}', event)">Add to Cart</button>`
               : `<button class="add-to-cart-btn" disabled>Sold Out</button>`}
-            <div style="font-size:13px;color:#999;margin-top:12px;text-align:center;">
+
+            <div class="shipping-note">
               🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available
             </div>
+
+            ${description ? `<div class="product-description">${description}</div>` : ''}
+
+            ${note ? `
+              <div class="product-note">
+                <strong>Note from TalesGalore</strong>
+                ${note}
+              </div>` : ''}
+
+            ${tags.length ? `
+              <div class="product-tags-section">
+                <h4>This book is for you if you love</h4>
+                <div class="product-tags">
+                  ${tags.map(t => `<a href="shop.html?tag=${encodeURIComponent(t)}" class="product-tag">${t}</a>`).join('')}
+                </div>
+              </div>` : ''}
+
+            <table class="product-meta-table">
+              ${author      ? `<tr><td>Author</td><td>${author}</td></tr>` : ''}
+              ${ages.length ? `<tr><td>Suggested ages</td><td>${ages.join(', ')}</td></tr>` : ''}
+              ${isbn        ? `<tr><td>ISBN</td><td>${isbn}</td></tr>` : ''}
+              ${returnPolicy? `<tr><td>Return policy</td><td>${returnPolicy}</td></tr>` : ''}
+              ${pageCount   ? `<tr><td>Page count</td><td>${pageCount} pages</td></tr>` : ''}
+              ${language    ? `<tr><td>Language</td><td>${language}</td></tr>` : ''}
+              ${genres.length?`<tr><td>Theme</td><td>${genres.join(', ')}</td></tr>` : ''}
+              ${dimensions  ? `<tr><td>Dimensions</td><td>${dimensions}</td></tr>` : ''}
+            </table>
+
           </div>
         </div>
       `;
+
     } catch(e) {
+      console.error(e);
       document.getElementById('page-content').innerHTML =
         '<div class="loading-state">Could not load this book. <a href="shop.html" style="color:var(--gold)">Back to catalogue</a></div>';
     }
