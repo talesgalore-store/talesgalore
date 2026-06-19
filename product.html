@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/@contentful/rich-text-html-renderer@16/dist/rich-text-html-renderer.umd.min.js"></script>
   <style>
     :root {
       --cream: #FDFAF4; --warm: #F5EDD8;
@@ -182,7 +181,7 @@
     }
     .product-meta-table td:last-child { color: #4a3c2e; }
 
-    /* Back + breadcrumb */
+    /* Breadcrumb */
     .breadcrumb {
       max-width: 1060px; margin: 0 auto;
       padding: 20px 24px 0;
@@ -286,6 +285,39 @@
   const SPACE_ID     = 'tx11zsju5n7c';
   const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
 
+  // ── Inline rich text → HTML converter (no external library needed) ──
+  function richTextToHtml(doc) {
+    if (!doc || !doc.content) return '';
+    function processNode(node) {
+      if (node.nodeType === 'text') {
+        let text = node.value || '';
+        if (node.marks) {
+          node.marks.forEach(mark => {
+            if (mark.type === 'bold')      text = `<strong>${text}</strong>`;
+            if (mark.type === 'italic')    text = `<em>${text}</em>`;
+            if (mark.type === 'underline') text = `<u>${text}</u>`;
+          });
+        }
+        return text;
+      }
+      const inner = (node.content || []).map(processNode).join('');
+      switch (node.nodeType) {
+        case 'paragraph':       return `<p>${inner}</p>`;
+        case 'heading-1':       return `<h1>${inner}</h1>`;
+        case 'heading-2':       return `<h2>${inner}</h2>`;
+        case 'heading-3':       return `<h3>${inner}</h3>`;
+        case 'unordered-list':  return `<ul>${inner}</ul>`;
+        case 'ordered-list':    return `<ol>${inner}</ol>`;
+        case 'list-item':       return `<li>${inner}</li>`;
+        case 'blockquote':      return `<blockquote>${inner}</blockquote>`;
+        case 'hr':              return `<hr>`;
+        case 'hyperlink':       return `<a href="${node.data.uri}">${inner}</a>`;
+        default:                return inner;
+      }
+    }
+    return doc.content.map(processNode).join('');
+  }
+
   async function loadProduct() {
     const id = new URLSearchParams(window.location.search).get('id');
     if (!id) { window.location = 'shop.html'; return; }
@@ -297,6 +329,7 @@
       const data = await res.json();
       const f    = data.fields;
       console.log('Contentful fields:', f);
+      console.log('All field keys:', Object.keys(f));
 
       // ── Resolve cover image ──
       let imageUrl = null;
@@ -309,35 +342,34 @@
       }
 
       // ── Fields ──
-const title        = f.title          || 'Untitled';
-const author       = f.authorName || f.author || '';
-const price        = parseFloat(f.price) || 0;
-const condition    = f.condition      || '';
-const binding      = f.bookBinding    || f.binding || '';
-const inStock      = f.inStock        !== false;
-const isbn         = f.isbn           || '';
-const pageCount    = f.pageCount      || '';
-const language     = f.language       || '';
-const dimensions   = f.bookDimensions || '';
-const returnPolicy = f.returnPolicy   || 'No Returns';
+      const title        = f.title          || 'Untitled';
+      const author       = f.authorName     || f.author || '';
+      const price        = parseFloat(f.price) || 0;
+      const condition    = f.condition      || '';
+      const binding      = f.bookBinding    || f.binding || '';
+      const inStock      = f.inStock        !== false;
+      const isbn         = f.isbn           || '';
+      const pageCount    = f.pageCount      || '';
+      const language     = f.language       || '';
+      const dimensions   = f.bookDimensions || '';
+      const returnPolicy = f.returnPolicy   || 'No Returns';
 
-const ages   = Array.isArray(f.suggestedAges) ? f.suggestedAges
-             : (f.suggestedAges ? [f.suggestedAges] : 
-               (Array.isArray(f.suggestedAge) ? f.suggestedAge
-             : (f.suggestedAge ? [f.suggestedAge] : [])));
-const genres = Array.isArray(f.theme) ? f.theme
-             : (f.theme ? [f.theme] : []);
-const tags   = Array.isArray(f.tags)  ? f.tags
-             : (f.tags ? [f.tags] : []);
+      const ages = Array.isArray(f.suggestedAges) ? f.suggestedAges
+                 : (f.suggestedAges ? [f.suggestedAges]
+                 : (Array.isArray(f.suggestedAge) ? f.suggestedAge
+                 : (f.suggestedAge ? [f.suggestedAge] : [])));
 
-const description = f.bookDescription
-  ? contentfulRichTextHtmlRenderer.documentToHtmlString(f.description)
-  : '';
-const note = f.note
-  ? (typeof f.note === 'string'
-      ? f.note
-      : contentfulRichTextHtmlRenderer.documentToHtmlString(f.note))
-  : '';
+      const genres = Array.isArray(f.theme) ? f.theme
+                   : (f.theme ? [f.theme] : []);
+
+      const tags = Array.isArray(f.tags) ? f.tags
+                 : (f.tags ? [f.tags] : []);
+
+      // ── Rich text fields ──
+      const description = f.description ? richTextToHtml(f.description) : '';
+      const note = f.note
+        ? (typeof f.note === 'string' ? f.note : richTextToHtml(f.note))
+        : '';
 
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
@@ -362,7 +394,7 @@ const note = f.note
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
 
             <div class="product-badges">
-              ${binding   ? `<span class="product-badge">${binding}</span>` : ''}
+              ${binding   ? `<span class="product-badge">${binding}</span>`   : ''}
               ${condition ? `<span class="product-badge">${condition}</span>` : ''}
               ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>` : ''}
             </div>
@@ -392,30 +424,29 @@ const note = f.note
               </div>` : ''}
 
             <table class="product-meta-table">
-              ${author      ? `<tr><td>Author</td><td>${author}</td></tr>` : ''}
-              ${ages.length ? `<tr><td>Suggested ages</td><td>${ages.join(', ')}</td></tr>` : ''}
-              ${isbn        ? `<tr><td>ISBN</td><td>${isbn}</td></tr>` : ''}
-              ${returnPolicy? `<tr><td>Return policy</td><td>${returnPolicy}</td></tr>` : ''}
-              ${pageCount   ? `<tr><td>Page count</td><td>${pageCount} pages</td></tr>` : ''}
-              ${language    ? `<tr><td>Language</td><td>${language}</td></tr>` : ''}
-              ${genres.length?`<tr><td>Theme</td><td>${genres.join(', ')}</td></tr>` : ''}
-              ${dimensions  ? `<tr><td>Dimensions</td><td>${dimensions}</td></tr>` : ''}
+              ${author       ? `<tr><td>Author</td><td>${author}</td></tr>`                     : ''}
+              ${ages.length  ? `<tr><td>Suggested ages</td><td>${ages.join(', ')}</td></tr>`    : ''}
+              ${isbn         ? `<tr><td>ISBN</td><td>${isbn}</td></tr>`                         : ''}
+              ${returnPolicy ? `<tr><td>Return policy</td><td>${returnPolicy}</td></tr>`        : ''}
+              ${pageCount    ? `<tr><td>Page count</td><td>${pageCount} pages</td></tr>`        : ''}
+              ${language     ? `<tr><td>Language</td><td>${language}</td></tr>`                 : ''}
+              ${genres.length? `<tr><td>Theme</td><td>${genres.join(', ')}</td></tr>`           : ''}
+              ${dimensions   ? `<tr><td>Dimensions</td><td>${dimensions}</td></tr>`             : ''}
             </table>
 
           </div>
         </div>
       `;
 
-} catch(e) {
-  console.error('Full error:', e);
-  console.error('Error message:', e.message);
-  console.error('Error stack:', e.stack);
-  document.getElementById('page-content').innerHTML =
-    `<div class="loading-state">Error: ${e.message} <br><a href="shop.html" style="color:var(--gold)">Back to catalogue</a></div>`;
-   }
+    } catch(e) {
+      console.error('Full error:', e);
+      console.error('Error message:', e.message);
+      console.error('Error stack:', e.stack);
+      document.getElementById('page-content').innerHTML =
+        `<div class="loading-state">Error: ${e.message}<br><a href="shop.html" style="color:var(--gold)">Back to catalogue</a></div>`;
+    }
   }
 
-  
   loadProduct();
 </script>
 </body>
