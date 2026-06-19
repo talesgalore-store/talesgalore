@@ -491,10 +491,18 @@ else if (typeof imgField === "string") {
     ? "https:" + imgField
     : imgField;
 }
+
+const rawAuthor = f.author || f.authorName || f['author-name'] || '';
+
+const authorsArray = Array.isArray(rawAuthor)
+  ? rawAuthor
+  : (rawAuthor ? [rawAuthor] : []);
+        
 return {
   id:        item.sys.id,
   title:     f.title || 'Untitled',
-  author:    f.author || '',
+  author: rawAuthor,
+  authorName: authorsArray,
   price:     parseFloat(f.price) || 0,
   condition: f.condition || '',
   ages:      ageArray,
