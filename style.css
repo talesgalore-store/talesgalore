@@ -1509,3 +1509,18 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   margin: 0 auto;
   padding: 0 24px;
 }
+
+.cart-item-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
