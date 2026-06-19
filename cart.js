@@ -21,7 +21,11 @@ function saveCart(cart) {
 }
 
 function updateCartCount() {
-  const count = getCart().length;
+  const count = getCart().reduce(
+    (sum, item) => sum + (item.qty || 1),
+    0
+  );
+
   document.querySelectorAll('#cartCount').forEach(el => {
     el.textContent = count;
   });
