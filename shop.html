@@ -441,7 +441,7 @@
         `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?content_type=book&limit=1000&access_token=${ACCESS_TOKEN}&include=1`
       );
       const data = await res.json();
-
+      console.log("CONTENTFUL RESPONSE:", data);
       const assets = {};
       (data.includes?.Asset || []).forEach(a => {
         assets[a.sys.id] = 'https:' + a.fields.file.url;
