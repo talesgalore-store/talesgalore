@@ -239,7 +239,8 @@
 
       const item = data.items[0];
       const f    = item.fields;
-
+      console.log("ALL FIELD KEYS:", Object.keys(f));
+      console.log("FULL FIELDS OBJECT:", f);
       // Resolve image — try includes first, then fetch asset directly
       let imageUrl = null;
 
