@@ -235,8 +235,7 @@
       );
 
       const data = await res.json();
-      console.log("FULL ENTRY FROM CONTENTFUL:", data);
-      console.log("FIELDS OBJECT:", data.fields);
+
       if (!data.items || !data.items.length) throw new Error('Book not found');
 
       const item = data.items[0];
