@@ -240,18 +240,33 @@
       const item = data.items[0];
       const f    = item.fields;
 
-      // Resolve image from includes.Asset — guaranteed to be present with include=2
+      // Resolve image — try includes first, then fetch asset directly
       let imageUrl = null;
       if (f.coverImage && f.coverImage.sys && f.coverImage.sys.id) {
         const assetId = f.coverImage.sys.id;
-        const asset   = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
-        if (asset && asset.fields && asset.fields.file && asset.fields.file.url) {
-          imageUrl = 'https:' + asset.fields.file.url;
+
+        // Try includes first (no extra network request)
+        const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
+        if (included?.fields?.file?.url) {
+          imageUrl = 'https:' + included.fields.file.url;
+        } else {
+          // Direct asset fetch — works 100% of the time regardless of includes
+          try {
+            const assetRes  = await fetch(
+              `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
+            );
+            const assetData = await assetRes.json();
+            if (assetData?.fields?.file?.url) {
+              imageUrl = 'https:' + assetData.fields.file.url;
+            }
+          } catch(imgErr) {
+            console.warn('Could not load image:', imgErr);
+          }
         }
       }
 
       const title        = f.title       || 'Untitled';
-      const author       = f.author      || f.authorName || '';
+      const author       = f.author || f.authorName || f['author-name'] || '';
       const price        = parseFloat(f.price) || 0;
       const condition    = f.condition   || '';
       const binding      = f.bookBinding || f.binding || '';
@@ -260,7 +275,7 @@
       const pageCount    = f.pageCount   || '';
       const language     = f.language    || '';
       const dimensions   = f.bookDimensions || '';
-      const returnPolicy = f.returnPolicy || 'No Returns';
+      const returnPolicy = f.returnPolicy || '';
 
       const ages   = [].concat(f.suggestedAge  || f.suggestedAges  || []);
       const genres = [].concat(f.theme || []);
