@@ -330,7 +330,7 @@ const genres = Array.isArray(f.theme) ? f.theme
 const tags   = Array.isArray(f.tags)  ? f.tags
              : (f.tags ? [f.tags] : []);
 
-const description = f.description
+const description = f.bookDescription
   ? contentfulRichTextHtmlRenderer.documentToHtmlString(f.description)
   : '';
 const note = f.note
