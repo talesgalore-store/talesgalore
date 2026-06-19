@@ -290,6 +290,9 @@ console.log("FINAL IMAGE URL:", imageUrl);
       const author = Array.isArray(rawAuthor)
       ? rawAuthor.join(", ")
       : rawAuthor;      
+      const authorsArray = Array.isArray(rawAuthor)
+      ? rawAuthor
+      : (rawAuthor ? [rawAuthor] : []);
       
       const price        = parseFloat(f.price) || 0;
       const condition    = f.condition   || '';
