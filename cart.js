@@ -170,3 +170,32 @@ async function fetchBooks() {
     };
   });
 }
+
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart") || "[]");
+}
+
+async function renderCart() {
+
+  const cartIds = getCart();
+  const books = await fetchBooks();
+
+  const cartItems = cartIds.map(id =>
+    books.find(b => b.id === id)
+  ).filter(Boolean);
+
+  const container = document.getElementById("cartItems");
+  container.innerHTML = cartItems.map(item => `
+    <div class="cart-item">
+      <div class="cart-img">
+        ${item.image ? `<img src="${item.image}" />` : '📖'}
+      </div>
+      <div>
+        <h3>${item.title}</h3>
+        <p>₹${item.price}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
+renderCart();
