@@ -110,52 +110,6 @@ function showToast(message) {
 // Initialise count on every page
 document.addEventListener('DOMContentLoaded', updateCartCount);
 
-function renderCart() {
-  const books = await fetchBooks();
-  window.__BOOKS__ = books; // 👈 ADD HERE
-  const container = document.getElementById("cartItems");
-
-  if (!container) {
-    console.error("cartItems div not found in HTML");
-    return;
-  }
-  const summary = document.getElementById('cartSummary');
-  const cart = getCart();
-
-  if (!container) return;
-
-  if (cart.length === 0) {
-    container.innerHTML = "<p>Your cart is empty.</p>";
-    summary.style.display = "none";
-    return;
-  }
-
-  summary.style.display = "block";
-
-container.innerHTML = cart.map(item => `
-  <div class="cart-item">
-    <a href="product.html?id=${item.id}" class="cart-item-link">
-      <img src="${item.image}" width="80" />
-      <div class="cart-item-info">
-        <div class="cart-img">
-          ${item.image ? `<img src="${item.image}" />` : '📖'}
-        </div>
-        <h3>${item.title}</h3>
-        <p>₹${item.price}</p>
-      </div>
-    </a>
-<div class="qty-controls">
-  <button onclick="decreaseQty('${item.id}')">−</button>
-  <span>${item.qty}</span>
-  <button onclick="increaseQty('${item.id}')">+</button>
-</div>
-  </div>
-`).join('');
-
-  document.getElementById('cartSubtotal').textContent = '₹' + getCartTotal();
-  document.getElementById('cartTotal').textContent = '₹' + getCartTotal();
-}
-
 document.addEventListener("DOMContentLoaded", renderCart);
 
 async function fetchBooks() {
