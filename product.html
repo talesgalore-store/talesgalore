@@ -406,13 +406,16 @@ const note = f.note
         </div>
       `;
 
-    } catch(e) {
-      console.error(e);
-      document.getElementById('page-content').innerHTML =
-        '<div class="loading-state">Could not load this book. <a href="shop.html" style="color:var(--gold)">Back to catalogue</a></div>';
-    }
+} catch(e) {
+  console.error('Full error:', e);
+  console.error('Error message:', e.message);
+  console.error('Error stack:', e.stack);
+  document.getElementById('page-content').innerHTML =
+    `<div class="loading-state">Error: ${e.message} <br><a href="shop.html" style="color:var(--gold)">Back to catalogue</a></div>`;
+   }
   }
 
+  
   loadProduct();
 </script>
 </body>
