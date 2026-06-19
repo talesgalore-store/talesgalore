@@ -215,7 +215,7 @@ function render(dateObj){
   const e = D.pool[day.e];
 
   document.getElementById('lc-content').innerHTML = `
-    <div class="lc-image-col">
+    <div class="lc-image-col" id="lc-img-col">
       <div class="lc-image-fallback">${esc((e.author||'?')[0])}</div>
     </div>
 
@@ -234,6 +234,20 @@ function render(dateObj){
       </div>
     </div>
   `;
+  if (e.wiki) {
+  fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + e.wiki)
+    .then(r => r.json())
+    .then(data => {
+      const thumb = data.thumbnail && data.thumbnail.source;
+      if (thumb) {
+        const col = document.getElementById('lc-img-col');
+        if (col) {
+          col.innerHTML = '<img src="' + thumb + '" alt="' + esc(e.author) + '" style="width:100%;height:100%;object-fit:cover;object-position:center top;">';
+        }
+      }
+    })
+    .catch(() => {});
+}
 }
 
 const picker = document.getElementById('lc-pick');
