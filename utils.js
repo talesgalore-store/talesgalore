@@ -102,3 +102,7 @@ function updateCartCount() {
 }
 window.increaseQty = increaseQty;
 window.decreaseQty = decreaseQty;
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+});
