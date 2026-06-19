@@ -6,7 +6,7 @@
   <title>Book – TalesGalore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
   <style>
     :root {
       --cream: #FDFAF4; --warm: #F5EDD8;
@@ -16,71 +16,48 @@
     body { background: var(--cream); }
 
     .product-page {
-      max-width: 1060px;
-      margin: 0 auto;
+      max-width: 1060px; margin: 0 auto;
       padding: 40px 24px 80px;
       display: grid;
       grid-template-columns: 1fr 1.1fr;
-      gap: 56px;
-      align-items: start;
+      gap: 56px; align-items: start;
     }
     @media(max-width:700px) {
       .product-page { grid-template-columns: 1fr; gap: 32px; }
     }
-
-    /* Image */
     .product-image-wrap {
-      border-radius: 10px;
-      overflow: hidden;
+      border-radius: 10px; overflow: hidden;
       border: 1px solid var(--rule);
-      background: var(--warm);
-      aspect-ratio: 3/4;
-      position: sticky;
-      top: 100px;
+      background: var(--warm); aspect-ratio: 3/4;
+      position: sticky; top: 100px;
     }
-    .product-image-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
+    .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .product-image-placeholder {
       width: 100%; height: 100%;
       display: flex; align-items: center;
       justify-content: center; font-size: 5rem;
     }
-
-    /* Details */
     .product-details h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.5rem, 3.5vw, 2rem);
       font-weight: 700; color: #2C2416;
       line-height: 1.25; margin-bottom: 6px;
     }
-    .product-author {
-      font-size: 0.9rem; color: #888;
-      margin-bottom: 18px;
-    }
+    .product-author { font-size: 0.9rem; color: #888; margin-bottom: 18px; }
     .product-author a { color: var(--gold); text-decoration: none; }
     .product-author a:hover { text-decoration: underline; }
-
     .product-price-large {
       font-size: 1.7rem; font-weight: 700;
       color: var(--ink-w); margin-bottom: 6px;
     }
-    .product-badges {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-bottom: 24px;
-    }
+    .product-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
     .product-badge {
       font-size: 0.7rem; font-weight: 700;
       letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--gold); border: 1px solid rgba(200,146,58,0.35);
       padding: 4px 12px; border-radius: 20px;
     }
-    .product-badge.sold-out {
-      color: #999; border-color: #ddd;
-    }
-
-    /* Add to cart */
+    .product-badge.sold-out { color: #999; border-color: #ddd; }
     .add-to-cart-btn {
       width: 100%; padding: 16px;
       background: var(--ink-w); color: #fff;
@@ -92,104 +69,53 @@
     }
     .add-to-cart-btn:hover { background: var(--gold); }
     .add-to-cart-btn:disabled { background: #ccc; cursor: default; }
-
-    .shipping-note {
-      font-size: 12px; color: #999;
-      text-align: center; margin-bottom: 28px;
-    }
-
-    /* Description */
+    .shipping-note { font-size: 12px; color: #999; text-align: center; margin-bottom: 28px; }
     .product-description {
-      font-size: 0.92rem; color: #4a3c2e;
-      line-height: 1.85;
-      border-top: 1px solid var(--rule);
-      padding-top: 24px; margin-bottom: 24px;
+      font-size: 0.92rem; color: #4a3c2e; line-height: 1.85;
+      border-top: 1px solid var(--rule); padding-top: 24px; margin-bottom: 24px;
     }
     .product-description p { margin-bottom: 14px; }
     .product-description p:last-child { margin-bottom: 0; }
-
-    /* Note */
     .product-note {
-      background: var(--warm);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 16px 18px;
-      font-size: 0.82rem;
-      color: var(--ink-w);
-      margin-bottom: 24px;
-      line-height: 1.7;
+      background: var(--warm); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 16px 18px;
+      font-size: 0.82rem; color: var(--ink-w);
+      margin-bottom: 24px; line-height: 1.7;
     }
     .product-note strong {
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 6px;
+      display: block; font-size: 0.7rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 6px;
     }
-
-    /* Tags */
-    .product-tags-section {
-      border-top: 1px solid var(--rule);
-      padding-top: 20px;
-      margin-bottom: 24px;
-    }
+    .product-tags-section { border-top: 1px solid var(--rule); padding-top: 20px; margin-bottom: 24px; }
     .product-tags-section h4 {
       font-family: 'Playfair Display', serif;
       font-size: 0.9rem; font-weight: 700;
-      color: #2C2416; margin-bottom: 12px;
-      font-style: italic;
+      color: #2C2416; margin-bottom: 12px; font-style: italic;
     }
-    .product-tags {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
+    .product-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .product-tag {
       font-size: 0.78rem; color: var(--ink-w);
-      background: var(--warm);
-      border: 1px solid var(--rule);
-      padding: 4px 14px; border-radius: 20px;
-      text-decoration: none;
+      background: var(--warm); border: 1px solid var(--rule);
+      padding: 4px 14px; border-radius: 20px; text-decoration: none;
       transition: background .2s, border-color .2s;
     }
-    .product-tag:hover {
-      background: var(--gold); color: #fff;
-      border-color: var(--gold);
-    }
-
-    /* Meta table */
-    .product-meta-table {
-      border-top: 1px solid var(--rule);
-      padding-top: 20px;
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .product-meta-table tr td {
-      padding: 8px 0;
-      font-size: 0.85rem;
-      border-bottom: 1px solid var(--rule);
-      vertical-align: top;
-    }
+    .product-tag:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
+    .product-meta-table { border-top: 1px solid var(--rule); padding-top: 20px; width: 100%; border-collapse: collapse; }
+    .product-meta-table tr td { padding: 8px 0; font-size: 0.85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
     .product-meta-table tr:last-child td { border-bottom: none; }
     .product-meta-table td:first-child {
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      width: 120px;
-      padding-right: 16px;
+      color: var(--gold); font-weight: 700; font-size: 0.72rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      width: 120px; padding-right: 16px;
     }
     .product-meta-table td:last-child { color: #4a3c2e; }
-
-    /* Breadcrumb */
     .breadcrumb {
       max-width: 1060px; margin: 0 auto;
-      padding: 20px 24px 0;
-      font-size: 0.8rem; color: #999;
+      padding: 20px 24px 0; font-size: 0.8rem; color: #999;
     }
     .breadcrumb a { color: var(--gold); text-decoration: none; }
     .breadcrumb a:hover { text-decoration: underline; }
-
     .loading-state {
       text-align: center; padding: 80px 24px;
       font-family: 'Playfair Display', serif;
@@ -204,7 +130,7 @@
   <div class="announcement-message">📚 Free Pick-up from Store!</div>
   <div class="announcement-message">✨ Every Story Deserves a Second Home</div>
 </div>
-<script src="announcement.js"></script>
+<script src="js/announcement.js"></script>
 
 <header class="site-header">
   <div class="header-inner">
@@ -218,7 +144,7 @@
     </div>
     <div class="header-logo">
       <a href="index.html">
-        <img src="images/TalesGalore-logo.PNG" alt="TalesGalore" class="logo-img"/>
+        <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem_6ea6503f-fce9-411e-8212-1c408f35bc62.png?v=1775539894" alt="TalesGalore" class="logo-img"/>
         <span class="logo-wordmark">TalesGalore</span>
       </a>
     </div>
@@ -229,7 +155,7 @@
       </a>
     </div>
   </div>
-  <nav class="main-nav">
+  <nav class="site-nav">
     <a href="index.html">Home</a>
     <a href="shop.html" class="active">Catalogue</a>
     <a href="contact.html">Contact Us</a>
@@ -251,7 +177,7 @@
 <footer class="site-footer">
   <div class="footer-inner" style="max-width:1200px;margin:0 auto;padding:48px 24px 0;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;">
     <div class="footer-col">
-      <img src="images/TalesGalore-logo.PNG" alt="TalesGalore" style="height:56px;margin-bottom:12px;" onerror="this.style.display='none'"/>
+      <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem.png?v=1774461512&width=200" alt="TalesGalore" style="height:56px;filter:brightness(0) invert(1);margin-bottom:12px;" onerror="this.style.display='none'"/>
       <p style="font-size:14px;color:#B8BDB8;">Pre-loved children's books, re-homed with care.</p>
     </div>
     <div class="footer-col">
@@ -280,12 +206,11 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<script src="cart.js"></script>
+<script src="js/cart.js"></script>
 <script>
   const SPACE_ID     = 'tx11zsju5n7c';
   const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
 
-  // ── Inline rich text → HTML converter (no external library needed) ──
   function richTextToHtml(doc) {
     if (!doc || !doc.content) return '';
     function processNode(node) {
@@ -302,17 +227,17 @@
       }
       const inner = (node.content || []).map(processNode).join('');
       switch (node.nodeType) {
-        case 'paragraph':       return `<p>${inner}</p>`;
-        case 'heading-1':       return `<h1>${inner}</h1>`;
-        case 'heading-2':       return `<h2>${inner}</h2>`;
-        case 'heading-3':       return `<h3>${inner}</h3>`;
-        case 'unordered-list':  return `<ul>${inner}</ul>`;
-        case 'ordered-list':    return `<ol>${inner}</ol>`;
-        case 'list-item':       return `<li>${inner}</li>`;
-        case 'blockquote':      return `<blockquote>${inner}</blockquote>`;
-        case 'hr':              return `<hr>`;
-        case 'hyperlink':       return `<a href="${node.data.uri}">${inner}</a>`;
-        default:                return inner;
+        case 'paragraph':      return `<p>${inner}</p>`;
+        case 'heading-1':      return `<h1>${inner}</h1>`;
+        case 'heading-2':      return `<h2>${inner}</h2>`;
+        case 'heading-3':      return `<h3>${inner}</h3>`;
+        case 'unordered-list': return `<ul>${inner}</ul>`;
+        case 'ordered-list':   return `<ol>${inner}</ol>`;
+        case 'list-item':      return `<li>${inner}</li>`;
+        case 'blockquote':     return `<blockquote>${inner}</blockquote>`;
+        case 'hr':             return `<hr>`;
+        case 'hyperlink':      return `<a href="${node.data.uri}">${inner}</a>`;
+        default:               return inner;
       }
     }
     return doc.content.map(processNode).join('');
@@ -323,32 +248,35 @@
     if (!id) { window.location = 'shop.html'; return; }
 
     try {
+      // ── FIX: fetch the entry with include=2 to get linked assets ──
       const res  = await fetch(
-        `https://cdn.contentful.com/spaces/${SPACE_ID}/entries/${id}?access_token=${ACCESS_TOKEN}&include=1`
+        `https://cdn.contentful.com/spaces/${SPACE_ID}/entries/${id}?access_token=${ACCESS_TOKEN}&include=2`
       );
       const data = await res.json();
       const f    = data.fields;
-      console.log('Contentful fields:', f);
-      console.log('All field keys:', Object.keys(f));
 
-// ── Resolve cover image ──
-let imageUrl = null;
-if (f.coverImage?.sys?.id) {
-  const assetId = f.coverImage.sys.id;
-  const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
-  if (included) {
-    imageUrl = 'https:' + included.fields.file.url;
-  } else {
-    // fallback: fetch directly
-    const assetRes = await fetch(
-      `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
-    );
-    const asset = await assetRes.json();
-    imageUrl = 'https:' + asset.fields.file.url;
-  }
-}
+      // ── FIX: resolve coverImage by fetching the asset directly ──
+      // This is the most reliable approach — always fetch the asset separately
+      let imageUrl = null;
+      if (f.coverImage && f.coverImage.sys && f.coverImage.sys.id) {
+        const assetId  = f.coverImage.sys.id;
 
-      // ── Fields ──
+        // First try includes (faster, no extra request)
+        const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
+        if (included && included.fields && included.fields.file && included.fields.file.url) {
+          imageUrl = 'https:' + included.fields.file.url;
+        } else {
+          // Fallback: fetch the asset directly from Contentful
+          const assetRes = await fetch(
+            `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
+          );
+          const asset = await assetRes.json();
+          if (asset.fields && asset.fields.file && asset.fields.file.url) {
+            imageUrl = 'https:' + asset.fields.file.url;
+          }
+        }
+      }
+
       const title        = f.title          || 'Untitled';
       const author       = f.authorName     || f.author || '';
       const price        = parseFloat(f.price) || 0;
@@ -361,19 +289,16 @@ if (f.coverImage?.sys?.id) {
       const dimensions   = f.bookDimensions || '';
       const returnPolicy = f.returnPolicy   || 'No Returns';
 
-      const ages = Array.isArray(f.suggestedAges) ? f.suggestedAges
-                 : (f.suggestedAges ? [f.suggestedAges]
-                 : (Array.isArray(f.suggestedAge) ? f.suggestedAge
-                 : (f.suggestedAge ? [f.suggestedAge] : [])));
-
+      const ages   = Array.isArray(f.suggestedAge) ? f.suggestedAge
+                   : (f.suggestedAge ? [f.suggestedAge] : []);
       const genres = Array.isArray(f.theme) ? f.theme
                    : (f.theme ? [f.theme] : []);
+      const tags   = Array.isArray(f.tags)  ? f.tags
+                   : (f.tags  ? [f.tags]  : []);
 
-      const tags = Array.isArray(f.tags) ? f.tags
-                 : (f.tags ? [f.tags] : []);
-
-      // ── Rich text fields ──
-      const description = f.description ? richTextToHtml(f.description) : '';
+      const description = f.description
+        ? (typeof f.description === 'string' ? f.description : richTextToHtml(f.description))
+        : '';
       const note = f.note
         ? (typeof f.note === 'string' ? f.note : richTextToHtml(f.note))
         : '';
@@ -381,76 +306,58 @@ if (f.coverImage?.sys?.id) {
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
 
+      // Store book in window._allBooks so cart.js addToCart can find it
+      window._allBooks = [{
+        id, title, author, price, condition, image: imageUrl, inStock
+      }];
+
       document.getElementById('page-content').innerHTML = `
         <div class="product-page">
-
-          <!-- Left: Image -->
           <div class="product-image-wrap">
             ${imageUrl
-              ? `<img src="${imageUrl}" alt="${title}"/>`
+              ? `<img src="${imageUrl}" alt="${title}" />`
               : `<div class="product-image-placeholder">📖</div>`}
           </div>
-
-          <!-- Right: Details -->
           <div class="product-details">
-
             <h1>${title}</h1>
-
-            ${author ? `<div class="product-author">By: <a href="shop.html?author=${encodeURIComponent(author)}">${author}</a></div>` : ''}
-
+            ${author ? `<div class="product-author">By <a href="shop.html">${author}</a></div>` : ''}
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
-
             <div class="product-badges">
-              ${binding   ? `<span class="product-badge">${binding}</span>`   : ''}
-              ${condition ? `<span class="product-badge">${condition}</span>` : ''}
-              ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>` : ''}
+              ${binding   ? `<span class="product-badge">${binding}</span>`              : ''}
+              ${condition ? `<span class="product-badge">${condition}</span>`            : ''}
+              ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`      : ''}
             </div>
-
             ${inStock
               ? `<button class="add-to-cart-btn" onclick="addToCart('${id}', event)">Add to Cart</button>`
               : `<button class="add-to-cart-btn" disabled>Sold Out</button>`}
-
-            <div class="shipping-note">
-              🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available
-            </div>
-
+            <div class="shipping-note">🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available</div>
             ${description ? `<div class="product-description">${description}</div>` : ''}
-
-            ${note ? `
-              <div class="product-note">
-                <strong>Note from TalesGalore</strong>
-                ${note}
-              </div>` : ''}
-
+            ${note ? `<div class="product-note"><strong>Note from TalesGalore</strong>${note}</div>` : ''}
             ${tags.length ? `
               <div class="product-tags-section">
-                <h4>This book is for you if you love</h4>
+                <h4>This book is for you if you love…</h4>
                 <div class="product-tags">
-                  ${tags.map(t => `<a href="shop.html?tag=${encodeURIComponent(t)}" class="product-tag">${t}</a>`).join('')}
+                  ${tags.map(t => `<a href="shop.html" class="product-tag">${t}</a>`).join('')}
                 </div>
               </div>` : ''}
-
             <table class="product-meta-table">
-              ${author       ? `<tr><td>Author</td><td>${author}</td></tr>`                     : ''}
-              ${ages.length  ? `<tr><td>Suggested ages</td><td>${ages.join(', ')}</td></tr>`    : ''}
-              ${isbn         ? `<tr><td>ISBN</td><td>${isbn}</td></tr>`                         : ''}
-              ${returnPolicy ? `<tr><td>Return policy</td><td>${returnPolicy}</td></tr>`        : ''}
-              ${pageCount    ? `<tr><td>Page count</td><td>${pageCount} pages</td></tr>`        : ''}
-              ${language     ? `<tr><td>Language</td><td>${language}</td></tr>`                 : ''}
-              ${genres.length? `<tr><td>Theme</td><td>${genres.join(', ')}</td></tr>`           : ''}
-              ${dimensions   ? `<tr><td>Dimensions</td><td>${dimensions}</td></tr>`             : ''}
+              ${author        ? `<tr><td>Author</td><td>${author}</td></tr>`               : ''}
+              ${ages.length   ? `<tr><td>Suggested age</td><td>${ages.join(', ')}</td></tr>` : ''}
+              ${genres.length ? `<tr><td>Theme</td><td>${genres.join(', ')}</td></tr>`     : ''}
+              ${isbn          ? `<tr><td>ISBN</td><td>${isbn}</td></tr>`                   : ''}
+              ${pageCount     ? `<tr><td>Pages</td><td>${pageCount}</td></tr>`             : ''}
+              ${language      ? `<tr><td>Language</td><td>${language}</td></tr>`           : ''}
+              ${dimensions    ? `<tr><td>Dimensions</td><td>${dimensions}</td></tr>`       : ''}
+              ${returnPolicy  ? `<tr><td>Returns</td><td>${returnPolicy}</td></tr>`        : ''}
             </table>
-
           </div>
         </div>
       `;
 
     } catch(e) {
-      console.error('Full error:', e);
-      console.error('Error message:', e.message);
-      console.error('Error stack:', e.stack);
+      console.error(e);
       document.getElementById('page-content').innerHTML =
-        `<div class="loading-state">Error: ${e.message}<br><a href="shop.html" style="color:var(--gold)">Back to catalogue</a></div>`;
+        `<div class="loading-state">Could not load this book.<br><a href="shop.html" style="color:var(--gold)">← Back to catalogue</a></div>`;
     }
   }
 
