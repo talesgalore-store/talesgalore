@@ -8,6 +8,12 @@ function saveCart(cart) {
 
 function addToCart(id) {
   let cart = getCart();
+
+  if (cart.includes(id)) {
+    alert("Maximum count reached");
+    return;
+  }
+
   cart.push(id);
   saveCart(cart);
   alert("Added to cart 🛒");
