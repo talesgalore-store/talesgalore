@@ -284,7 +284,13 @@ console.log("FINAL IMAGE URL:", imageUrl);
       
  
       const title        = f.title       || 'Untitled';
-      const author       = f.author || f.authorName || f['author-name'] || '';
+    
+      const rawAuthor = f.author || f.authorName || f['author-name'] || '';
+      // normalize to string safely
+      const author = Array.isArray(rawAuthor)
+      ? rawAuthor.join(", ")
+      : rawAuthor;      
+      
       const price        = parseFloat(f.price) || 0;
       const condition    = f.condition   || '';
       const binding      = f.bookBinding || f.binding || '';
