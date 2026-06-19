@@ -315,8 +315,10 @@ console.log("FINAL IMAGE URL:", imageUrl);
 
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
+      const stockCount = parseInt(f.stockCount || 0);
 
-      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, inStock }];      
+      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, inStock, stockCount }]; 
+      console.log("BOOK DATA:", window._allBooks);
       console.log("FINAL IMAGE URL:", imageUrl);
       document.getElementById('page-content').innerHTML = `
         <div class="product-page">
