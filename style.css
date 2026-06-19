@@ -1482,7 +1482,7 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 
 /* ── Rotating announcement bar ── */
 .announcement-bar {
-  background: var(--sage);
+  background:#8B5E3C;
   color: white;
   text-align: center;
   padding: 9px 16px;
