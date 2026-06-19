@@ -6,28 +6,12 @@ function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-async function addToCart(id) {
+function addToCart(id) {
   let cart = getCart();
-
-  // fetch ONLY this product if needed
-  const books = window.__BOOKS__ || [];
-
-  let book = books.find(b => b.id === id);
-
-  // fallback: if book not loaded, allow safe add
-  if (!book) {
-    cart.push({ id, qty: 1 });
-    saveCart(cart);
-    return;
-  }
 
   let item = cart.find(p => p.id === id);
 
   if (item) {
-    if (item.qty >= book.stockCount) {
-      alert("Maximum stock reached");
-      return;
-    }
     item.qty += 1;
   } else {
     cart.push({ id, qty: 1 });
