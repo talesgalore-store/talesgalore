@@ -44,7 +44,7 @@ function addToCart(id) {
   }
 
   saveCart(cart);
-
+  updateCartCount();
   console.log("CART SAVED:", cart);
 }
 
@@ -88,5 +88,17 @@ function decreaseQty(id) {
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
+
+function updateCartCount() {
+  const cart = getCart();
+
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  const badge = document.getElementById("cartCount");
+
+  if (badge) {
+    badge.textContent = count;
+  }
+}
 window.increaseQty = increaseQty;
 window.decreaseQty = decreaseQty;
