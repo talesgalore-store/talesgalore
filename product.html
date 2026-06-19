@@ -14,12 +14,10 @@
       --ink-w: #8B5E3C; --rule: #E2D5BC;
     }
     body { background: var(--cream); }
-
     .product-page {
       max-width: 1060px; margin: 0 auto;
       padding: 40px 24px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
+      display: grid; grid-template-columns: 1fr 1.1fr;
       gap: 56px; align-items: start;
     }
     @media(max-width:700px) {
@@ -27,111 +25,92 @@
     }
     .product-image-wrap {
       border-radius: 10px; overflow: hidden;
-      border: 1px solid var(--rule);
-      background: var(--warm); aspect-ratio: 3/4;
-      position: sticky; top: 100px;
+      border: 1px solid var(--rule); background: var(--warm);
+      aspect-ratio: 3/4; position: sticky; top: 100px;
     }
-    .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .product-image-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
     .product-image-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center;
-      justify-content: center; font-size: 5rem;
+      width:100%; height:100%; display:flex;
+      align-items:center; justify-content:center; font-size:5rem;
     }
     .product-details h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3.5vw, 2rem);
-      font-weight: 700; color: #2C2416;
-      line-height: 1.25; margin-bottom: 6px;
+      font-size: clamp(1.5rem,3.5vw,2rem); font-weight:700;
+      color:#2C2416; line-height:1.25; margin-bottom:6px;
     }
-    .product-author { font-size: 0.9rem; color: #888; margin-bottom: 18px; }
-    .product-author a { color: var(--gold); text-decoration: none; }
-    .product-author a:hover { text-decoration: underline; }
-    .product-price-large {
-      font-size: 1.7rem; font-weight: 700;
-      color: var(--ink-w); margin-bottom: 6px;
-    }
-    .product-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .product-author { font-size:0.9rem; color:#888; margin-bottom:18px; }
+    .product-author a { color:var(--gold); text-decoration:none; }
+    .product-price-large { font-size:1.7rem; font-weight:700; color:var(--ink-w); margin-bottom:6px; }
+    .product-badges { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
     .product-badge {
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--gold); border: 1px solid rgba(200,146,58,0.35);
-      padding: 4px 12px; border-radius: 20px;
+      font-size:0.7rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+      color:var(--gold); border:1px solid rgba(200,146,58,0.35); padding:4px 12px; border-radius:20px;
     }
-    .product-badge.sold-out { color: #999; border-color: #ddd; }
+    .product-badge.sold-out { color:#999; border-color:#ddd; }
     .add-to-cart-btn {
-      width: 100%; padding: 16px;
-      background: var(--ink-w); color: #fff;
-      border: none; font-family: 'Lato', sans-serif;
-      font-size: 14px; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      cursor: pointer; border-radius: 6px;
-      transition: background .2s; margin-bottom: 12px;
+      width:100%; padding:16px; background:var(--ink-w); color:#fff;
+      border:none; font-family:'Lato',sans-serif; font-size:14px; font-weight:700;
+      letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;
+      border-radius:6px; transition:background .2s; margin-bottom:12px;
     }
-    .add-to-cart-btn:hover { background: var(--gold); }
-    .add-to-cart-btn:disabled { background: #ccc; cursor: default; }
-    .shipping-note { font-size: 12px; color: #999; text-align: center; margin-bottom: 28px; }
+    .add-to-cart-btn:hover { background:var(--gold); }
+    .add-to-cart-btn:disabled { background:#ccc; cursor:default; }
+    .shipping-note { font-size:12px; color:#999; text-align:center; margin-bottom:28px; }
     .product-description {
-      font-size: 0.92rem; color: #4a3c2e; line-height: 1.85;
-      border-top: 1px solid var(--rule); padding-top: 24px; margin-bottom: 24px;
+      font-size:0.92rem; color:#4a3c2e; line-height:1.85;
+      border-top:1px solid var(--rule); padding-top:24px; margin-bottom:24px;
     }
-    .product-description p { margin-bottom: 14px; }
-    .product-description p:last-child { margin-bottom: 0; }
+    .product-description p { margin-bottom:14px; }
     .product-note {
-      background: var(--warm); border: 1px solid var(--rule);
-      border-radius: 8px; padding: 16px 18px;
-      font-size: 0.82rem; color: var(--ink-w);
-      margin-bottom: 24px; line-height: 1.7;
+      background:var(--warm); border:1px solid var(--rule); border-radius:8px;
+      padding:16px 18px; font-size:0.82rem; color:var(--ink-w); margin-bottom:24px; line-height:1.7;
     }
     .product-note strong {
-      display: block; font-size: 0.7rem;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 6px;
+      display:block; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:6px;
     }
-    .product-tags-section { border-top: 1px solid var(--rule); padding-top: 20px; margin-bottom: 24px; }
+    .product-tags-section { border-top:1px solid var(--rule); padding-top:20px; margin-bottom:24px; }
     .product-tags-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.9rem; font-weight: 700;
-      color: #2C2416; margin-bottom: 12px; font-style: italic;
+      font-family:'Playfair Display',serif; font-size:0.9rem;
+      font-weight:700; color:#2C2416; margin-bottom:12px; font-style:italic;
     }
-    .product-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .product-tags { display:flex; flex-wrap:wrap; gap:8px; }
     .product-tag {
-      font-size: 0.78rem; color: var(--ink-w);
-      background: var(--warm); border: 1px solid var(--rule);
-      padding: 4px 14px; border-radius: 20px; text-decoration: none;
-      transition: background .2s, border-color .2s;
+      font-size:0.78rem; color:var(--ink-w); background:var(--warm);
+      border:1px solid var(--rule); padding:4px 14px; border-radius:20px;
+      text-decoration:none; transition:background .2s, border-color .2s;
     }
-    .product-tag:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
-    .product-meta-table { border-top: 1px solid var(--rule); padding-top: 20px; width: 100%; border-collapse: collapse; }
-    .product-meta-table tr td { padding: 8px 0; font-size: 0.85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
-    .product-meta-table tr:last-child td { border-bottom: none; }
+    .product-tag:hover { background:var(--gold); color:#fff; border-color:var(--gold); }
+    .product-meta-table { border-top:1px solid var(--rule); padding-top:20px; width:100%; border-collapse:collapse; }
+    .product-meta-table tr td { padding:8px 0; font-size:0.85rem; border-bottom:1px solid var(--rule); vertical-align:top; }
+    .product-meta-table tr:last-child td { border-bottom:none; }
     .product-meta-table td:first-child {
-      color: var(--gold); font-weight: 700; font-size: 0.72rem;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      width: 120px; padding-right: 16px;
+      color:var(--gold); font-weight:700; font-size:0.72rem;
+      letter-spacing:0.06em; text-transform:uppercase; width:120px; padding-right:16px;
     }
-    .product-meta-table td:last-child { color: #4a3c2e; }
+    .product-meta-table td:last-child { color:#4a3c2e; }
     .breadcrumb {
-      max-width: 1060px; margin: 0 auto;
-      padding: 20px 24px 0; font-size: 0.8rem; color: #999;
+      max-width:1060px; margin:0 auto; padding:20px 24px 0;
+      font-size:0.8rem; color:#999;
     }
-    .breadcrumb a { color: var(--gold); text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb a { color:var(--gold); text-decoration:none; }
     .loading-state {
-      text-align: center; padding: 80px 24px;
-      font-family: 'Playfair Display', serif;
-      font-style: italic; color: var(--ink-w);
+      text-align:center; padding:80px 24px;
+      font-family:'Playfair Display',serif; font-style:italic; color:var(--ink-w);
     }
   </style>
 </head>
 <body>
 
 <div class="announcement-bar" id="announcementBar">
-  <div class="announcement-message active">🚚 All Parcels to be shipped via India Post</div>
-  <div class="announcement-message">📚 Free Pick-up from Store!</div>
-  <div class="announcement-message">✨ Every Story Deserves a Second Home</div>
-</div>
-<script src="js/announcement.js"></script>
+    <div class="announcement-message active">🚚 All Parcels to be shipped via India Post</div>
+    <div class="announcement-message">📚 Free Pick-up from Store!</div>
+    <div class="announcement-message">✨ Every Story Deserves a Second Home</div>
+  </div>
 
+  <script src="js/announcement.js"></script>
+
+<!-- Header -->
 <header class="site-header">
   <div class="header-inner">
     <div class="header-social">
@@ -174,11 +153,16 @@
   <div class="loading-state">Opening the book…</div>
 </div>
 
+<!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner" style="max-width:1200px;margin:0 auto;padding:48px 24px 0;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;">
     <div class="footer-col">
       <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem.png?v=1774461512&width=200" alt="TalesGalore" style="height:56px;filter:brightness(0) invert(1);margin-bottom:12px;" onerror="this.style.display='none'"/>
       <p style="font-size:14px;color:#B8BDB8;">Pre-loved children's books, re-homed with care.</p>
+      <div style="display:flex;gap:14px;margin-top:12px;">
+        <a href="https://www.facebook.com/TalesGalore" target="_blank" style="color:#B8BDB8;font-size:13px;">Facebook</a>
+        <a href="https://www.instagram.com/talesgalore.store" target="_blank" style="color:#B8BDB8;font-size:13px;">Instagram</a>
+      </div>
     </div>
     <div class="footer-col">
       <h4 style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:white;margin-bottom:14px;">Quick Links</h4>
@@ -191,9 +175,9 @@
     </div>
     <div class="footer-col">
       <h4 style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:white;margin-bottom:14px;">Subscribe</h4>
-      <form onsubmit="return false" style="display:flex;flex-direction:column;gap:10px;">
+      <form onsubmit="handleNewsletter(event)" style="display:flex;flex-direction:column;gap:10px;">
         <input type="email" placeholder="Email" style="background:#2a2a28;border:1px solid #3a3a38;color:white;padding:10px 14px;font-size:14px;" required/>
-        <button type="submit" style="background:#C8923A;color:white;border:none;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">Subscribe</button>
+        <button type="submit" style="background:#5C7A5E;color:white;border:none;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">Subscribe</button>
       </form>
     </div>
   </div>
@@ -216,13 +200,11 @@
     function processNode(node) {
       if (node.nodeType === 'text') {
         let text = node.value || '';
-        if (node.marks) {
-          node.marks.forEach(mark => {
-            if (mark.type === 'bold')      text = `<strong>${text}</strong>`;
-            if (mark.type === 'italic')    text = `<em>${text}</em>`;
-            if (mark.type === 'underline') text = `<u>${text}</u>`;
-          });
-        }
+        if (node.marks) node.marks.forEach(m => {
+          if (m.type === 'bold')      text = `<strong>${text}</strong>`;
+          if (m.type === 'italic')    text = `<em>${text}</em>`;
+          if (m.type === 'underline') text = `<u>${text}</u>`;
+        });
         return text;
       }
       const inner = (node.content || []).map(processNode).join('');
@@ -235,7 +217,6 @@
         case 'ordered-list':   return `<ol>${inner}</ol>`;
         case 'list-item':      return `<li>${inner}</li>`;
         case 'blockquote':     return `<blockquote>${inner}</blockquote>`;
-        case 'hr':             return `<hr>`;
         case 'hyperlink':      return `<a href="${node.data.uri}">${inner}</a>`;
         default:               return inner;
       }
@@ -248,68 +229,52 @@
     if (!id) { window.location = 'shop.html'; return; }
 
     try {
-      // ── FIX: fetch the entry with include=2 to get linked assets ──
+      // FIX: Fetch via entries list filtering by sys.id so assets are always included
       const res  = await fetch(
-        `https://cdn.contentful.com/spaces/${SPACE_ID}/entries/${id}?access_token=${ACCESS_TOKEN}&include=2`
+        `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?sys.id=${id}&access_token=${ACCESS_TOKEN}&include=2`
       );
       const data = await res.json();
-      const f    = data.fields;
 
-      // ── FIX: resolve coverImage by fetching the asset directly ──
-      // This is the most reliable approach — always fetch the asset separately
+      if (!data.items || !data.items.length) throw new Error('Book not found');
+
+      const item = data.items[0];
+      const f    = item.fields;
+
+      // Resolve image from includes.Asset — guaranteed to be present with include=2
       let imageUrl = null;
       if (f.coverImage && f.coverImage.sys && f.coverImage.sys.id) {
-        const assetId  = f.coverImage.sys.id;
-
-        // First try includes (faster, no extra request)
-        const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
-        if (included && included.fields && included.fields.file && included.fields.file.url) {
-          imageUrl = 'https:' + included.fields.file.url;
-        } else {
-          // Fallback: fetch the asset directly from Contentful
-          const assetRes = await fetch(
-            `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
-          );
-          const asset = await assetRes.json();
-          if (asset.fields && asset.fields.file && asset.fields.file.url) {
-            imageUrl = 'https:' + asset.fields.file.url;
-          }
+        const assetId = f.coverImage.sys.id;
+        const asset   = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
+        if (asset && asset.fields && asset.fields.file && asset.fields.file.url) {
+          imageUrl = 'https:' + asset.fields.file.url;
         }
       }
 
-      const title        = f.title          || 'Untitled';
-      const author       = f.authorName     || f.author || '';
+      const title        = f.title       || 'Untitled';
+      const author       = f.author      || f.authorName || '';
       const price        = parseFloat(f.price) || 0;
-      const condition    = f.condition      || '';
-      const binding      = f.bookBinding    || f.binding || '';
-      const inStock      = f.inStock        !== false;
-      const isbn         = f.isbn           || '';
-      const pageCount    = f.pageCount      || '';
-      const language     = f.language       || '';
+      const condition    = f.condition   || '';
+      const binding      = f.bookBinding || f.binding || '';
+      const inStock      = f.inStock     !== false;
+      const isbn         = f.isbn        || '';
+      const pageCount    = f.pageCount   || '';
+      const language     = f.language    || '';
       const dimensions   = f.bookDimensions || '';
-      const returnPolicy = f.returnPolicy   || 'No Returns';
+      const returnPolicy = f.returnPolicy || 'No Returns';
 
-      const ages   = Array.isArray(f.suggestedAge) ? f.suggestedAge
-                   : (f.suggestedAge ? [f.suggestedAge] : []);
-      const genres = Array.isArray(f.theme) ? f.theme
-                   : (f.theme ? [f.theme] : []);
-      const tags   = Array.isArray(f.tags)  ? f.tags
-                   : (f.tags  ? [f.tags]  : []);
+      const ages   = [].concat(f.suggestedAge  || f.suggestedAges  || []);
+      const genres = [].concat(f.theme || []);
+      const tags   = [].concat(f.tags  || []);
 
       const description = f.description
-        ? (typeof f.description === 'string' ? f.description : richTextToHtml(f.description))
-        : '';
+        ? (typeof f.description === 'string' ? f.description : richTextToHtml(f.description)) : '';
       const note = f.note
-        ? (typeof f.note === 'string' ? f.note : richTextToHtml(f.note))
-        : '';
+        ? (typeof f.note === 'string' ? f.note : richTextToHtml(f.note)) : '';
 
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
 
-      // Store book in window._allBooks so cart.js addToCart can find it
-      window._allBooks = [{
-        id, title, author, price, condition, image: imageUrl, inStock
-      }];
+      window._allBooks = [{ id, title, author, price, condition, image: imageUrl, inStock }];
 
       document.getElementById('page-content').innerHTML = `
         <div class="product-page">
@@ -323,9 +288,9 @@
             ${author ? `<div class="product-author">By <a href="shop.html">${author}</a></div>` : ''}
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
             <div class="product-badges">
-              ${binding   ? `<span class="product-badge">${binding}</span>`              : ''}
-              ${condition ? `<span class="product-badge">${condition}</span>`            : ''}
-              ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`      : ''}
+              ${binding   ? `<span class="product-badge">${binding}</span>`         : ''}
+              ${condition ? `<span class="product-badge">${condition}</span>`       : ''}
+              ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`   : ''}
             </div>
             ${inStock
               ? `<button class="add-to-cart-btn" onclick="addToCart('${id}', event)">Add to Cart</button>`
