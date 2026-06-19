@@ -1524,3 +1524,16 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   justify-content: space-between;
   align-items: center;
 }
+
+.cart-img {
+  width: 70px;
+  height: 90px;
+  background: #f5edd8;
+  margin-bottom: 8px;
+}
+
+.cart-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
