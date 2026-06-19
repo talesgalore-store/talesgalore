@@ -2,7 +2,7 @@
    TALESGALORE — Cart Manager
    Stores cart in localStorage
    ========================================= */
-
+console.log("cart.js running on:", window.location.pathname);
 const CART_KEY = 'talesgalore_cart';
 
 function getCart() {
