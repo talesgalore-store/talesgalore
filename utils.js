@@ -10,6 +10,8 @@ function addToCart(id) {
   console.log("ADD TO CART CALLED");
   console.log("ID:", id);
   console.log("_allBooks:", window._allBooks);
+  console.log("BOOK:", book);
+  console.log("STOCK COUNT:", book?.stockCount);
   let cart = getCart();
 
   let item = cart.find(p => p.id === id);
