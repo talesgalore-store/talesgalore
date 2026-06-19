@@ -461,16 +461,24 @@ const imgField = f.coverImage;
 
 let imageUrl = null;
 
-if (imgField?.sys?.id) {
-  imageUrl = assets[imgField.sys.id] || null;
-} 
-else if (imgField?.fields?.file?.url) {
-  imageUrl = 'https:' + imgField.fields.file.url;
-} 
-else if (typeof imgField === 'string') {
-  imageUrl = imgField.startsWith('//') ? 'https:' + imgField : imgField;
+// Case 1: linked asset via includes
+if (imgField?.sys?.id && assets[imgField.sys.id]) {
+  imageUrl = assets[imgField.sys.id];
 }
 
+// Case 2: direct embedded asset
+else if (imgField?.fields?.file?.url) {
+  imageUrl = imgField.fields.file.url.startsWith("//")
+    ? "https:" + imgField.fields.file.url
+    : imgField.fields.file.url;
+}
+
+// Case 3: plain string URL
+else if (typeof imgField === "string") {
+  imageUrl = imgField.startsWith("//")
+    ? "https:" + imgField
+    : imgField;
+}
 return {
   id:        item.sys.id,
   title:     f.title || 'Untitled',
