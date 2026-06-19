@@ -148,6 +148,7 @@ async function renderCart() {
   if (!container) return;
 
   if (cartItems.length === 0) {
+     console.log("CART ITEMS:", cartItems);
     container.innerHTML = `
       <div class="empty-cart">
         <h3>Your cart is empty</h3>
