@@ -2,7 +2,8 @@
    TALESGALORE — Shop Page Script
    Filtering, sorting, URL param support
    ========================================= */
-
+const SPACE_ID = 'tx11zsju5n7c';
+const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
 let allBooks = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
