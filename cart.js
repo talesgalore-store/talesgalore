@@ -128,6 +128,9 @@ container.innerHTML = cart.map(item => `
     <a href="product.html?id=${item.id}" class="cart-item-link">
       <img src="${item.image}" width="80" />
       <div class="cart-item-info">
+        <div class="cart-img">
+          ${item.image ? `<img src="${item.image}" />` : '📖'}
+        </div>
         <h3>${item.title}</h3>
         <p>₹${item.price}</p>
       </div>
