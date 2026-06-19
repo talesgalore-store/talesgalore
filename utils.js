@@ -6,14 +6,22 @@ function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-function addToCart(id) {
+async function addToCart(id) {
   let cart = getCart();
-  const books = window.__BOOKS__;
-  const book = books.find(b => b.id === id);
+
+  // fetch ONLY this product if needed
+  const books = window.__BOOKS__ || [];
+
+  let book = books.find(b => b.id === id);
+
+  // fallback: if book not loaded, allow safe add
+  if (!book) {
+    cart.push({ id, qty: 1 });
+    saveCart(cart);
+    return;
+  }
 
   let item = cart.find(p => p.id === id);
-
-  if (!book) return;
 
   if (item) {
     if (item.qty >= book.stockCount) {
