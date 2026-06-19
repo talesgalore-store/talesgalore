@@ -324,7 +324,7 @@ console.log("FINAL IMAGE URL:", imageUrl);
           </div>
           <div class="product-details">
             <h1>${title}</h1>
-            ${author ? `<div class="product-author">By <a href="shop.html">${author}</a></div>` : ''}
+            ${author ? `<div class="product-author">By <a href="shop.html?author=${encodeURIComponent(author)}">${author}</a></div>` : ''}
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
             <div class="product-badges">
               ${binding   ? `<span class="product-badge">${binding}</span>`         : ''}
