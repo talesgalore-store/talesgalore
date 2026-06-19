@@ -109,7 +109,12 @@ function showToast(message) {
 document.addEventListener('DOMContentLoaded', updateCartCount);
 
 function renderCart() {
-  const container = document.getElementById('cartItems');
+  const container = document.getElementById("cartItems");
+
+  if (!container) {
+    console.error("cartItems div not found in HTML");
+    return;
+  }
   const summary = document.getElementById('cartSummary');
   const cart = getCart();
 
