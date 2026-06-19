@@ -49,7 +49,8 @@ function addToCart(bookId, event) {
     author:    book.author,
     price:     book.price,
     condition: book.condition,
-    image:     book.image
+    image:     book.image,
+    qty:       1
   });
   saveCart(cart);
 
