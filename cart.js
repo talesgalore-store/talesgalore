@@ -147,3 +147,26 @@ container.innerHTML = cart.map(item => `
 }
 
 document.addEventListener("DOMContentLoaded", renderCart);
+
+async function fetchBooks() {
+  const res = await fetch(
+    `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?content_type=book&access_token=${ACCESS_TOKEN}&include=1`
+  );
+  const data = await res.json();
+  const assets = {};
+  (data.includes?.Asset || []).forEach(a => {
+    assets[a.sys.id] = 'https:' + a.fields.file.url;
+  });
+  return (data.items || []).map(item => {
+    const f = item.fields;
+    const img = f.coverImage?.sys?.id
+      ? assets[f.coverImage.sys.id]
+      : null;
+    return {
+      id: item.sys.id,
+      title: f.title,
+      price: f.price,
+      image: img
+    };
+  });
+}
