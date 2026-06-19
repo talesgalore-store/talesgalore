@@ -1480,21 +1480,26 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     text-align:center;
 }
 
-.announcement-bar{
-  background:#8B5E3C;
-  color:white;
-  text-align:center;
-  padding:10px;
-  min-height:40px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+/* ── Rotating announcement bar ── */
+.announcement-bar {
+  background: var(--sage);
+  color: white;
+  text-align: center;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 36px;
+  position: relative;
+  overflow: hidden;
 }
-
-.announcement-message{
-  display:none;
+.announcement-message {
+  display: none;
+  animation: fadeIn 0.5s ease;
 }
-
-.announcement-message.active{
-  display:block;
+.announcement-message.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
