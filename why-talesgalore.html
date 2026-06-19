@@ -1,273 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why TalesGalore — TalesGalore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root {
+      --cream:   #FDFAF4;
+      --warm:    #F5EDD8;
+      --gold:    #C8923A;
+      --gold-lt: #E8B96A;
+      --ink-why: #8B5E3C;
+      --muted:   #7A6A52;
+      --rule:    #E2D5BC;
+    }
+
+    body { background: var(--cream); font-family: 'Lato', sans-serif; color: #2C2416; line-height: 1.8; }
+
+    /* Why page header */
+    .why-header {
+      background: var(--ink-why);
+      padding: 48px 32px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-header::before {
+      content: '📚'; font-size: 120px; position: absolute;
+      opacity: 0.06; top: -20px; left: -20px; transform: rotate(-15deg);
+    }
+    .why-header::after {
+      content: '✨'; font-size: 90px; position: absolute;
+      opacity: 0.06; bottom: -10px; right: 20px; transform: rotate(10deg);
+    }
+    .logo-tag {
+      display: inline-block; font-family: 'Playfair Display', serif;
+      font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold-lt); border: 1px solid rgba(200,146,58,0.4);
+      padding: 5px 18px; border-radius: 2px; margin-bottom: 18px;
+    }
+    .why-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
+      color: #fff; letter-spacing: -0.5px; line-height: 1.2;
+    }
+    .why-header h1 span { color: var(--gold-lt); }
+
+    /* Content */
+    .why-container { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
+
+    .story {
+      background: var(--warm); border-left: 4px solid var(--gold);
+      border-radius: 0 10px 10px 0; padding: 28px 32px; margin-bottom: 52px;
+      font-family: 'Playfair Display', serif; font-size: 17px; font-style: italic;
+      color: #2C2416; line-height: 1.9; position: relative;
+    }
+    .story::before {
+      content: '\201C'; font-size: 80px; color: var(--gold); opacity: 0.3;
+      position: absolute; top: -10px; left: 16px;
+      font-family: 'Playfair Display', serif; line-height: 1;
+    }
+
+    .why-section { margin-bottom: 48px; }
+    .section-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .section-heading .icon {
+      width: 36px; height: 36px; background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .section-heading h2 {
+      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+      color: #2C2416; border-bottom: 2px solid var(--gold); padding-bottom: 4px;
+    }
+    .why-section p { font-size: 15px; color: #3D3020; line-height: 1.85; margin-bottom: 12px; }
+    .why-section p strong { color: #2C2416; font-weight: 700; }
+
+    .notice {
+      background: #FFF8EC; border: 1.5px solid var(--gold); border-radius: 10px;
+      padding: 20px 24px; margin: 18px 0; font-size: 15px; color: #3D3020; line-height: 1.8;
+    }
+    .notice strong { color: var(--ink-why); }
+
+    .spotlight {
+      background: var(--ink-why); border-radius: 14px; padding: 36px 40px; color: #fff;
+    }
+    .spot-tag {
+      display: inline-block; font-family: 'Playfair Display', serif;
+      font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold-lt); border: 1px solid rgba(200,146,58,0.4);
+      padding: 4px 14px; border-radius: 2px; margin-bottom: 14px;
+    }
+    .spotlight h3 {
+      font-family: 'Playfair Display', serif; font-size: 24px; font-style: italic;
+      color: var(--gold-lt); margin-bottom: 16px; line-height: 1.3;
+    }
+    .spotlight p { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.85; margin-bottom: 12px; }
+    .spotlight p:last-child { margin-bottom: 0; }
+
+    .divider {
+      border: none; height: 1px;
+      background: linear-gradient(to right, transparent, var(--rule), transparent);
+      margin: 48px 0;
+    }
+
+    .signoff {
+      background: var(--ink-why); border-radius: 14px;
+      padding: 36px 40px; text-align: center; color: #fff; margin-top: 52px;
+    }
+    .signoff p { font-size: 15px; color: rgba(255,255,255,0.75); margin-bottom: 18px; line-height: 1.8; }
+    .signoff .names {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      font-style: italic; color: var(--gold-lt); margin-bottom: 4px;
+    }
+    .signoff .team {
+      font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    @media (max-width: 500px) {
+      .story { padding: 20px 20px 20px 24px; font-size: 15px; }
+      .spotlight { padding: 28px 22px; }
+      .signoff { padding: 28px 22px; }
+    }
+  </style>
+</head>
 <body>
+  <div class="announcement-bar" id="announcementBar">
+    <div class="announcement-message active">🚚 All Parcels to be shipped via India Post</div>
+    <div class="announcement-message">📚 Free Pick-up from Store!</div>
+    <div class="announcement-message">✨ Every Story Deserves a Second Home</div>
+  </div>
 
+  <script src="js/announcement.js"></script>
+<!-- Announcement Bar -->
+</div>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Why TalesGalore</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --cream:   #FDFAF4;
-    --warm:    #F5EDD8;
-    --gold:    #C8923A;
-    --gold-lt: #E8B96A;
-    --ink:     #8B5E3C;
-    --muted:   #7A6A52;
-    --rule:    #E2D5BC;
-  }
-
-  body {
-    background: var(--cream);
-    font-family: 'Lato', sans-serif;
-    color: #2C2416;
-    line-height: 1.8;
-  }
-
-  /* ── Header ── */
-  header {
-    background: var(--ink);
-    padding: 48px 32px 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  header::before {
-    content: '📚';
-    font-size: 120px;
-    position: absolute;
-    opacity: 0.06;
-    top: -20px;
-    left: -20px;
-    transform: rotate(-15deg);
-  }
-
-  header::after {
-    content: '✨';
-    font-size: 90px;
-    position: absolute;
-    opacity: 0.06;
-    bottom: -10px;
-    right: 20px;
-    transform: rotate(10deg);
-  }
-
-  .logo-tag {
-    display: inline-block;
-    font-family: 'Playfair Display', serif;
-    font-size: 11px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold-lt);
-    border: 1px solid rgba(200,146,58,0.4);
-    padding: 5px 18px;
-    border-radius: 2px;
-    margin-bottom: 18px;
-  }
-
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-  }
-
-  header h1 span { color: var(--gold-lt); }
-
-  /* ── Container ── */
-  .container {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 60px 24px 80px;
-  }
-
-  /* ── Opening quote ── */
-  .story {
-    background: var(--warm);
-    border-left: 4px solid var(--gold);
-    border-radius: 0 10px 10px 0;
-    padding: 28px 32px;
-    margin-bottom: 52px;
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
-    font-style: italic;
-    color: #2C2416;
-    line-height: 1.9;
-    position: relative;
-  }
-
-  .story::before {
-    content: '\201C';
-    font-size: 80px;
-    color: var(--gold);
-    opacity: 0.3;
-    position: absolute;
-    top: -10px;
-    left: 16px;
-    font-family: 'Playfair Display', serif;
-    line-height: 1;
-  }
-
-  /* ── Sections ── */
-  .section { margin-bottom: 48px; }
-
-  .section-heading {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .section-heading .icon {
-    width: 36px;
-    height: 36px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .section-heading h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #2C2416;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 4px;
-  }
-
-  .section p {
-    font-size: 15px;
-    color: #3D3020;
-    line-height: 1.85;
-    margin-bottom: 12px;
-  }
-
-  .section p strong { color: #2C2416; font-weight: 700; }
-
-  /* ── Notice box ── */
-  .notice {
-    background: #FFF8EC;
-    border: 1.5px solid var(--gold);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin: 18px 0;
-    font-size: 15px;
-    color: #3D3020;
-    line-height: 1.8;
-  }
-
-  .notice strong { color: var(--ink); }
-
-  /* ── Story Beneath the Story spotlight ── */
-  .spotlight {
-    background: var(--ink);
-    border-radius: 14px;
-    padding: 36px 40px;
-    margin: 0;
-    color: #fff;
-  }
-
-  .spotlight .spot-tag {
-    display: inline-block;
-    font-family: 'Playfair Display', serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold-lt);
-    border: 1px solid rgba(200,146,58,0.4);
-    padding: 4px 14px;
-    border-radius: 2px;
-    margin-bottom: 14px;
-  }
-
-  .spotlight h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-style: italic;
-    color: var(--gold-lt);
-    margin-bottom: 16px;
-    line-height: 1.3;
-  }
-
-  .spotlight p {
-    font-size: 15px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.85;
-    margin-bottom: 12px;
-  }
-
-  .spotlight p:last-child { margin-bottom: 0; }
-
-  /* ── Divider ── */
-  .divider {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--rule), transparent);
-    margin: 48px 0;
-  }
-
-  /* ── Sign-off ── */
-  .signoff {
-    background: var(--ink);
-    border-radius: 14px;
-    padding: 36px 40px;
-    text-align: center;
-    color: #fff;
-    margin-top: 52px;
-  }
-
-  .signoff p {
-    font-size: 15px;
-    color: rgba(255,255,255,0.75);
-    margin-bottom: 18px;
-    line-height: 1.8;
-  }
-
-  .signoff .names {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-style: italic;
-    color: var(--gold-lt);
-    margin-bottom: 4px;
-  }
-
-  .signoff .team {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-  }
-
-  @media (max-width: 500px) {
-    .story { padding: 20px 20px 20px 24px; font-size: 15px; }
-    .spotlight { padding: 28px 22px; }
-    .signoff { padding: 28px 22px; }
-  }
-</style>
-
-<header>
-  <div class="logo-tag">Why Choose Us</div>
-  <h1>Tales<span>Galore</span>
-</h1>
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-social">
+      <a href="https://www.facebook.com/TalesGalore" target="_blank" aria-label="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/talesgalore.store" target="_blank" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+    <div class="header-logo">
+      <a href="index.html">
+        <img src="https://talesgalore.com/cdn/shop/files/Tales_Galore_vintage_emblem_6ea6503f-fce9-411e-8212-1c408f35bc62.png?v=1775539894" alt="TalesGalore" class="logo-img"/>
+        <span class="logo-wordmark">TalesGalore</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <a href="cart.html" class="header-cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Cart <span id="cartCount" style="background:#C4622D;color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-left:4px;">0</span>
+      </a>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Catalogue</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="literary-games.html">Literary Games</a>
+    <a href="why-talesgalore.html" class="active">Why TalesGalore?</a>
+  </nav>
+  </nav>
 </header>
 
-<div class="container">
+<!-- Why TalesGalore Page Header -->
+<div class="why-header">
+  <div class="logo-tag">Why Choose Us</div>
+  <h1>Tales<span>Galore</span></h1>
+</div>
 
-  <!-- Opening quote -->
+<div class="why-container">
+
   <div class="story">
     TalesGalore was created with a simple belief: that children's books are not just products to be traded, but stories meant to be cherished, rediscovered, and passed along. It approaches pre-loved children's books with much care and thoughtfulness.
   </div>
 
-  <!-- Curated Collection -->
-  <div class="section">
+  <div class="why-section">
     <div class="section-heading">
       <div class="icon">📖</div>
       <h2>A Curated Collection for Young Readers</h2>
@@ -278,8 +194,7 @@
 
   <hr class="divider">
 
-  <!-- Giving Stories Another Life -->
-  <div class="section">
+  <div class="why-section">
     <div class="section-heading">
       <div class="icon">🌿</div>
       <h2>Giving Beautiful Stories Another Life</h2>
@@ -290,8 +205,7 @@
 
   <hr class="divider">
 
-  <!-- Quality -->
-  <div class="section">
+  <div class="why-section">
     <div class="section-heading">
       <div class="icon">✦</div>
       <h2>Quality You Can Feel Confident About</h2>
@@ -301,8 +215,7 @@
 
   <hr class="divider">
 
-  <!-- Built Around Reading -->
-  <div class="section">
+  <div class="why-section">
     <div class="section-heading">
       <div class="icon">🏡</div>
       <h2>A Place Built Around the Love of Reading</h2>
@@ -315,8 +228,7 @@
 
   <hr class="divider">
 
-  <!-- Story Beneath the Story -->
-  <div class="section">
+  <div class="why-section">
     <div class="spotlight">
       <div class="spot-tag">Our Signature Feature</div>
       <h3>The Story Beneath the Story</h3>
@@ -327,7 +239,6 @@
     </div>
   </div>
 
-  <!-- Sign-off -->
   <div class="signoff">
     <p>Thank you for choosing TalesGalore — where every book has a story, and every story has a little magic waiting to be discovered.</p>
     <div class="names">With warmth</div>
@@ -336,4 +247,12 @@
 
 </div>
 
+<!-- WhatsApp -->
+<a href="https://api.whatsapp.com/send?phone=+919810280654&text=Hey! I'd like to know more about TalesGalore!" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="js/cart.js"></script>
+<script src="js/announcement.js"></script>
 </body>
+</html>
