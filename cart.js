@@ -111,6 +111,8 @@ function showToast(message) {
 document.addEventListener('DOMContentLoaded', updateCartCount);
 
 function renderCart() {
+  const books = await fetchBooks();
+  window.__BOOKS__ = books; // 👈 ADD HERE
   const container = document.getElementById("cartItems");
 
   if (!container) {
@@ -142,9 +144,11 @@ container.innerHTML = cart.map(item => `
         <p>₹${item.price}</p>
       </div>
     </a>
-    <button onclick="removeFromCart('${item.id}')">
-      Remove
-    </button>
+<div class="qty-controls">
+  <button onclick="decreaseQty('${item.id}')">−</button>
+  <span>${item.qty}</span>
+  <button onclick="increaseQty('${item.id}')">+</button>
+</div>
   </div>
 `).join('');
 
