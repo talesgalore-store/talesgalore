@@ -663,8 +663,13 @@ return {
 
   loadBooks();
   const urlParams = new URLSearchParams(window.location.search);
+  
   const authorFilter = urlParams.get("author");
-
+  console.log("AUTHOR FILTER:", authorFilter);
+  allBooks.forEach(book => {
+  console.log(book.title, book.authorName);
+});
+  
   if (authorFilter) {
     filtered = allBooks.filter(b =>
     (b.authorName || []).includes(authorFilter)
