@@ -136,27 +136,52 @@ async function fetchBooks() {
 }
 
 async function renderCart() {
-  console.log("PAGE CHECK:", window.location.pathname);
-console.log("cartItems:", document.getElementById("cartItems"));
-  const cartIds = getCart();
-  const books = await fetchBooks();
-
-  const cartItems = cartIds.map(id =>
-    books.find(b => b.id === id)
-  ).filter(Boolean);
+  const cartItems = getCart();
 
   const container = document.getElementById("cartItems");
+
+  if (!container) return;
+
+  if (cartItems.length === 0) {
+    container.innerHTML = `
+      <div class="empty-cart">
+        <h3>Your cart is empty</h3>
+        <a href="shop.html">Browse books</a>
+      </div>
+    `;
+    return;
+  }
+
   container.innerHTML = cartItems.map(item => `
     <div class="cart-item">
       <div class="cart-img">
         ${item.image ? `<img src="${item.image}" />` : '📖'}
       </div>
-      <div>
+
+      <div class="cart-details">
         <h3>${item.title}</h3>
+        <p>${item.author || ''}</p>
         <p>₹${item.price}</p>
+
+        <button onclick="removeFromCart('${item.id}')">
+          Remove
+        </button>
       </div>
     </div>
   `).join("");
+
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + Number(item.price || 0),
+    0
+  );
+
+  document.getElementById("cartSubtotal").textContent =
+    `₹${subtotal}`;
+
+  document.getElementById("cartTotal").textContent =
+    `₹${subtotal}`;
+
+  document.getElementById("cartSummary").style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
