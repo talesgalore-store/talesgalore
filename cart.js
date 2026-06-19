@@ -181,10 +181,6 @@ async function fetchBooks() {
   });
 }
 
-function getCart() {
-  return JSON.parse(localStorage.getItem("cart") || "[]");
-}
-
 async function renderCart() {
   console.log("PAGE CHECK:", window.location.pathname);
 console.log("cartItems:", document.getElementById("cartItems"));
