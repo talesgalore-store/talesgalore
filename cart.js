@@ -202,4 +202,6 @@ async function renderCart() {
   `).join("");
 }
 
-renderCart();
+document.addEventListener("DOMContentLoaded", () => {
+  renderCart();
+});
