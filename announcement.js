@@ -1,26 +1,22 @@
-/* =========================================
-   TALESGALORE — Announcement Bar Loader
-   Fetches announcement.html and injects it
-   at the top of <body> on every page.
-   To change the announcement, edit only
-   announcement.html — all pages update.
-   ========================================= */
+/* Rotating announcement bar — works on all pages */
 (function () {
-  fetch('/announcement.html')
-    .then(res => res.text())
-    .then(html => {
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = html;
-      // Insert as very first child of body
-      document.body.insertBefore(wrapper, document.body.firstChild);
-      // Run any inline scripts inside the fetched HTML
-      wrapper.querySelectorAll('script').forEach(oldScript => {
-        const newScript = document.createElement('script');
-        newScript.textContent = oldScript.textContent;
-        document.head.appendChild(newScript);
-      });
-    })
-    .catch(() => {
-      // Silently fail — announcement bar is non-critical
-    });
+  function initAnnouncement() {
+    var messages = document.querySelectorAll('.announcement-message');
+    if (messages.length === 0) return;
+    var current = 0;
+    // Make sure first one is active
+    messages[0].classList.add('active');
+    setInterval(function () {
+      messages[current].classList.remove('active');
+      current = (current + 1) % messages.length;
+      messages[current].classList.add('active');
+    }, 3000);
+  }
+ 
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnnouncement);
+  } else {
+    initAnnouncement();
+  }
 })();
