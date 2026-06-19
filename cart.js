@@ -156,23 +156,37 @@ async function renderCart() {
     return;
   }
 
-  container.innerHTML = cartItems.map(item => `
-    <div class="cart-item">
-      <div class="cart-img">
-        ${item.image ? `<img src="${item.image}" />` : '📖'}
-      </div>
+container.innerHTML = cartItems.map(item => `
+  <div class="cart-item">
 
-      <div class="cart-details">
-        <h3>${item.title}</h3>
-        <p>${item.author || ''}</p>
-        <p>₹${item.price}</p>
-
-        <button onclick="removeFromCart('${item.id}')">
-          Remove
-        </button>
-      </div>
+    <div class="cart-img">
+      ${item.image
+        ? `<img src="${item.image}" alt="${item.title}">`
+        : '📖'}
     </div>
-  `).join("");
+
+    <div class="cart-details">
+      <h3>${item.title}</h3>
+
+      <p class="cart-author">
+        ${item.author || ''}
+      </p>
+
+      <p class="cart-price">
+        ₹${item.price}
+      </p>
+
+      <p class="cart-qty">
+        Quantity: ${item.qty || 1}
+      </p>
+
+      <button onclick="removeFromCart('${item.id}')">
+        Remove
+      </button>
+    </div>
+
+  </div>
+`).join('');
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + Number(item.price || 0),
