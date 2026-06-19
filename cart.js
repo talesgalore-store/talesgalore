@@ -2,7 +2,7 @@
    TALESGALORE — Cart Manager
    Stores cart in localStorage
    ========================================= */
-console.log("cart.js running on:", window.location.pathname);
+console.log("cart.js loaded on:", window.location.pathname);
 const CART_KEY = 'talesgalore_cart';
 
 function getCart() {
@@ -203,6 +203,11 @@ console.log("cartItems:", document.getElementById("cartItems"));
   `).join("");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderCart();
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("cartItems");
+  if (!container) {
+    console.log("Cart page not detected — skipping cart render");
+    return;
+  }
+  await renderCart();
 });
