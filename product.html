@@ -331,15 +331,22 @@
       console.log('Contentful fields:', f);
       console.log('All field keys:', Object.keys(f));
 
-      // ── Resolve cover image ──
-      let imageUrl = null;
-      if (f.coverImage?.sys?.id) {
-        const assetRes = await fetch(
-          `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${f.coverImage.sys.id}?access_token=${ACCESS_TOKEN}`
-        );
-        const asset = await assetRes.json();
-        imageUrl = 'https:' + asset.fields.file.url;
-      }
+// ── Resolve cover image ──
+let imageUrl = null;
+if (f.coverImage?.sys?.id) {
+  const assetId = f.coverImage.sys.id;
+  const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
+  if (included) {
+    imageUrl = 'https:' + included.fields.file.url;
+  } else {
+    // fallback: fetch directly
+    const assetRes = await fetch(
+      `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
+    );
+    const asset = await assetRes.json();
+    imageUrl = 'https:' + asset.fields.file.url;
+  }
+}
 
       // ── Fields ──
       const title        = f.title          || 'Untitled';
