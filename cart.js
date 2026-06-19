@@ -123,16 +123,38 @@ function renderCart() {
 
   summary.style.display = "block";
 
-  container.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <img src="${item.image}" width="80" />
+container.innerHTML = cart.map(item => `
+  <div class="cart-item">
+    
+    <a href="product.html?id=${item.id}" style="display:flex;gap:12px;text-decoration:none;color:inherit;align-items:center;">
+      
+      <img 
+        src="${item.image}" 
+        width="80" 
+        style="border-radius:6px;object-fit:cover;"
+      />
+
       <div>
-        <h3>${item.title}</h3>
-        <p>₹${item.price}</p>
-        <button onclick="removeFromCart('${item.id}')">Remove</button>
+        <h3 style="margin:0;font-size:15px;">
+          ${item.title}
+        </h3>
+
+        <p style="margin:4px 0 0;color:#777;">
+          ₹${item.price}
+        </p>
       </div>
-    </div>
-  `).join('');
+
+    </a>
+
+    <button 
+      onclick="removeFromCart('${item.id}')" 
+      style="margin-top:8px;background:#c4622d;color:#fff;border:none;padding:6px 10px;border-radius:4px;cursor:pointer;"
+    >
+      Remove
+    </button>
+
+  </div>
+`).join('');
 
   document.getElementById('cartSubtotal').textContent = '₹' + getCartTotal();
   document.getElementById('cartTotal').textContent = '₹' + getCartTotal();
