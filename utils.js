@@ -8,13 +8,60 @@ function saveCart(cart) {
 
 function addToCart(id) {
   let cart = getCart();
+  const books = window.__BOOKS__;
+  const book = books.find(b => b.id === id);
 
-  if (cart.includes(id)) {
-    alert("Maximum count reached");
+  let item = cart.find(p => p.id === id);
+
+  if (!book) return;
+
+  if (item) {
+    if (item.qty >= book.stockCount) {
+      alert("Maximum stock reached");
+      return;
+    }
+    item.qty += 1;
+  } else {
+    cart.push({ id, qty: 1 });
+  }
+
+  saveCart(cart);
+}
+
+function removeFromCart(id) {
+  let cart = getCart();
+  cart = cart.filter(p => p.id !== id);
+  saveCart(cart);
+}
+
+function increaseQty(id) {
+  let cart = getCart();
+  const books = window.__BOOKS__;
+  const book = books.find(b => b.id === id);
+
+  let item = cart.find(p => p.id === id);
+  if (!item || !book) return;
+
+  if (item.qty >= book.stockCount) {
+    alert("Maximum stock reached");
     return;
   }
 
-  cart.push(id);
+  item.qty += 1;
   saveCart(cart);
-  alert("Added to cart 🛒");
+}
+
+function decreaseQty(id) {
+  let cart = getCart();
+
+  let item = cart.find(p => p.id === id);
+  if (!item) return;
+
+  item.qty -= 1;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(p => p.id !== id);
+  }
+
+  saveCart(cart);
 }
