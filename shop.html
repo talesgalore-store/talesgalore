@@ -670,14 +670,26 @@ return {
   console.log(book.title, book.authorName);
 });
   
-  if (authorFilter) {
-    filtered = allBooks.filter(b =>
-    (b.authorName || []).includes(authorFilter)
-  );
-  } else {
-    filtered = allBooks;
-  }
+if (authorFilter) {
 
+  const authorsToMatch =
+    authorFilter.split(",").map(a => a.trim());
+
+  filtered = allBooks.filter(book => {
+
+    const bookAuthors =
+      Array.isArray(book.authorName)
+        ? book.authorName
+        : (book.authorName ? [book.authorName] : []);
+
+    return bookAuthors.some(author =>
+      authorsToMatch.includes(author)
+    );
+  });
+
+} else {
+  filtered = allBooks;
+}
 renderPage();
 </script>
 </body>
