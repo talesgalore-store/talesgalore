@@ -457,28 +457,31 @@
           .map(g => typeof g === 'string' ? g : (g?.fields?.name ?? g?.fields?.title ?? ''))
           .filter(Boolean);
 
-        return {
-          id:        item.sys.id,
-          title:     f.title     || 'Untitled',
-          author:    f.author    || '',
-          price:     parseFloat(f.price) || 0,
-          condition: f.condition || '',
-          ages:      ageArray,
-          genres:    genreArray,
-          inStock:   f.inStock !== false,
-          let imageUrl = null;
-          const imgField = f.coverImage;
-          if (imgField?.sys?.id) {
-           imageUrl = assets[imgField.sys.id] || null;
-          } 
-          else if (imgField?.fields?.file?.url) {
-           imageUrl = 'https:' + imgField.fields.file.url;
-          } 
-          else if (typeof imgField === 'string') {
-           imageUrl = imgField.startsWith('//') ? 'https:' + imgField : imgField;
-          }
-          date:      item.sys.createdAt,
-        };
+const imgField = f.coverImage;
+
+let imageUrl = null;
+
+if (imgField?.sys?.id) {
+  imageUrl = assets[imgField.sys.id] || null;
+} 
+else if (imgField?.fields?.file?.url) {
+  imageUrl = 'https:' + imgField.fields.file.url;
+} 
+else if (typeof imgField === 'string') {
+  imageUrl = imgField.startsWith('//') ? 'https:' + imgField : imgField;
+}
+
+return {
+  id:        item.sys.id,
+  title:     f.title || 'Untitled',
+  author:    f.author || '',
+  price:     parseFloat(f.price) || 0,
+  condition: f.condition || '',
+  ages:      ageArray,
+  genres:    genreArray,
+  inStock:   f.inStock !== false,
+  image:     imageUrl   // ✅ THIS is the correct place
+};
       });
 
       readUrlParams();
