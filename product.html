@@ -242,33 +242,35 @@
 
       // Resolve image — try includes first, then fetch asset directly
       let imageUrl = null;
-      if (f.coverImage && f.coverImage.sys && f.coverImage.sys.id) {
-        const assetId = f.coverImage.sys.id;
 
-        // Try includes first (no extra network request)
-        const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
-        if (included?.fields?.file?.url) {
-          imageUrl = included?.fields?.file?.url
-            ? (included.fields.file.url.startsWith('//')
-            ? 'https:' + included.fields.file.url
-            : included.fields.file.url)
-            : null;
-        } else {
-          // Direct asset fetch — works 100% of the time regardless of includes
-          try {
-            const assetRes  = await fetch(
-              `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
-            );
-            const assetData = await assetRes.json();
-            if (assetData?.fields?.file?.url) {
-              imageUrl = 'https:' + assetData.fields.file.url;
-            }
-          } catch(imgErr) {
-            console.warn('Could not load image:', imgErr);
-          }
-        }
-      }
+const assetId = f.coverImage?.sys?.id;
 
+console.log("ASSET ID:", assetId);
+
+if (assetId) {
+  try {
+    // 1. Always try direct fetch first (MOST RELIABLE)
+    const assetRes = await fetch(
+      `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
+    );
+
+    const assetData = await assetRes.json();
+
+    console.log("DIRECT ASSET RESPONSE:", assetData);
+
+    const fileUrl = assetData?.fields?.file?.url;
+
+    if (fileUrl) {
+      imageUrl = "https:" + fileUrl;
+    }
+  } catch (err) {
+    console.warn("Asset fetch failed:", err);
+  }
+}
+
+console.log("FINAL IMAGE URL:", imageUrl);
+      
+ 
       const title        = f.title       || 'Untitled';
       const author       = f.author || f.authorName || f['author-name'] || '';
       const price        = parseFloat(f.price) || 0;
