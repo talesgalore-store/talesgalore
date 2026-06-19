@@ -78,7 +78,7 @@ input, textarea, select, button { font-family: inherit; }
 
 /* --- HEADER --- */
 .site-header {
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 100;
   background: var(--white);
@@ -1489,7 +1489,7 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   font-size: 13px;
   font-weight: 500;
   min-height: 36px;
-  position: fixed;
+  position: relative;
   overflow: hidden;
 }
 .announcement-message {
