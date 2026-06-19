@@ -203,7 +203,9 @@
       const inStock   = f.inStock   !== false;
       const ages      = Array.isArray(f.suggestedAge) ? f.suggestedAge : (f.suggestedAge ? [f.suggestedAge] : []);
       const genres    = Array.isArray(f.theme) ? f.theme : (f.theme ? [f.theme] : []);
-
+      const description = f.description
+        ? contentfulRichTextHtmlRenderer.documentToHtmlString(f.description)
+        : '';
       document.title = `${title} – TalesGalore`;
 
       document.getElementById('page-content').innerHTML = `
