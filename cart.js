@@ -213,6 +213,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 if (!document.getElementById("cartItems")) {
-  console.log("Not cart page → exiting cart.js");
-  return;
+  console.log("Not cart page — skipping cart.js");
+} else {
+  renderCart();
 }
