@@ -2,8 +2,7 @@
    TALESGALORE — Cart Manager
    Stores cart in localStorage
    ========================================= */
-const SPACE_ID = 'tx11zsju5n7c';
-const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
+
 const CART_KEY = 'talesgalore_cart';
 
 function getCart() {
