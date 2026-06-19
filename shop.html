@@ -555,7 +555,7 @@
     window._allBooks = allBooks;
 
     grid.innerHTML = page.map(b => `
-      <div class="product-card">
+      <div class="product-card" onclick="window.location='product.html?id=${b.id}'" style="cursor:pointer">
         <div class="product-img-wrap">
           ${b.image
             ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
