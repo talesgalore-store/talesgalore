@@ -296,6 +296,7 @@
       );
       const data = await res.json();
       const f    = data.fields;
+      console.log('Contentful fields:', f);
 
       // ── Resolve cover image ──
       let imageUrl = null;
