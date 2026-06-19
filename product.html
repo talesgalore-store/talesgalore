@@ -248,7 +248,11 @@
         // Try includes first (no extra network request)
         const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
         if (included?.fields?.file?.url) {
-          imageUrl = 'https:' + included.fields.file.url;
+          imageUrl = included?.fields?.file?.url
+            ? (included.fields.file.url.startsWith('//')
+            ? 'https:' + included.fields.file.url
+            : included.fields.file.url)
+            : null;
         } else {
           // Direct asset fetch — works 100% of the time regardless of includes
           try {
