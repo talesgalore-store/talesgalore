@@ -324,9 +324,9 @@ console.log("FINAL IMAGE URL:", imageUrl);
               ${condition ? `<span class="product-badge">${condition}</span>`       : ''}
               ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`   : ''}
             </div>
-            ${inStock
-              ? `<button class="add-to-cart-btn" onclick="addToCart('${id}', event)">Add to Cart</button>`
-              : `<button class="add-to-cart-btn" disabled>Sold Out</button>`}
+           ${inStock
+            ? `<button class="add-to-cart-btn" onclick="addToCart('${id}')">Add to Cart</button>`
+            : `<button class="add-to-cart-btn" disabled>Sold Out</button>`}
             <div class="shipping-note">🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available</div>
             ${description ? `<div class="product-description">${description}</div>` : ''}
             ${note ? `<div class="product-note"><strong>Note from TalesGalore</strong>${note}</div>` : ''}
