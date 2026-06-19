@@ -274,7 +274,17 @@
 <!-- Literary Corner -->
 <div id="literary-corner-container"></div>
 
-<iframe src="literary-corner.html" style="width:100%; border:none;"></iframe>
+<iframe id="lc-frame" src="literary-corner.html"
+        style="width:100%; border:none;"></iframe>
+
+<script>
+const iframe = document.getElementById("lc-frame");
+
+iframe.onload = function () {
+  iframe.style.height =
+    iframe.contentWindow.document.body.scrollHeight + "px";
+};
+</script>
   
 <!-- Footer -->
 <footer class="site-footer">
