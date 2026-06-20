@@ -1602,3 +1602,28 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   background: #cc4444;
   color: white;
 }
+.cart-item-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.wishlist-btn {
+  background: none;
+  border: 1px solid #C8923A;
+  color: #C8923A;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.wishlist-btn:hover {
+  background: #C8923A;
+  color: white;
+}
