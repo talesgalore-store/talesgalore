@@ -145,10 +145,11 @@ async function fetchBooks() {
 }
 
 async function renderCart() {
-  const cartItems = getCart();
-
+  // Clean out any corrupted entries
+  const raw = getCart();
+  const cartItems = raw.filter(item => item.title && item.title !== 'undefined');
+  if (raw.length !== cartItems.length) saveCart(cartItems);
   const container = document.getElementById("cartItems");
-
   if (!container) return;
 
   if (cartItems.length === 0) {
