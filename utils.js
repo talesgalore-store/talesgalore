@@ -29,6 +29,7 @@ function addToCart(id) {
       price:     Number(book.price),
       condition: book.condition || '',
       image:     book.image || '',
+      stockCount: book.stockCount, 
       qty:       1
     });
   }
@@ -44,6 +45,7 @@ function removeFromCart(id) {
 }
 
 function increaseQty(id) {
+  const book = (window._allBooks || window.__BOOKS__ || []).find(b => b.id === id);
   let cart = getCart();
   const books = window.__BOOKS__;
   const book = books.find(b => b.id === id);
