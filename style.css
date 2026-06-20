@@ -1627,3 +1627,8 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   background: #C8923A;
   color: white;
 }
+
+.cart-item-title a:hover {
+  text-decoration: underline;
+  color: #C8923A;
+}
