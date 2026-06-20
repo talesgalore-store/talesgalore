@@ -6,6 +6,66 @@
   <title>Cart — TalesGalore</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  .page-hero {
+    background: #8B5E3C;
+    text-align: center;
+    padding: 36px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '🛒';
+    font-size: 120px;
+    position: absolute;
+    opacity: 0.05;
+    top: -16px; left: -10px;
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+  .page-hero::after {
+    content: '📖';
+    font-size: 90px;
+    position: absolute;
+    opacity: 0.05;
+    bottom: -10px; right: 20px;
+    transform: rotate(10deg);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #E8B96A;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: inline-block;
+    border: 1px solid rgba(232,185,106,0.35);
+    padding: 4px 16px;
+    border-radius: 2px;
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+  }
+  .page-hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    max-width: 420px;
+    margin: 8px auto 0;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
 </head>
 <script src="utils.js"></script>
 <body>
