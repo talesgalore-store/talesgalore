@@ -1546,3 +1546,59 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 .product-author a:hover {
   color: #C8923A;
 }
+
+.cart-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #C8923A;
+  background: white;
+  color: #8B5E3C;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.qty-btn:hover {
+  background: #8B5E3C;
+  color: white;
+}
+
+.qty-display {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2C2416;
+  min-width: 20px;
+  text-align: center;
+}
+
+.remove-btn {
+  background: none;
+  border: 1px solid #cc4444;
+  color: #cc4444;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 4px;
+}
+
+.remove-btn:hover {
+  background: #cc4444;
+  color: white;
+}
