@@ -608,7 +608,7 @@ return {
           ${b.condition ? `<div class="product-condition">${b.condition}</div>` : ''}
           <div class="product-price">₹ ${b.price.toFixed(2)}</div>
           ${b.inStock
-            ? `<button class="product-add-btn" onclick="addToCart('${b.id}', event)">Add to Cart</button>`
+            ? `<button class="product-add-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify({id:b.id,title:b.title,author:b.author||'',price:b.price,condition:b.condition||'',image:b.image||''})}, event)">Add to Cart</button>`
             : `<div style="margin-top:8px;font-size:0.75rem;color:#aaa;text-align:center;text-transform:uppercase;letter-spacing:0.05em;">Sold</div>`
           }
         </div>
