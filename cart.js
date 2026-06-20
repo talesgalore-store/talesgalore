@@ -31,14 +31,18 @@ function updateCartCount() {
   });
 }
 
-function addToCart(bookId, event) {
-  // Fetch full book data from the page's loaded books
-  const book = window._allBooks && window._allBooks.find(b => b.id === bookId);
-  if (!book) return;
+function addToCart(bookData, event) {
+  // bookData can be an id (string) or a full object
+  let book;
+  if (typeof bookData === 'string') {
+    book = window._allBooks && window._allBooks.find(b => b.id === bookData);
+  } else {
+    book = bookData;
+  }
+  if (!book) { console.warn('addToCart: book not found', bookData); return; }
 
   const cart = getCart();
-  // Each pre-loved book is unique — only one copy allowed
-  if (cart.find(item => item.id === bookId)) {
+  if (cart.find(item => item.id === book.id)) {
     showToast('Already in your cart!');
     return;
   }
@@ -46,10 +50,10 @@ function addToCart(bookId, event) {
   cart.push({
     id:        book.id,
     title:     book.title,
-    author:    book.author,
-    price:     book.price,
-    condition: book.condition,
-    image:     book.image,
+    author:    book.author || '',
+    price:     Number(book.price),
+    condition: book.condition || '',
+    image:     book.image || '',
     qty:       1
   });
   saveCart(cart);
