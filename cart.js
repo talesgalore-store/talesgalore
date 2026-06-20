@@ -32,7 +32,7 @@ function updateCartCount() {
 }
 
 function addToCart(bookData, event) {
-  // bookData can be an id (string) or a full object
+  console.log("addToCart called with:", bookData); // add this
   let book;
   if (typeof bookData === 'string') {
     book = window._allBooks && window._allBooks.find(b => b.id === bookData);
