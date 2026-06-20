@@ -32,7 +32,7 @@ function renderCart() {
         : `<div class="cart-item-image" style="display:flex;align-items:center;justify-content:center;font-size:40px;">📖</div>`}
 <div class="cart-item-info">
         <div class="cart-item-title">${item.title}</div>
-        <div class="cart-item-author">${item.author}</div>
+        <div class="cart-item-author">${Array.isArray(item.author) ? item.author.join(', ') : item.author}</div>
         <div class="cart-item-price">₹${item.price}</div>
         <div style="font-size:12px;color:#4A4A46;margin-top:4px;">${item.condition}</div>
         <div class="cart-qty-controls">
