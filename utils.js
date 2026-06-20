@@ -15,10 +15,10 @@ function addToCart(id) {
   let item = cart.find(p => p.id === id);
   const currentQty = item ? item.qty : 0;
 
-  if (currentQty >= book.stockCount) {
-    alert("Maximum count reached");
-    return;
-  }
+if (currentQty >= (book.stockCount || 1)) {
+  alert("Maximum stock reached");
+  return;
+}
 
   if (item) {
     item.qty += 1;
