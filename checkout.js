@@ -30,13 +30,18 @@ function renderCart() {
       ${item.image
         ? `<img class="cart-item-image" src="${item.image}" alt="${item.title}" />`
         : `<div class="cart-item-image" style="display:flex;align-items:center;justify-content:center;font-size:40px;">📖</div>`}
-      <div class="cart-item-info">
+<div class="cart-item-info">
         <div class="cart-item-title">${item.title}</div>
         <div class="cart-item-author">${item.author}</div>
         <div class="cart-item-price">₹${item.price}</div>
         <div style="font-size:12px;color:#4A4A46;margin-top:4px;">${item.condition}</div>
+        <div class="cart-qty-controls">
+          <button class="qty-btn" onclick="decreaseQty('${item.id}'); renderCart()">−</button>
+          <span class="qty-display">${item.qty || 1}</span>
+          <button class="qty-btn" onclick="increaseQty('${item.id}'); renderCart()">+</button>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove from Cart</button>
       </div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" title="Remove">×</button>
     </div>`).join('');
 
   const total = getCartTotal();
