@@ -145,10 +145,10 @@ async function fetchBooks() {
 }
 
 async function renderCart() {
-  // Clean out any corrupted entries
   const raw = getCart();
-  const cartItems = raw.filter(item => item.title && item.title !== 'undefined');
-  if (raw.length !== cartItems.length) saveCart(cartItems);
+  // Filter corrupted entries for display only — don't save back
+  const cartItems = raw.filter(item => item.id); // just check id exists
+  
   const container = document.getElementById("cartItems");
   if (!container) return;
 
