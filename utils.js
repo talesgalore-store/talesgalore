@@ -8,6 +8,7 @@ function saveCart(cart) {
 
 function addToCart(id) {
   const book = window._allBooks?.find(b => b.id === id);
+ console.log("BOOK STOCK COUNT:", book?.stockCount, "FULL BOOK:", book);
   if (!book) { console.error("Book not found:", id); return; }
 
   let cart = getCart();
