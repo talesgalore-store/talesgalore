@@ -158,4 +158,5 @@ window.moveToCart = moveToCart;
 
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
+  updateWishlistCount(); // add this line
 });
