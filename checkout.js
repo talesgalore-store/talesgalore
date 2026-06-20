@@ -41,6 +41,7 @@ function renderCart() {
           <button class="qty-btn" onclick="increaseQty('${item.id}'); renderCart()">+</button>
         </div>
         <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove from Cart</button>
+        <button class="wishlist-btn" onclick="addToWishlist('${item.id}')">♡ Save for Later</button>
       </div>
     </div>`).join('');
 
