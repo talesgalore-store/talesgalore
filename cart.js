@@ -183,12 +183,14 @@ container.innerHTML = cartItems.map(item => `
         ₹${item.price}
       </p>
 
-      <p class="cart-qty">
-        Quantity: ${item.qty || 1}
-      </p>
+      <div class="cart-qty-controls">
+        <button class="qty-btn" onclick="decreaseQty('${item.id}'); renderCart()">−</button>
+        <span class="qty-display">${item.qty || 1}</span>
+        <button class="qty-btn" onclick="increaseQty('${item.id}'); renderCart()">+</button>
+      </div>
 
-      <button onclick="removeFromCart('${item.id}')">
-        Remove
+      <button class="remove-btn" onclick="removeFromCart('${item.id}')">
+        Remove from Cart
       </button>
     </div>
 
