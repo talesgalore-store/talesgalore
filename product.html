@@ -17,7 +17,7 @@
     .product-page {
       max-width: 1060px; margin: 0 auto;
       padding: 40px 24px 80px;
-      display: grid; grid-template-columns: 1fr 1.1fr;
+      display: grid; grid-template-columns: 0.7fr 1.3fr;
       gap: 56px; align-items: start;
     }
     @media(max-width:700px) {
@@ -27,6 +27,7 @@
       border-radius: 10px; overflow: hidden;
       border: 1px solid var(--rule); background: var(--warm);
       aspect-ratio: 3/4; position: sticky; top: 100px;
+      max-width: 340px;
     }
     .product-image-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
     .product-image-placeholder {
