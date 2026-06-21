@@ -52,6 +52,13 @@ function renderCart() {
 }
 
 function initiatePayment() {
+   // Check auth first
+  const user = window.getCurrentUser ? window.getCurrentUser() : null;
+  if (!user) {
+    openAuthModal('signin');
+    showToast('Please sign in to complete your purchase.');
+    return;
+  }
   const name    = document.getElementById('custName')?.value.trim();
   const email   = document.getElementById('custEmail')?.value.trim();
   const phone   = document.getElementById('custPhone')?.value.trim();
