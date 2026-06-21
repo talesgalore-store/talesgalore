@@ -99,6 +99,27 @@
       text-align:center; padding:80px 24px;
       font-family:'Playfair Display',serif; font-style:italic; color:var(--ink-w);
     }
+
+    .save-later-btn {
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: 1px solid #C8923A;
+  color: #C8923A;
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 12px;
+}
+.save-later-btn:hover {
+  background: #C8923A;
+  color: white;
+}
   </style>
 
 <script src="utils.js"></script> 
@@ -342,8 +363,9 @@ console.log("FINAL IMAGE URL:", imageUrl);
               ${condition ? `<span class="product-badge">${condition}</span>`       : ''}
               ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`   : ''}
             </div>
-           ${inStock
-            ? `<button class="add-to-cart-btn" onclick="addToCart('${id}', event)">Add to Cart</button>`
+            ${inStock
+            ? `<button class="add-to-cart-btn" onclick="addToCart('${id}', event)">Add to Cart</button>
+            <button class="save-later-btn" onclick="addToWishlistFromProduct('${id}')">♡ Save for Later</button>`
             : `<button class="add-to-cart-btn" disabled>Sold Out</button>`}
             <div class="shipping-note">🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available</div>
             ${description ? `<div class="product-description">${description}</div>` : ''}
@@ -376,6 +398,33 @@ console.log("FINAL IMAGE URL:", imageUrl);
     }
   }
 
+  function addToWishlistFromProduct(id) {
+  const book = window._allBooks?.[0];
+  if (!book) return;
+
+  const wishlist = getWishlist();
+  if (wishlist.find(p => p.id === id)) {
+    showToast('Already in your wishlist!');
+    return;
+  }
+
+  wishlist.push({ ...book, qty: 1 });
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  updateWishlistCount();
+
+  const btn = document.querySelector('.save-later-btn');
+  if (btn) {
+    btn.textContent = '♡ Saved!';
+    btn.style.borderColor = '#5C7A5E';
+    btn.style.color = '#5C7A5E';
+    setTimeout(() => {
+      btn.textContent = '♡ Save for Later';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2000);
+  }
+}
+  
   loadProduct();
 </script>
 </body>
