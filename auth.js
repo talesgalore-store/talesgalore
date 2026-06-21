@@ -168,7 +168,10 @@ window.handleSignUp = async function() {
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(cred.user, { displayName: name });
+    await sendEmailVerification(cred.user);
     closeAuthModal();
+    // Show verification notice
+    showVerificationBanner();
   } catch (e) {
     showAuthError(friendlyError(e.code));
     setLoading('signup-btn', false);
@@ -244,3 +247,17 @@ function prefillCheckout(user) {
 window.getCurrentUser = function() {
   return auth.currentUser;
 };
+
+function showVerificationBanner() {
+  const banner = document.createElement('div');
+  banner.style.cssText = `
+    position:fixed;top:0;left:0;right:0;z-index:99999;
+    background:#5C7A5E;color:white;text-align:center;
+    padding:14px 24px;font-size:14px;font-weight:500;
+  `;
+  banner.innerHTML = `
+    ✉️ A verification email has been sent to your inbox. Please verify before placing an order.
+    <button onclick="this.parentElement.remove()" style="margin-left:16px;background:none;border:1px solid white;color:white;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;">Dismiss</button>
+  `;
+  document.body.prepend(banner);
+}
