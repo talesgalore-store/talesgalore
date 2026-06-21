@@ -237,6 +237,23 @@
     }
     .page-btn:hover, .page-btn.active { background: var(--ink-w); color: #fff; border-color: var(--ink-w); }
     .page-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .product-wishlist-btn {
+  width: 100%; margin-top: 6px;
+  background: none;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 7px;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  cursor: pointer; font-family: 'Lato', sans-serif;
+  transition: background .2s, color .2s;
+  border-radius: 6px;
+}
+.product-wishlist-btn:hover {
+  background: var(--gold);
+  color: white;
+}
   </style>
 </head>
 <body>
@@ -613,6 +630,10 @@ return {
             ? `<button class="product-add-btn" 
                     onclick="event.stopPropagation(); addToCart('${b.id}', event)">
                       Add to Cart
+               </button>
+               <button class="product-wishlist-btn"
+                    onclick="event.stopPropagation(); addToWishlistFromShop('${b.id}')">
+                      ♡ Save for Later
                </button>`
             : `<div style="margin-top:8px;font-size:0.75rem;color:#aaa;text-align:center;text-transform:uppercase;letter-spacing:0.05em;">Sold</div>`
           }
@@ -674,6 +695,29 @@ return {
     alert('Thanks for subscribing!');
   }
 
+  function addToWishlistFromShop(id) {
+  const book = allBooks.find(b => b.id === id);
+  if (!book) return;
+
+  const wishlist = getWishlist();
+  if (wishlist.find(p => p.id === id)) {
+    showToast('Already in your wishlist!');
+    return;
+  }
+
+  wishlist.push({
+    id:        book.id,
+    title:     book.title,
+    author:    Array.isArray(book.author) ? book.author.join(', ') : (book.author || ''),
+    price:     Number(book.price),
+    condition: book.condition || '',
+    image:     book.image || '',
+    qty:       1
+  });
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  updateWishlistCount();
+  showToast(`"${book.title}" saved to wishlist`);
+}
   loadBooks();
   const urlParams = new URLSearchParams(window.location.search);
   
