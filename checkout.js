@@ -86,8 +86,8 @@ function initiatePayment() {
     name:        'TalesGalore',
     description: `Books: ${bookTitles}`,
     image:       '/images/logo.png',
-    handler: function(response) {
-      onPaymentSuccess(response, { name, email, phone, address, cart, total });
+handler: function(response) {
+      onPaymentSuccess(response, { name, email, phone, address, state, cart, total });
     },
     prefill: {
       name:    name,
@@ -115,19 +115,5 @@ function initiatePayment() {
   rzp.open();
 }
 
-function onPaymentSuccess(response, orderDetails) {
-  // Clear the cart
-  clearCart();
-
-  // Show confirmation
-  const container = document.querySelector('.container');
-  container.innerHTML = `
-    <div style="text-align:center;padding:80px 0;">
-      <div style="font-size:72px;margin-bottom:24px;">🎉</div>
-      <h1 style="font-family:'Playfair Display',serif;font-size:36px;margin-bottom:16px;">Order Confirmed!</h1>
-      <p style="color:#4A4A46;font-size:18px;margin-bottom:8px;">Thank you, ${orderDetails.name}!</p>
-      <p style="color:#4A4A46;margin-bottom:8px;">Payment ID: <strong>${response.razorpay_payment_id}</strong></p>
-      <p style="color:#4A4A46;margin-bottom:32px;">We'll reach out to <strong>${orderDetails.email}</strong> shortly with your order details.</p>
-      <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
-    </div>`;
-}
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("ravklld-LaAz-FXZy");</script>
