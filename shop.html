@@ -453,7 +453,13 @@
   let allBooks    = [];
   let filtered    = [];
   let currentPage = 1;
-
+  function slugify(title) {
+  return title
+    .toLowerCase()
+    .replace(/['']/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
   async function loadBooks() {
     try {
       const res  = await fetch(
