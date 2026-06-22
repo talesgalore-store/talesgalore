@@ -1771,16 +1771,47 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 
 /* ── Featured collection — smaller cards ── */
-#featured-grid .product-img-wrap {
-  aspect-ratio: 2/3;
-  max-height: 180px;
+/* ── Featured collection — matching marquee card size ── */
+#featured-grid {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
 }
 
 #featured-grid .product-card {
-  max-width: 160px;
+  width: 160px;
+  border-radius: 10px;
+  border: 1px solid #E2D5BC;
 }
 
-#featured-grid {
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
+#featured-grid .product-img-wrap {
+  aspect-ratio: 3/4;
+  max-height: unset;
+}
+
+#featured-grid .product-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2C2416;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#featured-grid .product-info .product-price {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8B5E3C;
+}
+
+#featured-grid .product-info p {
+  font-size: 0.7rem;
+  color: #888;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
