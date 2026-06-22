@@ -1632,3 +1632,95 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   text-decoration: underline;
   color: #C8923A;
 }
+
+/* ── ARRIVALS MARQUEE ── */
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+  padding: 16px 0;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-card {
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid #E2D5BC;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.marquee-card:hover {
+  box-shadow: 0 8px 24px rgba(139,94,60,0.12);
+  transform: translateY(-3px);
+  border-color: #C8923A;
+}
+
+.marquee-card img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+
+.marquee-card-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #F5EDD8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.marquee-card-info {
+  padding: 10px 12px 12px;
+}
+
+.marquee-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2C2416;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.marquee-card-author {
+  font-size: 0.7rem;
+  color: #888;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.marquee-card-price {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8B5E3C;
+}
