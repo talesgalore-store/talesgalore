@@ -161,11 +161,12 @@
   <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
     <h2 class="section-heading">Latest Arrivals</h2>
   </div>
-   <div class="marquee-wrapper">
-    <div class="marquee-track" id="arrivals-marquee">
-      <!-- Populated dynamically by app.js; static fallback below shown until then -->
-        <a href="shop.html">Loading latest arrivals…</a>
+  <div class="marquee-outer">
+    <button class="marquee-arrow marquee-arrow-left" onclick="marqueeScroll(-1)">‹</button>
+    <div class="marquee-wrapper">
+      <div class="marquee-track" id="arrivals-marquee"></div>
     </div>
+    <button class="marquee-arrow marquee-arrow-right" onclick="marqueeScroll(1)">›</button>
   </div>
 </section>
 
