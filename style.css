@@ -1769,3 +1769,18 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   font-weight: 700;
   color: #8B5E3C;
 }
+
+/* ── Featured collection — smaller cards ── */
+#featured-grid .product-img-wrap {
+  aspect-ratio: 2/3;
+  max-height: 180px;
+}
+
+#featured-grid .product-card {
+  max-width: 160px;
+}
+
+#featured-grid {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
