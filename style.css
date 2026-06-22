@@ -1672,6 +1672,35 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   to   { transform: translateX(-50%); }
 }
 
+.marquee-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #E2D5BC;
+  background: #fff;
+  color: #8B5E3C;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.marquee-arrow:hover {
+  background: #8B5E3C;
+  color: white;
+  border-color: #8B5E3C;
+}
+
+.marquee-arrow-left  { left: 8px; }
+.marquee-arrow-right { right: 8px; }
+
 .marquee-card {
   display: flex;
   flex-direction: column;
