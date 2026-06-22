@@ -1815,3 +1815,8 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ── Homepage header border fix ── */
+.site-header {
+  border-bottom: 1px solid #DDD8CF;
+}
