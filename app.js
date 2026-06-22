@@ -75,11 +75,20 @@ function renderMarquee(books) {
   const track = document.getElementById('arrivals-marquee');
   if (!track) return;
 
-  // Duplicate for seamless loop
+  // Duplicate for seamless infinite loop
   const items = [...books, ...books];
-  track.innerHTML = items.map(b =>
-    `<a href="product.html?id=${b.id}&slug=${slugify(b.title)}">${b.title}${b.author ? ' — ' + b.author : ''} &nbsp;·&nbsp; ₹${b.price}</a>`
-  ).join('');
+  track.innerHTML = items.map(b => `
+    <a href="product.html?id=${b.id}&slug=${slugify(b.title)}" class="marquee-card">
+      ${b.image
+        ? `<img src="${b.image}" alt="${b.title}"/>`
+        : `<div class="marquee-card-placeholder">📖</div>`}
+      <div class="marquee-card-info">
+        <div class="marquee-card-title">${b.title}</div>
+        ${b.author ? `<div class="marquee-card-author">${b.author}</div>` : ''}
+        <div class="marquee-card-price">₹${b.price}</div>
+      </div>
+    </a>
+  `).join('');
 }
 
 function renderFeatured(books) {
