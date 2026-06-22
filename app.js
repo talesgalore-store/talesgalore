@@ -59,12 +59,16 @@ async function loadHomeBooks() {
         };
       });
 
-    const shuffled  = shuffle(books);
-    const marquee20 = shuffled.slice(0, 20);
-    const featured8 = shuffled.slice(20, 28);
+const shuffled  = shuffle(books);
+// Take up to 8 for featured first, then rest for marquee
+const featured8 = shuffled.slice(0, Math.min(8, shuffled.length));
+const remaining = shuffled.slice(featured8.length);
 
-    renderMarquee(marquee20);
-    renderFeatured(featured8);
+// For marquee, use remaining + loop back through all books if needed
+let marqueeBooks = remaining.length >= 8 ? remaining.slice(0, 20) : shuffled.slice(0, 20);
+
+renderMarquee(marqueeBooks);
+renderFeatured(featured8);
 
   } catch (e) {
     console.error('Failed to load books for homepage:', e);
