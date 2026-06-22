@@ -1638,6 +1638,8 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   overflow: hidden;
   width: 100%;
   padding: 16px 0;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
 .marquee-track {
