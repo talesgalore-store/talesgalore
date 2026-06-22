@@ -116,3 +116,29 @@ function renderFeatured(books) {
 }
 
 loadHomeBooks();
+
+let marqueeOffset = 0;
+let isManual = false;
+let manualTimeout;
+
+function marqueeScroll(direction) {
+  const track = document.getElementById('arrivals-marquee');
+  if (!track) return;
+
+  // Pause auto-scroll temporarily
+  track.style.animationPlayState = 'paused';
+  isManual = true;
+  clearTimeout(manualTimeout);
+
+  marqueeOffset += direction * 200;
+  track.style.transform = `translateX(${-marqueeOffset}px)`;
+  track.style.transition = 'transform 0.4s ease';
+
+  // Resume auto-scroll after 3 seconds of inactivity
+  manualTimeout = setTimeout(() => {
+    track.style.transition = '';
+    track.style.transform  = '';
+    track.style.animationPlayState = 'running';
+    marqueeOffset = 0;
+  }, 3000);
+}
