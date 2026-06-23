@@ -101,8 +101,15 @@ function renderFeatured(books) {
   const grid = document.getElementById('featured-grid');
   if (!grid) return;
 
-grid.innerHTML = books.map(b => `
-    <div class="product-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer;">
+  grid.innerHTML = books.map(b => {
+    const safeId     = b.id;
+    const safeTitle  = b.title.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const safeAuthor = (b.author || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const safeImage  = (b.image || '').replace(/'/g, "\\'");
+    const safePrice  = b.price;
+
+    return `
+    <div class="product-card" onclick="window.location='product.html?id=${safeId}&slug=${slugify(b.title)}'" style="cursor:pointer;">
       <div class="product-img-wrap">
         ${b.image
           ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
@@ -120,14 +127,14 @@ grid.innerHTML = books.map(b => `
             >${a}</a>`
           ).join(', ')}
         </p>` : ''}
-     <p class="product-price">₹ ${b.price.toFixed(2)}</p>
+        <p class="product-price">₹ ${safePrice.toFixed(2)}</p>
         <button
           class="product-add-btn"
-          onclick="event.stopPropagation(); addToCart({id:'${b.id}',title:'${b.title.replace(/'/g,"\\'")}',author:'${(b.author||'').replace(/'/g,"\\'")}',price:${b.price},image:'${b.image||''}',condition:'Good'}); flyBookToCart(this);"
+          onclick="event.stopPropagation(); handleAddToCart('${safeId}', '${safeTitle}', '${safeAuthor}', ${safePrice}, '${safeImage}', this);"
         >Add to Cart</button>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 loadHomeBooks();
