@@ -120,7 +120,6 @@ grid.innerHTML = books.map(b => `
             >${a}</a>`
           ).join(', ')}
         </p>` : ''}
-        <p class="product-price">₹ ${b.price.toFixed(2)}</p>
      <p class="product-price">₹ ${b.price.toFixed(2)}</p>
         <button
           class="product-add-btn"
