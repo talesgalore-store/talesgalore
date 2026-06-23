@@ -165,7 +165,7 @@ function marqueeScroll(direction) {
   }, 3000);
 }
 
-function handleAddToCart(id, title, author, price, image, btn) {
+window.handleAddToCart = function(id, title, author, price, image, btn) {
   addToCart({
     id:        id,
     title:     title,
