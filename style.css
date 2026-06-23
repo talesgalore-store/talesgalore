@@ -1781,6 +1781,8 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   width: 160px;
   border-radius: 10px;
   border: 1px solid #E2D5BC;
+  flex-direction: column;
+  display: flex;
 }
 
 #featured-grid .product-img-wrap {
