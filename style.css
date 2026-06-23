@@ -1994,3 +1994,79 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 .search-view-all:hover {
   background: #F5EDD8;
 }
+
+/* ── MISSION BOX ── */
+.mission-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mission-box {
+  background: white;
+  border: 1px solid #E2D5BC;
+  border-radius: 16px;
+  padding: 36px 32px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(139,94,60,0.08);
+  max-width: 380px;
+}
+
+.mission-icon {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+
+.mission-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2C2416;
+  margin-bottom: 12px;
+}
+
+.mission-box p {
+  font-size: 0.92rem;
+  color: #6B5A47;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.mission-box blockquote {
+  border-left: 3px solid #C8923A;
+  padding: 10px 16px;
+  margin: 0 0 20px;
+  text-align: left;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: #8B5E3C;
+  background: #FDF8F2;
+  border-radius: 0 8px 8px 0;
+}
+
+.mission-box blockquote cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #C8923A;
+  margin-top: 6px;
+}
+
+.mission-cta {
+  display: inline-block;
+  background: #8B5E3C;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.mission-cta:hover {
+  background: #C8923A;
+}
