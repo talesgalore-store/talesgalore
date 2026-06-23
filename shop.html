@@ -539,6 +539,8 @@ return {
   author: rawAuthor,
   authorName: authorsArray,
   price:     parseFloat(f.price) || 0,
+ condition:  (f.condition || '').trim(),
+  binding:   (f.bookBinding || f.binding || '').trim(),
   condition: f.condition || '',
   ages:      ageArray,
   genres:    genreArray,
@@ -609,8 +611,7 @@ function readUrlParams() {
     const sort              = document.getElementById('sort-select').value;
 
     filtered = allBooks.filter(b => {
-      if (checkedConditions.length && !checkedConditions.includes(b.condition)) return false;
-      if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
+    if (checkedConditions.length && !checkedConditions.some(c => c.trim().toLowerCase() === (b.condition || '').trim().toLowerCase())) return false;      if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
       if (checkedGenres.length) {
         const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
         const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
