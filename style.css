@@ -1837,21 +1837,17 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 
 /* ── HOME SEARCH ── */
 .home-search-wrap {
-  background: transparent;
-  padding: 32px 24px 28px;
+  background: #8B5E3C;
+  padding: 36px 24px 28px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .home-search-wrap::before {
-  content: 'Find your next favourite book';
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  font-style: italic;
-  color: rgba(255,255,255,0.75);
+  display: none;
 }
 
 .home-search-inner {
