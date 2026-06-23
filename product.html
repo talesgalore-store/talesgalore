@@ -322,7 +322,7 @@ console.log("FINAL IMAGE URL:", imageUrl);
       : (rawAuthor ? [rawAuthor] : []);
       
       const price        = parseFloat(f.price) || 0;
-      const condition    = f.condition   || '';
+      const condition    = f.bookCondition   || '';
       const binding      = f.bookBinding || f.binding || '';
       const inStock      = f.inStock     !== false;
       const isbn         = f.isbn        || '';
@@ -381,8 +381,8 @@ console.log("FINAL IMAGE URL:", imageUrl);
               ${author        ? `<tr><td>Author</td><td>${author}</td></tr>`               : ''}
               ${ages.length   ? `<tr><td>Suggested age</td><td>${ages.join(', ')}</td></tr>` : ''}
               ${genres.length ? `<tr><td>Theme</td><td>${genres.join(', ')}</td></tr>`     : ''}
-              ${binding       ? `<tr><td>Binding</td><td>${bookBinding}</td></tr>`                 : ''}
-              ${condition     ? `<tr><td>Condition</td><td>${bookCondition}</td></tr>`             : ''}
+              ${binding       ? `<tr><td>Binding</td><td>${binding}</td></tr>`                 : ''}
+              ${condition     ? `<tr><td>Condition</td><td>${condition}</td></tr>`             : ''}
               ${isbn          ? `<tr><td>ISBN</td><td>${isbn}</td></tr>`                   : ''}
               ${pageCount     ? `<tr><td>Pages</td><td>${pageCount}</td></tr>`             : ''}
               ${language      ? `<tr><td>Language</td><td>${language}</td></tr>`           : ''}
