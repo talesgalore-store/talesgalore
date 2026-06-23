@@ -102,7 +102,7 @@ function renderFeatured(books) {
   if (!grid) return;
 
 grid.innerHTML = books.map(b => `
-    <a href="product.html?id=${b.id}&slug=${slugify(b.title)}" class="product-card">
+    <div class="product-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer;">
       <div class="product-img-wrap">
         ${b.image
           ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
@@ -110,9 +110,10 @@ grid.innerHTML = books.map(b => `
       </div>
       <div class="product-info">
         <h3>${b.title}</h3>
-         ${b.authorArray && b.authorArray.length ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
+        ${b.authorArray && b.authorArray.length ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
           ${b.authorArray.map(a =>
             `<a href="shop.html?author=${encodeURIComponent(a)}"
+                onclick="event.stopPropagation()"
                 style="color:#C8923A;text-decoration:none;"
                 onmouseover="this.style.textDecoration='underline'"
                 onmouseout="this.style.textDecoration='none'"
@@ -121,7 +122,7 @@ grid.innerHTML = books.map(b => `
         </p>` : ''}
         <p class="product-price">₹ ${b.price.toFixed(2)}</p>
       </div>
-    </a>
+    </div>
   `).join('');
 }
 
