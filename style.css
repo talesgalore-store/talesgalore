@@ -635,6 +635,7 @@ input, textarea, select, button { font-family: inherit; }
 .summary-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 14px;
   padding: 8px 0;
   color: var(--ink-light);
