@@ -164,3 +164,15 @@ function marqueeScroll(direction) {
     marqueeOffset = 0;
   }, 3000);
 }
+
+function handleAddToCart(id, title, author, price, image, btn) {
+  addToCart({
+    id:        id,
+    title:     title,
+    author:    author,
+    price:     price,
+    image:     image,
+    condition: 'Good'
+  });
+  flyBookToCart(btn);
+}
