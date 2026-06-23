@@ -322,7 +322,7 @@ console.log("FINAL IMAGE URL:", imageUrl);
       : (rawAuthor ? [rawAuthor] : []);
       
       const price        = parseFloat(f.price) || 0;
-      const condition    = f.bookCondition   || '';
+      const condition    = f.bookCondition || f.condition || '';
       const binding      = f.bookBinding || f.binding || '';
       const inStock      = f.inStock     !== false;
       const isbn         = f.isbn        || '';
