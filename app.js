@@ -48,14 +48,16 @@ async function loadHomeBooks() {
         }
 
         const rawAuthor = f.author || f.authorName || '';
-        const author = Array.isArray(rawAuthor) ? rawAuthor.join(', ') : rawAuthor;
+        const authorArray = Array.isArray(rawAuthor) ? rawAuthor : (rawAuthor ? [rawAuthor] : []);
+        const author = authorArray.join(', ');
 
         return {
-          id:    item.sys.id,
-          title: f.title || 'Untitled',
+          id:         item.sys.id,
+          title:      f.title || 'Untitled',
           author,
-          price: parseFloat(f.price) || 0,
-          image: imageUrl
+          authorArray,
+          price:      parseFloat(f.price) || 0,
+          image:      imageUrl
         };
       });
 
@@ -108,8 +110,8 @@ grid.innerHTML = books.map(b => `
       </div>
       <div class="product-info">
         <h3>${b.title}</h3>
-        ${b.author ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
-          ${(Array.isArray(b.author) ? b.author : [b.author]).map(a =>
+         ${b.authorArray && b.authorArray.length ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
+          ${b.authorArray.map(a =>
             `<a href="shop.html?author=${encodeURIComponent(a)}"
                 style="color:#C8923A;text-decoration:none;"
                 onmouseover="this.style.textDecoration='underline'"
