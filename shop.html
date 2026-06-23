@@ -561,10 +561,11 @@ return {
   }
 
 function readUrlParams() {
-    const params = new URLSearchParams(window.location.search);
-    const age    = params.get('age');
-    const genre  = params.get('genre');
-    const author = params.get('author');
+    const params  = new URLSearchParams(window.location.search);
+    const age     = params.get('age');
+    const genre   = params.get('genre');
+    const author  = params.get('author');
+    const search  = params.get('search');
 
     if (age) {
       const cb = document.querySelector(`#ageFilters input[value="${age}"]`);
@@ -584,6 +585,11 @@ function readUrlParams() {
       document.getElementById('pageTitle').textContent = author;
       showPill(author);
     }
+    if (search) {
+      window._searchQuery = search;
+      document.getElementById('pageTitle').textContent = `"${search}"`;
+      showPill(`Search: ${search}`);
+    }
   }
 
   function showPill(label) {
@@ -597,6 +603,7 @@ function readUrlParams() {
     const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
     const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
     const checkedAuthors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
+    const searchQuery       = (window._searchQuery || '').toLowerCase().trim();
     const priceMin          = parseFloat(document.getElementById('priceMin').value) || 0;
     const priceMax          = parseFloat(document.getElementById('priceMax').value) || Infinity;
     const sort              = document.getElementById('sort-select').value;
@@ -612,6 +619,12 @@ function readUrlParams() {
       if (checkedAuthors.length) {
         const bookAuthors = Array.isArray(b.authorName) ? b.authorName : (b.authorName ? [b.authorName] : []);
         if (!checkedAuthors.some(a => bookAuthors.includes(a))) return false;
+      }
+      if (searchQuery) {
+        const inTitle  = b.title.toLowerCase().includes(searchQuery);
+        const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(searchQuery);
+        const inAge    = b.ages.some(a => a.toLowerCase().includes(searchQuery));
+        if (!inTitle && !inAuthor && !inAge) return false;
       }
       if (b.price < priceMin || b.price > priceMax) return false;
       return true;
@@ -721,6 +734,7 @@ function readUrlParams() {
     document.getElementById('sort-select').value = 'featured';
     document.getElementById('pageTitle').textContent = 'Catalogue';
     document.getElementById('activeFilterPill').style.display = 'none';
+    window._searchQuery = '';
     history.replaceState({}, '', 'shop.html');
     applyFilters();
   }
