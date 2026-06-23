@@ -551,7 +551,7 @@ return {
   author: rawAuthor,
   authorName: authorsArray,
   price:     parseFloat(f.price) || 0,
-  condition:  (f.bookCondition || '').trim(),
+  condition: (f.bookCondition || f.condition || '').trim(),
   binding:   (f.bookBinding || f.binding || '').trim(),
   ages:      ageArray,
   genres:    genreArray,
