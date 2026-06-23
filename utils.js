@@ -6,38 +6,33 @@ function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-function addToCart(id) {
- let book = window._allBooks?.find(b => b.id === id);
- console.log("BOOK STOCK COUNT:", book?.stockCount, "FULL BOOK:", book);
-  if (!book) { console.error("Book not found:", id); return; }
+function addToCart(idOrBook) {
+  let book;
+
+  if (typeof idOrBook === 'object') {
+    // Full book object passed directly
+    book = idOrBook;
+  } else {
+    // ID string passed — look up from _allBooks
+    book = window._allBooks?.find(b => b.id === idOrBook);
+  }
+
+  console.log("BOOK STOCK COUNT:", book?.stockCount, "FULL BOOK:", book);
+  if (!book) { console.error("Book not found:", idOrBook); return; }
 
   let cart = getCart();
-  let item = cart.find(p => p.id === id);
+  let item = cart.find(p => p.id === book.id);
   const currentQty = item ? item.qty : 0;
 
-if (currentQty >= (book.stockCount || 1)) {
-  alert("Maximum stock reached");
-  return;
-}
+  if (currentQty >= (book.stockCount || 99)) {
+    alert("Maximum stock reached");
+    return;
+  }
 
   if (item) {
     item.qty += 1;
   } else {
     cart.push({
-      id:        book.id,
-      title:     book.title,
-      author:    book.author || '',
-      price:     Number(book.price),
-      condition: book.condition || '',
-      image:     book.image || '',
-      stockCount: book.stockCount, 
-      qty:       1
-    });
-  }
-
-  saveCart(cart);
-  updateCartCount();
-}
 
 function removeFromCart(id) {
   let cart = getCart();
