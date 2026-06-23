@@ -108,7 +108,15 @@ function renderFeatured(books) {
       </div>
       <div class="product-info">
         <h3>${b.title}</h3>
-        ${b.author ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">${b.author}</p>` : ''}
+         ${b.author ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
+          ${(Array.isArray(b.author) ? b.author : [b.author]).map(a =>
+            `<a href="shop.html?author=${encodeURIComponent(a)}"
+                style="color:#C8923A;text-decoration:none;"
+                onmouseover="this.style.textDecoration='underline'"
+                onmouseout="this.style.textDecoration='none'"
+            >${a}</a>`
+          ).join(', ')}
+        </p>` : ''}
         <p class="product-price">₹ ${b.price.toFixed(2)}</p>
       </div>
     </a>
