@@ -99,7 +99,7 @@ function renderFeatured(books) {
   const grid = document.getElementById('featured-grid');
   if (!grid) return;
 
-  grid.innerHTML = books.map(b => `
+grid.innerHTML = books.map(b => `
     <a href="product.html?id=${b.id}&slug=${slugify(b.title)}" class="product-card">
       <div class="product-img-wrap">
         ${b.image
@@ -108,7 +108,7 @@ function renderFeatured(books) {
       </div>
       <div class="product-info">
         <h3>${b.title}</h3>
-         ${b.author ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
+        ${b.author ? `<p style="font-size:0.78rem;color:#888;margin-bottom:4px;">
           ${(Array.isArray(b.author) ? b.author : [b.author]).map(a =>
             `<a href="shop.html?author=${encodeURIComponent(a)}"
                 style="color:#C8923A;text-decoration:none;"
