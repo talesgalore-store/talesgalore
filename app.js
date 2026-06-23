@@ -121,6 +121,10 @@ grid.innerHTML = books.map(b => `
           ).join(', ')}
         </p>` : ''}
         <p class="product-price">₹ ${b.price.toFixed(2)}</p>
+          <button
+          class="add-to-cart"
+          onclick="event.stopPropagation(); addToCart({id:'${b.id}',title:'${b.title.replace(/'/g,"\\'")}',author:'${(b.author||'').replace(/'/g,"\\'")}',price:${b.price},image:'${b.image||''}',condition:'Good'}); flyBookToCart(this);"
+        >Add to Cart</button>
       </div>
     </div>
   `).join('');
