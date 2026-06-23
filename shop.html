@@ -373,6 +373,15 @@
       </div>
     </div>
 
+     <div class="filter-group">
+      <div class="filter-heading open" onclick="toggleFilter(this)">
+        <h3>Author</h3><span class="chevron">▼</span>
+      </div>
+      <div class="filter-options" id="authorFilters">
+        <div style="font-size:0.78rem;color:#aaa;font-style:italic;">Loading authors…</div>
+      </div>
+    </div>
+
     <button class="clear-filters" onclick="clearFilters()">Remove all filters</button>
   </aside>
 
@@ -539,9 +548,10 @@ return {
 };
       });
 
+      populateAuthorFilters();
       readUrlParams();
       applyFilters();
-
+      
     } catch (e) {
       console.error(e);
       document.getElementById('products-grid').innerHTML =
@@ -550,10 +560,11 @@ return {
     }
   }
 
-  function readUrlParams() {
+function readUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const age    = params.get('age');
     const genre  = params.get('genre');
+    const author = params.get('author');
 
     if (age) {
       const cb = document.querySelector(`#ageFilters input[value="${age}"]`);
@@ -567,6 +578,12 @@ return {
       document.getElementById('pageTitle').textContent = genre;
       showPill(genre);
     }
+    if (author) {
+      const cb = document.querySelector(`#authorFilters input[value="${author}"]`);
+      if (cb) cb.checked = true;
+      document.getElementById('pageTitle').textContent = author;
+      showPill(author);
+    }
   }
 
   function showPill(label) {
@@ -579,6 +596,7 @@ return {
     const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
     const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
     const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
+    const checkedAuthors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
     const priceMin          = parseFloat(document.getElementById('priceMin').value) || 0;
     const priceMax          = parseFloat(document.getElementById('priceMax').value) || Infinity;
     const sort              = document.getElementById('sort-select').value;
@@ -590,6 +608,10 @@ return {
         const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
         const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
         if (!normFilters.some(f => normBook.includes(f))) return false;
+      }
+      if (checkedAuthors.length) {
+        const bookAuthors = Array.isArray(b.authorName) ? b.authorName : (b.authorName ? [b.authorName] : []);
+        if (!checkedAuthors.some(a => bookAuthors.includes(a))) return false;
       }
       if (b.price < priceMin || b.price > priceMax) return false;
       return true;
@@ -631,7 +653,18 @@ return {
         </div>
         <div class="product-info">
           <h3>${b.title}</h3>
-          ${b.author ? `<div style="font-size:0.78rem;color:#888;margin-bottom:4px;">${b.author}</div>` : ''}
+          ${b.authorName && b.authorName.length
+            ? `<div style="font-size:0.78rem;color:#888;margin-bottom:4px;">
+                ${b.authorName.map(a =>
+                  `<a href="shop.html?author=${encodeURIComponent(a)}"
+                      onclick="event.stopPropagation()"
+                      style="color:#C8923A;text-decoration:none;"
+                      onmouseover="this.style.textDecoration='underline'"
+                      onmouseout="this.style.textDecoration='none'"
+                  >${a}</a>`
+                ).join(', ')}
+               </div>`
+            : ''}
           ${b.condition ? `<div class="product-condition">${b.condition}</div>` : ''}
           <div class="product-price">₹ ${b.price.toFixed(2)}</div>
           ${b.inStock
@@ -726,36 +759,29 @@ return {
   updateWishlistCount();
   showToast(`"${book.title}" saved to wishlist`);
 }
+
+  function populateAuthorFilters() {
+    const authorSet = new Set();
+    allBooks.forEach(b => {
+      const authors = Array.isArray(b.authorName) ? b.authorName : (b.authorName ? [b.authorName] : []);
+      authors.forEach(a => { if (a) authorSet.add(a.trim()); });
+    });
+
+    const sorted = [...authorSet].sort();
+    const container = document.getElementById('authorFilters');
+    if (!container) return;
+
+    container.innerHTML = sorted.map(author => `
+      <label>
+        <input type="checkbox" value="${author}" onchange="applyFilters()"/>
+        ${author}
+      </label>
+    `).join('');
+  }
+  
   loadBooks();
   const urlParams = new URLSearchParams(window.location.search);
   
-  const authorFilter = urlParams.get("author");
-  console.log("AUTHOR FILTER:", authorFilter);
-  allBooks.forEach(book => {
-  console.log(book.title, book.authorName);
-});
-  
-if (authorFilter) {
-
-  const authorsToMatch =
-    authorFilter.split(",").map(a => a.trim());
-
-  filtered = allBooks.filter(book => {
-
-    const bookAuthors =
-      Array.isArray(book.authorName)
-        ? book.authorName
-        : (book.authorName ? [book.authorName] : []);
-
-    return bookAuthors.some(author =>
-      authorsToMatch.includes(author)
-    );
-  });
-
-} else {
-  filtered = allBooks;
-}
-renderPage();
 </script>
 </body>
 </html>
