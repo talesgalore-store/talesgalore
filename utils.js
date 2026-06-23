@@ -160,3 +160,34 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
   updateWishlistCount(); // add this line
 });
+
+function flyBookToCart(buttonEl) {
+  const cart = document.querySelector('.header-cart') || document.querySelector('a[href="cart.html"]');
+  if (!buttonEl || !cart) return;
+
+  const btnRect  = buttonEl.getBoundingClientRect();
+  const cartRect = cart.getBoundingClientRect();
+
+  const el = document.createElement('div');
+  el.classList.add('fly-to-cart');
+  el.textContent = '📖';
+  el.style.left = btnRect.left + btnRect.width / 2 + 'px';
+  el.style.top  = btnRect.top  + btnRect.height / 2 + 'px';
+
+  // Override animation to fly toward cart position
+  el.style.animation = 'none';
+  document.body.appendChild(el);
+
+  const deltaX = cartRect.left - btnRect.left;
+  const deltaY = cartRect.top  - btnRect.top;
+
+  el.animate([
+    { transform: 'translate(0, 0) scale(1) rotate(0deg)',               opacity: 1 },
+    { transform: `translate(${deltaX * 0.4}px, ${deltaY * 0.2}px) scale(1.3) rotate(-20deg)`, opacity: 1, offset: 0.4 },
+    { transform: `translate(${deltaX}px, ${deltaY}px) scale(0.2) rotate(20deg)`, opacity: 0 }
+  ], {
+    duration: 700,
+    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    fill: 'forwards'
+  }).onfinish = () => el.remove();
+}
