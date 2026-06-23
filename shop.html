@@ -602,6 +602,7 @@ function readUrlParams() {
 
   function applyFilters() {
     const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
+    const checkedBindings = [...document.querySelectorAll('#bindingFilters input:checked')].map(c => c.value);
     const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
     const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
     const checkedAuthors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
@@ -612,6 +613,8 @@ function readUrlParams() {
 
     filtered = allBooks.filter(b => {
     if (checkedConditions.length && !checkedConditions.some(c => c.trim().toLowerCase() === (b.condition || '').trim().toLowerCase())) return false;      if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
+    if (checkedBindings.length && !checkedBindings.some(c => c.trim().toLowerCase() === (b.binding || '').trim().toLowerCase())) return false;
+
       if (checkedGenres.length) {
         const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
         const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
