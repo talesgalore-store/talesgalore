@@ -7,22 +7,19 @@ function saveCart(cart) {
 }
 
 function addToCart(idOrBook) {
-  let book;
+  var book;
 
   if (typeof idOrBook === 'object') {
-    // Full book object passed directly
     book = idOrBook;
   } else {
-    // ID string passed — look up from _allBooks
-    book = window._allBooks?.find(b => b.id === idOrBook);
+    book = window._allBooks ? window._allBooks.find(function(b) { return b.id === idOrBook; }) : null;
   }
 
-  console.log("BOOK STOCK COUNT:", book?.stockCount, "FULL BOOK:", book);
   if (!book) { console.error("Book not found:", idOrBook); return; }
 
-  let cart = getCart();
-  let item = cart.find(p => p.id === book.id);
-  const currentQty = item ? item.qty : 0;
+  var cart = getCart();
+  var item = cart.find(function(p) { return p.id === book.id; });
+  var currentQty = item ? item.qty : 0;
 
   if (currentQty >= (book.stockCount || 99)) {
     alert("Maximum stock reached");
@@ -33,6 +30,20 @@ function addToCart(idOrBook) {
     item.qty += 1;
   } else {
     cart.push({
+      id:         book.id,
+      title:      book.title,
+      author:     book.author || '',
+      price:      Number(book.price),
+      condition:  book.condition || '',
+      image:      book.image || '',
+      stockCount: book.stockCount || 99,
+      qty:        1
+    });
+  }
+
+  saveCart(cart);
+  updateCartCount();
+}
 
 function removeFromCart(id) {
   let cart = getCart();
