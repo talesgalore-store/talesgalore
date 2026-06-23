@@ -368,7 +368,7 @@
           <div class="wishlist-item-price">₹${item.price}</div>
           ${item.condition ? `<div class="wishlist-item-condition">${item.condition}</div>` : ''}
           <div class="wishlist-item-actions">
-            <button class="move-to-cart-btn" onclick="moveToCart('${item.id}')">Move to Cart</button>
+            <button class="move-to-cart-btn" onclick="moveToCart('${item.id}'); flyBookToCart(this);">Move to Cart</button>
             <button class="remove-wishlist-btn" onclick="removeFromWishlist('${item.id}'); renderWishlist()">Remove</button>
           </div>
         </div>
