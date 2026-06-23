@@ -40,8 +40,8 @@ function renderCart() {
           <span class="qty-display">${item.qty || 1}</span>
           <button class="qty-btn" onclick="increaseQty('${item.id}'); renderCart()">+</button>
         </div>
-        <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove from Cart</button>
-        <button class="wishlist-btn" onclick="addToWishlist('${item.id}')">♡ Save for Later</button>
+        <button class="remove-btn" onclick="removeFromCart('${item.id}'); renderCart()">Remove from Cart</button>
+        <button class="wishlist-btn" onclick="addToWishlist('${item.id}'); renderCart()">♡ Save for Later</button>
       </div>
     </div>`).join('');
 
