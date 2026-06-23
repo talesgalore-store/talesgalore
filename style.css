@@ -1831,9 +1831,16 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 
 .home-search-inner {
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-search-inner .home-search-box {
+  flex: 1;
 }
 
 .home-search-inner::before {
