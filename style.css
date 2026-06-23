@@ -1778,7 +1778,7 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 
 #featured-grid .product-card {
-  width: 160px;
+  width: 100%;
   border-radius: 10px;
   border: 1px solid #E2D5BC;
   flex-direction: column;
