@@ -358,10 +358,6 @@ console.log("FINAL IMAGE URL:", imageUrl);
             <h1>${title}</h1>
             ${author ? `<div class="product-author">By <a href="shop.html?author=${encodeURIComponent(author)}">${author}</a></div>` : ''}
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
-            <div class="product-badges">
-              ${binding   ? `<span class="product-badge">${binding}</span>`         : ''}
-              ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`   : ''}
-            </div>
             ${inStock
             ? `<button class="add-to-cart-btn" id="atc-btn" onclick="addToCart('${id}'); flyBookToCart(this);">Add to Cart</button>
             <button class="save-later-btn" onclick="addToWishlistFromProduct('${id}')">♡ Save for Later</button>`
