@@ -2145,3 +2145,9 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 .product-add-btn:hover { background: #C8923A; }
 
+.story-parade-wrap {
+  overflow: hidden;
+  background: #FDFAF4;
+  border-top: 1px solid #E2D5BC;
+  border-bottom: 1px solid #E2D5BC;
+}
