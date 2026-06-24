@@ -360,7 +360,6 @@ console.log("FINAL IMAGE URL:", imageUrl);
             <div class="product-price-large">₹ ${price.toFixed(2)}</div>
             <div class="product-badges">
               ${binding   ? `<span class="product-badge">${binding}</span>`         : ''}
-              ${condition ? `<span class="product-badge">${condition}</span>`       : ''}
               ${!inStock  ? `<span class="product-badge sold-out">Sold Out</span>`   : ''}
             </div>
             ${inStock
