@@ -1782,8 +1782,6 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   scrollbar-width: none;
   flex-wrap: nowrap;
   padding-bottom: 8px;
-  mask-image: linear-gradient(to right, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
 }
 
 #featured-grid .product-card {
