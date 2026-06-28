@@ -454,8 +454,6 @@ console.log("FINAL IMAGE URL:", imageUrl);
       console.log("BOOK DATA:", window._allBooks);
       console.log("FINAL IMAGE URL:", imageUrl);
       document.getElementById('page-content').innerHTML = `
-      loadAlsoLike(id, authorsArray, ages, genres); // ← ADD THIS LINE
-
         <div class="product-page">
           <div class="product-image-wrap">
             ${imageUrl
@@ -495,7 +493,7 @@ console.log("FINAL IMAGE URL:", imageUrl);
           </div>
         </div>
       `;
-
+     loadAlsoLike(id, authorsArray, ages, genres); 
     } catch(e) {
       console.error(e);
       document.getElementById('page-content').innerHTML =
