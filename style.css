@@ -2145,3 +2145,12 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 .product-add-btn:hover { background: #C8923A; }
 
+.marquee-wrapper {
+  isolation: isolate;
+}
+
+.featured-section {
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
