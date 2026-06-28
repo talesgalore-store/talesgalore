@@ -809,7 +809,21 @@ function readUrlParams() {
   
   loadBooks();
   const urlParams = new URLSearchParams(window.location.search);
-  
+
+  function handleShopSearch() {
+  const query = document.getElementById('shopSearchInput').value.trim();
+  window._searchQuery = query;
+
+  if (query) {
+    document.getElementById('pageTitle').textContent = `"${query}"`;
+    showPill(`Search: ${query}`);
+  } else {
+    document.getElementById('pageTitle').textContent = 'Catalogue';
+    document.getElementById('activeFilterPill').style.display = 'none';
+  }
+
+  applyFilters();
+}
 </script>
 </body>
 </html>
