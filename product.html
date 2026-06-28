@@ -120,6 +120,112 @@
   background: #C8923A;
   color: white;
 }
+
+.also-like-section {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  border-top: 1px solid var(--rule);
+  padding-top: 48px;
+}
+.also-like-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2C2416;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+.also-like-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+@media(max-width:700px) {
+  .also-like-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.also-like-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow .2s, transform .2s, border-color .2s;
+}
+.also-like-card:hover {
+  box-shadow: 0 8px 28px rgba(139,94,60,0.12);
+  transform: translateY(-3px);
+  border-color: var(--gold);
+}
+.also-like-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  background: var(--warm);
+}
+.also-like-img-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+.also-like-info {
+  padding: 10px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.also-like-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #2C2416;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.also-like-author {
+  font-size: 0.72rem;
+  color: #888;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.also-like-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-w);
+  margin-bottom: 8px;
+}
+.also-like-btn {
+  width: 100%;
+  padding: 7px;
+  background: var(--ink-w);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  transition: background .2s;
+  margin-top: auto;
+}
+.also-like-btn:hover { background: var(--gold); }
   </style>
 
 <script src="utils.js"></script> 
