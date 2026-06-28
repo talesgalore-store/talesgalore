@@ -2154,3 +2154,13 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   position: relative;
   z-index: 1;
 }
+
+.featured-section {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.featured-section * {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
