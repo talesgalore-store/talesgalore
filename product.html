@@ -527,8 +527,95 @@ console.log("FINAL IMAGE URL:", imageUrl);
     }, 2000);
   }
 }
-  
+  async function loadAlsoLike(currentId, currentAuthors, currentAges, currentGenres) {
+  try {
+    const res  = await fetch(
+      `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?content_type=book&limit=1000&access_token=${ACCESS_TOKEN}&include=1`
+    );
+    const data = await res.json();
+
+    const assets = {};
+    (data.includes?.Asset || []).forEach(a => {
+      assets[a.sys.id] = 'https:' + a.fields.file.url;
+    });
+
+    const allBooks = (data.items || [])
+      .filter(item => item.sys.id !== currentId && item.fields.inStock !== false)
+      .map(item => {
+        const f = item.fields;
+        const imgField = f.coverImage;
+        let imageUrl = null;
+        if (imgField?.sys?.id) imageUrl = assets[imgField.sys.id] || null;
+        else if (Array.isArray(imgField) && imgField[0]?.sys?.id) imageUrl = assets[imgField[0].sys.id] || null;
+
+        const rawAuthor = f.author || f.authorName || '';
+        const authors = Array.isArray(rawAuthor) ? rawAuthor : (rawAuthor ? [rawAuthor] : []);
+        const ages = [].concat(f.suggestedAge || f.suggestedAges || []);
+        const genres = [].concat(f.theme || []);
+
+        return { id: item.sys.id, title: f.title || 'Untitled', authors, ages, genres, price: parseFloat(f.price) || 0, image: imageUrl };
+      });
+
+    const picked = [];
+    const usedIds = new Set();
+
+    // Priority 1 — same author
+    if (currentAuthors.length) {
+      allBooks.filter(b =>
+        b.authors.some(a => currentAuthors.includes(a)) && !usedIds.has(b.id)
+      ).slice(0, 4).forEach(b => { picked.push(b); usedIds.add(b.id); });
+    }
+
+    // Priority 2 — same age
+    if (picked.length < 4 && currentAges.length) {
+      allBooks.filter(b =>
+        b.ages.some(a => currentAges.includes(a)) && !usedIds.has(b.id)
+      ).slice(0, 4 - picked.length).forEach(b => { picked.push(b); usedIds.add(b.id); });
+    }
+
+    // Priority 3 — same genre
+    if (picked.length < 4 && currentGenres.length) {
+      allBooks.filter(b =>
+        b.genres.some(g => currentGenres.includes(g)) && !usedIds.has(b.id)
+      ).slice(0, 4 - picked.length).forEach(b => { picked.push(b); usedIds.add(b.id); });
+    }
+
+    // Priority 4 — fallback: any in-stock books
+    if (picked.length < 4) {
+      allBooks.filter(b => !usedIds.has(b.id))
+        .slice(0, 4 - picked.length)
+        .forEach(b => { picked.push(b); usedIds.add(b.id); });
+    }
+
+    if (!picked.length) return;
+
+    document.getElementById('also-like-grid').innerHTML = picked.map(b => `
+      <div class="also-like-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
+        ${b.image
+          ? `<img class="also-like-img" src="${b.image}" alt="${b.title}" loading="lazy"/>`
+          : `<div class="also-like-img-placeholder">📖</div>`}
+        <div class="also-like-info">
+          <div class="also-like-title">${b.title}</div>
+          <div class="also-like-author">${b.authors.join(', ')}</div>
+          <div class="also-like-price">₹ ${b.price.toFixed(2)}</div>
+          <button class="also-like-btn" onclick="event.stopPropagation(); addToCart('${b.id}')">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('also-like-section').style.display = 'block';
+    loadAlsoLike(id, authorsArray, ages, genres);
+
+  } catch(e) {
+    console.error('Also like failed:', e);
+  }
+}
   loadProduct();
 </script>
+  <div id="also-like-section" class="also-like-section" style="display:none;">
+  <h2>You may also like…</h2>
+  <div class="also-like-grid" id="also-like-grid"></div>
+</div>
+  
 </body>
 </html>
