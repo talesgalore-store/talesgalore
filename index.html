@@ -220,6 +220,70 @@
     <div style="text-align:center;padding:40px;color:#888;font-style:italic;grid-column:1/-1;">Loading featured books…</div>
     </div>
   </div>
+
+<!--
+  TALESGALORE — Homepage Reviews Strip
+  Paste this into index.html wherever you want the trust section to appear
+  (recommended: after the featured books section, before the footer).
+  Requires reviews.js to be loaded on the page.
+-->
+
+<section class="section section-alt" id="reviews-strip">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">What Readers Say</h2>
+      <a href="reviews.html" class="view-all">All Reviews →</a>
+    </div>
+    <div id="homepage-reviews" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;"></div>
+  </div>
+</section>
+
+<style>
+  .hp-review-card {
+    background: #fff;
+    border: 1px solid #DDD8CF;
+    border-radius: 12px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hp-review-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1C1C1A;
+    line-height: 1.4;
+  }
+  .hp-review-body {
+    font-size: 13px;
+    color: #4A4A46;
+    line-height: 1.7;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hp-review-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8B5E3C;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 768px) {
+    #homepage-reviews {
+      grid-template-columns: 1fr !important;
+      gap: 14px;
+    }
+  }
+</style>
+
+  import { loadHomepageReviews } from './reviews.js';
+  document.addEventListener('DOMContentLoaded', loadHomepageReviews);
+
+  
 </section>
 
 <!-- Literary Corner -->
