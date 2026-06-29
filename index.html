@@ -285,11 +285,29 @@
 <!-- Literary Corner -->
 <div id="literary-corner-container"></div>
 <script>
-  fetch('literary-corner.html')
-    .then(r => r.text())
-    .then(html => {
-      document.getElementById('literary-corner-container').innerHTML = html;
-    });
+  // Load literary-data.js first, then inject the corner HTML
+  const lcScript = document.createElement('script');
+  lcScript.src = 'literary-data.js';
+  lcScript.onload = function () {
+    fetch('literary-corner.html')
+      .then(r => r.text())
+      .then(html => {
+        const container = document.getElementById('literary-corner-container');
+        container.innerHTML = html;
+
+        // Re-run the inline script inside literary-corner.html
+        container.querySelectorAll('script').forEach(oldScript => {
+          const newScript = document.createElement('script');
+          if (oldScript.src) {
+            newScript.src = oldScript.src; // skip — already loaded
+          } else {
+            newScript.textContent = oldScript.textContent;
+          }
+          document.body.appendChild(newScript);
+        });
+      });
+  };
+  document.head.appendChild(lcScript);
 </script>
 
 <script type="module">
