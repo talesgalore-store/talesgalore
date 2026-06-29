@@ -286,14 +286,17 @@
 <div id="literary-corner-container"></div>
 
 <iframe id="lc-frame" src="literary-corner.html"
-        style="width:100%; border:none;"></iframe>
+        style="width:100%; border:none; display:block;"
+        scrolling="no"></iframe>
 
 <script>
 const iframe = document.getElementById("lc-frame");
-
 iframe.onload = function () {
-  iframe.style.height =
-    iframe.contentWindow.document.body.scrollHeight + "px";
+  // Give the iframe content a moment to fully render
+  setTimeout(() => {
+    const doc = iframe.contentWindow.document;
+    iframe.style.height = doc.documentElement.scrollHeight + "px";
+  }, 200);
 };
     import { loadHomepageReviews } from './reviews.js';
   document.addEventListener('DOMContentLoaded', loadHomepageReviews);
