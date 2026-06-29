@@ -1,10 +1,12 @@
 /* =========================================
-   TALESGALORE — Reviews System
+   TALESGALORE — Store Reviews
    Firebase Firestore (CDN, no bundler)
    ========================================= */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, serverTimestamp }
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs,
+         query, orderBy, limit, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -19,90 +21,111 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-/* ── Render star rating (read-only display) ── */
-function starsHTML(rating) {
+/* ── Helpers ── */
+function starsHTML(rating, size = '1rem') {
   return Array.from({ length: 5 }, (_, i) =>
-    `<span style="color:${i < rating ? '#C8923A' : '#DDD8CF'};font-size:1.1rem;">★</span>`
+    `<span style="color:${i < rating ? '#C8923A' : '#DDD8CF'};font-size:${size};">★</span>`
   ).join('');
 }
 
-/* ── Load and display reviews for a book ── */
-export async function loadReviews(bookId) {
+function formatDate(ts) {
+  if (!ts?.toDate) return '';
+  return ts.toDate().toLocaleDateString('en-IN', {
+    day: 'numeric', month: 'short', year: 'numeric'
+  });
+}
+
+/* ── Load all reviews (reviews page) ── */
+export async function loadAllReviews() {
   const container = document.getElementById('reviews-list');
   const countEl   = document.getElementById('reviews-count');
+  const avgEl     = document.getElementById('reviews-avg');
   if (!container) return;
 
-  container.innerHTML = `<p style="color:#888;font-style:italic;padding:16px 0;">Loading reviews…</p>`;
+  container.innerHTML = `<p class="reviews-loading">Loading reviews…</p>`;
 
   try {
-    const q = query(
-      collection(db, 'reviews'),
-      where('bookId', '==', bookId),
-      orderBy('createdAt', 'desc')
-    );
+    const q    = query(collection(db, 'store-reviews'), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
 
     if (snap.empty) {
-      container.innerHTML = `<p style="color:#888;font-style:italic;padding:16px 0;">No reviews yet — be the first!</p>`;
+      container.innerHTML = `<p class="reviews-empty">No reviews yet — be the first to share your experience!</p>`;
       if (countEl) countEl.textContent = '0 reviews';
       return;
     }
 
-    if (countEl) countEl.textContent = `${snap.size} review${snap.size !== 1 ? 's' : ''}`;
+    const reviews = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const avg     = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+
+    if (countEl) countEl.textContent = `${reviews.length} review${reviews.length !== 1 ? 's' : ''}`;
+    if (avgEl)   avgEl.innerHTML     = `${starsHTML(Math.round(avg), '1.2rem')} <span style="font-weight:700;font-size:1.1rem;color:#1C1C1A;">${avg}</span> <span style="color:#888;font-size:13px;">/ 5</span>`;
+
+    container.innerHTML = reviews.map(r => `
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-stars">${starsHTML(r.rating)}</div>
+          <span class="review-author">${r.userName}</span>
+          <span class="review-date">${formatDate(r.createdAt)}</span>
+        </div>
+        ${r.headline ? `<p class="review-headline">"${r.headline}"</p>` : ''}
+        <p class="review-body">${r.body}</p>
+      </div>`).join('');
+
+  } catch (err) {
+    console.error('loadAllReviews:', err);
+    container.innerHTML = `<p style="color:#cc4444;">Could not load reviews. Please try again later.</p>`;
+  }
+}
+
+/* ── Load 3 latest reviews (homepage strip) ── */
+export async function loadHomepageReviews() {
+  const container = document.getElementById('homepage-reviews');
+  if (!container) return;
+
+  try {
+    const q    = query(collection(db, 'store-reviews'), orderBy('createdAt', 'desc'), limit(3));
+    const snap = await getDocs(q);
+    if (snap.empty) { container.closest('section')?.remove(); return; }
 
     container.innerHTML = snap.docs.map(doc => {
-      const r    = doc.data();
-      const date = r.createdAt?.toDate
-        ? r.createdAt.toDate().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
-        : '';
+      const r = doc.data();
       return `
-        <div class="review-card">
-          <div class="review-header">
-            <span class="review-stars">${starsHTML(r.rating)}</span>
-            <span class="review-author">${r.userName}</span>
-            <span class="review-date">${date}</span>
-          </div>
-          ${r.headline ? `<p class="review-headline">${r.headline}</p>` : ''}
-          <p class="review-body">${r.body}</p>
+        <div class="hp-review-card">
+          <div style="margin-bottom:8px;">${starsHTML(r.rating)}</div>
+          ${r.headline ? `<p class="hp-review-headline">"${r.headline}"</p>` : ''}
+          <p class="hp-review-body">${r.body}</p>
+          <p class="hp-review-author">— ${r.userName}</p>
         </div>`;
     }).join('');
 
   } catch (err) {
-    console.error('loadReviews error:', err);
-    container.innerHTML = `<p style="color:#cc4444;">Could not load reviews.</p>`;
+    console.error('loadHomepageReviews:', err);
+    container.closest('section')?.remove();
   }
 }
 
-/* ── Submit a new review ── */
-export async function submitReview(bookId, bookTitle) {
+/* ── Submit a store review ── */
+export async function submitReview() {
   const user = window.getCurrentUser ? window.getCurrentUser() : null;
   if (!user) {
     if (typeof openAuthModal === 'function') openAuthModal('signin');
-    showToast('Please sign in to leave a review.');
+    if (typeof showToast    === 'function') showToast('Please sign in to leave a review.');
     return;
   }
 
-  const rating   = parseInt(document.getElementById('review-rating')?.value || '0');
-  const headline = document.getElementById('review-headline')?.value.trim();
-  const body     = document.getElementById('review-body')?.value.trim();
+  const rating    = parseInt(document.getElementById('review-rating')?.value || '0');
+  const headline  = document.getElementById('review-headline')?.value.trim();
+  const body      = document.getElementById('review-body')?.value.trim();
   const submitBtn = document.getElementById('review-submit-btn');
 
-  if (!rating || rating < 1 || rating > 5) {
-    alert('Please select a star rating.');
-    return;
-  }
-  if (!body) {
-    alert('Please write your review before submitting.');
-    return;
-  }
+  if (!rating) { alert('Please select a star rating.'); return; }
+  if (!body)   { alert('Please write your review before submitting.'); return; }
 
   submitBtn.disabled    = true;
   submitBtn.textContent = 'Submitting…';
 
   try {
-    await addDoc(collection(db, 'reviews'), {
-      bookId,
-      bookTitle,
+    await addDoc(collection(db, 'store-reviews'), {
       rating,
       headline: headline || '',
       body,
@@ -117,11 +140,14 @@ export async function submitReview(bookId, bookTitle) {
     document.getElementById('review-body').value     = '';
     updateStarUI(0);
 
-    showToast('Thank you for your review!');
-    await loadReviews(bookId); // refresh list
+    if (typeof showToast === 'function') showToast('Thank you for your review! 🎉');
+    await loadAllReviews();
+
+    // Scroll to reviews list
+    document.getElementById('reviews-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   } catch (err) {
-    console.error('submitReview error:', err);
+    console.error('submitReview:', err);
     alert('Could not submit review. Please try again.');
   } finally {
     submitBtn.disabled    = false;
@@ -135,7 +161,7 @@ export function initStarPicker() {
   if (!picker) return;
 
   picker.innerHTML = Array.from({ length: 5 }, (_, i) =>
-    `<span class="star-pick" data-val="${i + 1}" style="font-size:1.8rem;cursor:pointer;color:#DDD8CF;transition:color 0.15s;">★</span>`
+    `<span class="star-pick" data-val="${i + 1}">★</span>`
   ).join('');
 
   const stars = picker.querySelectorAll('.star-pick');
@@ -143,8 +169,7 @@ export function initStarPicker() {
   stars.forEach(star => {
     star.addEventListener('mouseenter', () => updateStarUI(+star.dataset.val, stars));
     star.addEventListener('mouseleave', () => {
-      const current = parseInt(document.getElementById('review-rating')?.value || '0');
-      updateStarUI(current, stars);
+      updateStarUI(parseInt(document.getElementById('review-rating')?.value || '0'), stars);
     });
     star.addEventListener('click', () => {
       const val = +star.dataset.val;
