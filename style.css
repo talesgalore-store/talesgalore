@@ -2162,3 +2162,350 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   -webkit-mask-image: none;
   mask-image: none;
 }
+
+/* =========================================
+   TALESGALORE — Mobile Optimisation
+   Append to the bottom of style.css
+   Breakpoints: 768px (tablet), 480px (phone)
+   ========================================= */
+
+/* ── HEADER ── */
+@media (max-width: 768px) {
+
+  /* Stack logo + actions cleanly */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .header-inner {
+    padding: 10px 16px;
+    height: auto;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  /* Hide social icons on mobile — saves space */
+  .header-social {
+    display: none;
+  }
+
+  /* Logo takes natural space */
+  .header-logo {
+    flex: 1;
+  }
+
+  .logo-img {
+    height: 48px;
+  }
+
+  /* Actions: wishlist + cart side by side */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .header-actions a {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* Nav: horizontal scroll instead of hiding */
+  .main-nav {
+    display: flex !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+    position: static; /* don't double-stick on mobile */
+  }
+
+  .main-nav::-webkit-scrollbar { display: none; }
+
+  .main-nav a {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-right: 1px solid var(--border);
+  }
+
+  .main-nav a:last-child { border-right: none; }
+}
+
+/* ── ANNOUNCEMENT BAR ── */
+@media (max-width: 768px) {
+  .announcement-bar {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+}
+
+/* ── HERO / SEARCH BAND ── */
+@media (max-width: 768px) {
+  .home-search-wrap {
+    padding: 20px 16px;
+  }
+
+  .home-search-inner {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .home-filter-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── HERO MISSION (2-col → 1-col) ── */
+@media (max-width: 768px) {
+  .hero-mission {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-mission-banner {
+    height: 200px;
+  }
+
+  .hero-mission-text {
+    padding: 28px 20px;
+  }
+}
+
+/* ── AGE GRID ── */
+@media (max-width: 768px) {
+  .age-grid,
+  #age-track {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .age-grid,
+  #age-track {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── GENRE GRID ── */
+@media (max-width: 768px) {
+  .genre-grid,
+  #genre-track {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+}
+
+/* ── PRODUCTS GRID ── */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── MARQUEE / ARRIVALS ── */
+@media (max-width: 768px) {
+  .marquee-outer {
+    padding: 0 44px;
+  }
+
+  .marquee-card {
+    width: 130px;
+  }
+
+  .marquee-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+}
+
+/* ── FEATURED GRID (horizontal scroll) ── */
+@media (max-width: 768px) {
+  #featured-grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #featured-grid .product-card {
+    flex: 0 0 140px;
+    width: 140px;
+  }
+}
+
+/* ── MISSION BOX ── */
+@media (max-width: 768px) {
+  .mission-content {
+    padding: 0 16px;
+  }
+
+  .mission-box {
+    max-width: 100%;
+    padding: 24px 20px;
+  }
+}
+
+/* ── SHOP PAGE ── */
+@media (max-width: 768px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    position: static;
+  }
+
+  .shop-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+/* ── CART PAGE ── */
+@media (max-width: 768px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Summary panel unsticks and flows below items */
+  .cart-summary {
+    position: static;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .cart-item-image {
+    width: 70px;
+    height: 90px;
+  }
+
+  /* Stack image + info horizontally within the item */
+  .cart-item > * { width: 100%; }
+
+  /* Keep image+info side-by-side on phones */
+  .cart-item {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .cart-item-info {
+    flex: 1;
+    min-width: 0; /* prevents overflow */
+  }
+
+  .cart-item-actions {
+    width: 100%;
+  }
+
+  .checkout-form input,
+  .checkout-form textarea {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+}
+
+/* ── CONTACT PAGE ── */
+@media (max-width: 768px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 28px;
+    padding-bottom: 48px;
+  }
+}
+
+/* ── WHY PAGE ── */
+@media (max-width: 768px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .why-pillar {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .signature-feature {
+    padding: 24px 20px;
+  }
+}
+
+/* ── GAMES PAGE ── */
+@media (max-width: 768px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .games-banner-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .games-page-hero {
+    padding: 48px 20px 40px;
+  }
+
+  .games-hero-stats {
+    gap: 16px;
+    justify-content: center;
+  }
+}
+
+/* ── FOOTER ── */
+@media (max-width: 768px) {
+  .footer-inner,
+  .site-footer .footer-inner {
+    grid-template-columns: 1fr !important;
+    gap: 32px;
+    padding: 36px 20px 24px;
+  }
+}
+
+/* ── GENERAL SECTION SPACING ── */
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 0;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}
+
+/* ── WHATSAPP BUTTON — avoid covering content ── */
+@media (max-width: 768px) {
+  .whatsapp-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+}
