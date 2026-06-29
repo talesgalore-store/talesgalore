@@ -279,10 +279,6 @@
     }
   }
 </style>
-
-  import { loadHomepageReviews } from './reviews.js';
-  document.addEventListener('DOMContentLoaded', loadHomepageReviews);
-
   
 </section>
 
@@ -299,6 +295,8 @@ iframe.onload = function () {
   iframe.style.height =
     iframe.contentWindow.document.body.scrollHeight + "px";
 };
+    import { loadHomepageReviews } from './reviews.js';
+  document.addEventListener('DOMContentLoaded', loadHomepageReviews);
 </script>
   
 <!-- Footer -->
