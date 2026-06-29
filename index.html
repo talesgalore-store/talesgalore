@@ -284,25 +284,16 @@
 
 <!-- Literary Corner -->
 <div id="literary-corner-container"></div>
-
-<div style="width:100%;overflow:hidden;">
-  <iframe id="lc-frame" src="literary-corner.html"
-          style="width:100%;border:none;display:block;"
-          scrolling="no"></iframe>
-</div>
-
 <script>
-const iframe = document.getElementById("lc-frame");
-iframe.onload = function () {
-  setTimeout(() => {
-    const doc = iframe.contentWindow.document;
-    // Force the iframe body to not overflow
-    doc.body.style.overflowX = 'hidden';
-    doc.documentElement.style.overflowX = 'hidden';
-    iframe.style.height = doc.documentElement.scrollHeight + 'px';
-  }, 200);
-};
-    import { loadHomepageReviews } from './reviews.js';
+  fetch('literary-corner.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('literary-corner-container').innerHTML = html;
+    });
+</script>
+
+<script type="module">
+  import { loadHomepageReviews } from './reviews.js';
   document.addEventListener('DOMContentLoaded', loadHomepageReviews);
 </script>
   
