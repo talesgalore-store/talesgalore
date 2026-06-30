@@ -1,6 +1,7 @@
 /* =========================================
    TALESGALORE — Store Reviews
-   Firebase Firestore + Storage (CDN, no bundler)
+   Firebase Firestore (CDN, no bundler)
+   Photo upload removed for now — Spark (free) plan only
    ========================================= */
 
 import { initializeApp }
@@ -8,8 +9,6 @@ import { initializeApp }
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
          query, orderBy, limit, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCNuMz24vkzr551Mmjme4WkHBFXI2GdP80",
@@ -20,9 +19,8 @@ const firebaseConfig = {
   appId:             "1:251408630247:web:dfe7796c11affe21f0fd42"
 };
 
-const app     = initializeApp(firebaseConfig);
-const db      = getFirestore(app);
-const storage = getStorage(app);
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
 /* ── ADMIN CONFIG ──────────────────────────────────────────
    Add the email address(es) allowed to delete reviews.
@@ -30,7 +28,7 @@ const storage = getStorage(app);
    which comes from your existing auth.js.
    ──────────────────────────────────────────────────────── */
 const ADMIN_EMAILS = [
-  'support@talesgalore.com' // 🔑 replace with your actual admin email(s)
+  'you@talesgalore.com' // 🔑 replace with your actual admin email(s)
 ];
 
 function isAdmin() {
@@ -92,7 +90,6 @@ export async function loadAllReviews() {
         </div>
         ${r.headline ? `<p class="review-headline">"${esc(r.headline)}"</p>` : ''}
         <p class="review-body">${esc(r.body)}</p>
-        ${r.imageUrl ? `<img src="${r.imageUrl}" alt="Review photo" class="review-photo" onclick="window.open('${r.imageUrl}','_blank')"/>` : ''}
       </div>`).join('');
 
     if (admin) {
@@ -141,7 +138,6 @@ export async function loadHomepageReviews() {
           <div style="margin-bottom:8px;">${starsHTML(r.rating, '0.95rem')}</div>
           ${r.headline ? `<p class="hp-review-headline">"${esc(r.headline)}"</p>` : ''}
           <p class="hp-review-body">${esc(r.body)}</p>
-          ${r.imageUrl ? `<img src="${r.imageUrl}" alt="" class="hp-review-photo"/>` : ''}
           <p class="hp-review-author">— ${esc(r.userName)}</p>
         </div>`;
     }).join('');
@@ -152,7 +148,7 @@ export async function loadHomepageReviews() {
   }
 }
 
-/* ── Submit a store review (with optional image) ── */
+/* ── Submit a store review ── */
 export async function submitReview() {
   const user = window.getCurrentUser ? window.getCurrentUser() : null;
   if (!user) {
@@ -164,37 +160,19 @@ export async function submitReview() {
   const rating    = parseInt(document.getElementById('review-rating')?.value || '0');
   const headline  = document.getElementById('review-headline')?.value.trim();
   const body      = document.getElementById('review-body')?.value.trim();
-  const fileInput = document.getElementById('review-photo');
-  const file      = fileInput?.files?.[0] || null;
   const submitBtn = document.getElementById('review-submit-btn');
 
   if (!rating) { alert('Please select a star rating.'); return; }
   if (!body)   { alert('Please write your review before submitting.'); return; }
 
-  if (file && file.size > 5 * 1024 * 1024) {
-    alert('Image is too large. Please choose a file under 5MB.');
-    return;
-  }
-
   submitBtn.disabled    = true;
-  submitBtn.textContent = file ? 'Uploading photo…' : 'Submitting…';
+  submitBtn.textContent = 'Submitting…';
 
   try {
-    let imageUrl = '';
-
-    if (file) {
-      const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-      const imgRef   = ref(storage, `review-photos/${safeName}`);
-      await uploadBytes(imgRef, file);
-      imageUrl = await getDownloadURL(imgRef);
-      submitBtn.textContent = 'Submitting…';
-    }
-
     await addDoc(collection(db, 'store-reviews'), {
       rating,
       headline: headline || '',
       body,
-      imageUrl,
       userName:  user.displayName || user.email?.split('@')[0] || 'Reader',
       userEmail: user.email || '',
       createdAt: serverTimestamp()
@@ -204,9 +182,6 @@ export async function submitReview() {
     document.getElementById('review-rating').value   = '0';
     document.getElementById('review-headline').value = '';
     document.getElementById('review-body').value     = '';
-    if (fileInput) fileInput.value = '';
-    const preview = document.getElementById('review-photo-preview');
-    if (preview) { preview.style.display = 'none'; preview.src = ''; }
     updateStarUI(0);
 
     if (typeof showToast === 'function') showToast('Thank you for your review! 🎉');
@@ -221,24 +196,6 @@ export async function submitReview() {
     submitBtn.disabled    = false;
     submitBtn.textContent = 'Submit Review';
   }
-}
-
-/* ── Photo preview on file select ── */
-export function initPhotoPreview() {
-  const fileInput = document.getElementById('review-photo');
-  const preview   = document.getElementById('review-photo-preview');
-  if (!fileInput || !preview) return;
-
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files?.[0];
-    if (!file) { preview.style.display = 'none'; return; }
-    const reader = new FileReader();
-    reader.onload = e => {
-      preview.src = e.target.result;
-      preview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  });
 }
 
 /* ── Interactive star picker ── */
