@@ -209,51 +209,6 @@
     #review-submit-btn:hover  { background: #4a6650; }
     #review-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .photo-upload-wrap {
-      margin-bottom: 12px;
-    }
-    .photo-upload-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: #8B5E3C;
-      border: 1px dashed #C8923A;
-      border-radius: 8px;
-      padding: 8px 14px;
-      cursor: pointer;
-      background: #fff;
-      transition: background 0.15s;
-    }
-    .photo-upload-btn:hover { background: #FDF8F2; }
-    #review-photo { display: none; }
-    #review-photo-preview {
-      display: none;
-      width: 100%;
-      max-height: 160px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-top: 10px;
-      border: 1px solid #DDD8CF;
-    }
-    .review-photo {
-      display: block;
-      max-width: 220px;
-      max-height: 220px;
-      width: auto;
-      border-radius: 8px;
-      margin-top: 12px;
-      cursor: pointer;
-      border: 1px solid #DDD8CF;
-      object-fit: cover;
-    }
-    .hp-review-photo {
-      width: 100%;
-      max-height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin: 8px 0;
-    }
     .review-delete-btn {
       background: none;
       border: none;
@@ -367,13 +322,6 @@
           <label class="form-label">Your Review</label>
           <textarea id="review-body" rows="5" placeholder="Tell us about your experience with TalesGalore — the books, the service, the condition…" maxlength="1500"></textarea>
 
-          <label class="form-label">Add a Photo <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
-          <div class="photo-upload-wrap">
-            <label for="review-photo" class="photo-upload-btn">📷 Choose Photo</label>
-            <input type="file" id="review-photo" accept="image/*" />
-            <img id="review-photo-preview" alt="Preview" />
-          </div>
-
           <button id="review-submit-btn">Submit Review</button>
           <p class="signin-nudge">You must be <a onclick="openAuthModal('signin')">signed in</a> to submit.</p>
         </div>
@@ -421,12 +369,11 @@
   <script src="utils.js"></script>
   <script src="cart.js"></script>
   <script type="module">
-    import { loadAllReviews, submitReview, initStarPicker, initPhotoPreview } from './reviews.js';
+    import { loadAllReviews, submitReview, initStarPicker } from './reviews.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       loadAllReviews();
       initStarPicker();
-      initPhotoPreview();
       document.getElementById('review-submit-btn')
         .addEventListener('click', submitReview);
     });
