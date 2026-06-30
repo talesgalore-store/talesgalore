@@ -132,6 +132,7 @@ function initiatePayment() {
 
 function onPaymentSuccess(response, orderDetails) {
   sendOrderConfirmationEmail(response, orderDetails);
+  sendAdminNotificationEmails(response, orderDetails);
   clearCart();
 
   const container = document.querySelector('.container');
@@ -147,7 +148,7 @@ function onPaymentSuccess(response, orderDetails) {
     </div>`;
 }
 
-function sendOrderConfirmationEmail(response, orderDetails) {
+function buildOrderEmailParams(response, orderDetails) {
   const orderItems = orderDetails.cart.map(item =>
     `${item.title} — ₹${item.price} x ${item.qty || 1}`
   ).join('\n');
@@ -157,9 +158,10 @@ function sendOrderConfirmationEmail(response, orderDetails) {
   );
   const shipping = orderDetails.total - subtotal;
 
-  const templateParams = {
-    to_email:         orderDetails.email,
+  return {
     customer_name:    orderDetails.name,
+    customer_email:   orderDetails.email,
+    customer_phone:   orderDetails.phone,
     order_items:      orderItems,
     subtotal:         subtotal.toFixed(2),
     shipping:         shipping.toFixed(2),
@@ -168,8 +170,40 @@ function sendOrderConfirmationEmail(response, orderDetails) {
     delivery_state:   orderDetails.state || '',
     payment_id:       response.razorpay_payment_id
   };
+}
+
+function sendOrderConfirmationEmail(response, orderDetails) {
+  const templateParams = {
+    to_email: orderDetails.email,
+    ...buildOrderEmailParams(response, orderDetails)
+  };
 
   emailjs.send('service_7bvqnof', 'template_7gm9ak5', templateParams)
-    .then(() => console.log('Order confirmation email sent'))
-    .catch(err => console.error('EmailJS error:', err));
+    .then(() => console.log('Order confirmation email sent to customer'))
+    .catch(err => console.error('EmailJS error (customer):', err));
+}
+
+/* ── Notify store admins on every order ──
+   Sends the same order details (name, phone, address, items, total)
+   to both admin inboxes. Uses the same template as the customer email —
+   to_email is swapped per recipient since EmailJS sends to one address
+   per call. ── */
+function sendAdminNotificationEmails(response, orderDetails) {
+  const ADMIN_EMAILS = [
+    'support@talesgalore.com',
+    'talesgalore.store@gmail.com'
+  ];
+
+  const baseParams = buildOrderEmailParams(response, orderDetails);
+
+  ADMIN_EMAILS.forEach(adminEmail => {
+    const templateParams = {
+      to_email: adminEmail,
+      ...baseParams
+    };
+
+    emailjs.send('service_7bvqnof', 'template_7gm9ak5', templateParams)
+      .then(() => console.log(`Admin notification sent to ${adminEmail}`))
+      .catch(err => console.error(`EmailJS error (admin: ${adminEmail}):`, err));
+  });
 }
