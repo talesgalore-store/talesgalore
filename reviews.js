@@ -30,7 +30,7 @@ const storage = getStorage(app);
    which comes from your existing auth.js.
    ──────────────────────────────────────────────────────── */
 const ADMIN_EMAILS = [
-  'you@talesgalore.com' // 🔑 replace with your actual admin email(s)
+  'support@talesgalore.com' // 🔑 replace with your actual admin email(s)
 ];
 
 function isAdmin() {
