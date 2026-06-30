@@ -4,22 +4,26 @@
    Photo upload removed for now — Spark (free) plan only
    ========================================= */
 
-import { initializeApp }
+import { initializeApp, getApps, getApp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
          query, orderBy, limit, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// Same Firebase project as auth.js — reuse the existing app instead of
+// initializing a second one (which throws app/duplicate-app and silently
+// kills this whole module, including the star picker).
 const firebaseConfig = {
-  apiKey:            "AIzaSyCNuMz24vkzr551Mmjme4WkHBFXI2GdP80",
-  authDomain:        "talesgalore-reviews.firebaseapp.com",
-  projectId:         "talesgalore-reviews",
-  storageBucket:     "talesgalore-reviews.firebasestorage.app",
-  messagingSenderId: "251408630247",
-  appId:             "1:251408630247:web:dfe7796c11affe21f0fd42"
+  apiKey:            "AIzaSyDhBOGaJKp6tb0B495p0BnCwcNCvTafRDs",
+  authDomain:        "talesgalore-fb431.firebaseapp.com",
+  projectId:         "talesgalore-fb431",
+  storageBucket:     "talesgalore-fb431.firebasestorage.app",
+  messagingSenderId: "772991771036",
+  appId:             "1:772991771036:web:b85c2ef90a7eb36e2c6859",
+  measurementId:     "G-ED7Y5BN84J"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
 /* ── ADMIN CONFIG ──────────────────────────────────────────
