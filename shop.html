@@ -27,13 +27,13 @@
     .page-hero {
       background: var(--ink-w);
       text-align: center;
-      padding: 60px 24px 48px;
+      padding: 28px 24px 24px;
       position: relative;
       overflow: hidden;
     }
     .page-hero::before {
       content: '📖';
-      font-size: 140px;
+      font-size: 100px;
       position: absolute;
       opacity: 0.05;
       top: -20px; left: -10px;
@@ -41,27 +41,27 @@
     }
     .page-hero::after {
       content: '✨';
-      font-size: 100px;
+      font-size: 70px;
       position: absolute;
       opacity: 0.05;
       bottom: -10px; right: 20px;
       transform: rotate(10deg);
     }
     .hero-label {
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold-lt);
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
       display: inline-block;
       border: 1px solid rgba(232,185,106,0.35);
-      padding: 5px 18px;
+      padding: 4px 16px;
       border-radius: 2px;
     }
     .page-hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
       font-weight: 700;
       color: #fff;
       margin-bottom: 0;
@@ -70,13 +70,7 @@
       z-index: 1;
     }
     .page-hero p {
-      color: rgba(255,255,255,0.65);
-      font-size: 1rem;
-      max-width: 520px;
-      margin: 12px auto 0;
-      line-height: 1.7;
-      position: relative;
-      z-index: 1;
+      display: none;
     }
     .active-filter-pill {
       display: inline-block;
@@ -86,10 +80,59 @@
       font-weight: 700;
       padding: 4px 14px;
       border-radius: 20px;
-      margin-top: 14px;
+      margin-top: 10px;
       letter-spacing: 0.04em;
       position: relative;
       z-index: 1;
+    }
+
+    /* ── LIVE SEARCH DROPDOWN ── */
+    .shop-search-results {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0; right: 0;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+      overflow: hidden;
+      text-align: left;
+      z-index: 50;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .shop-search-results.open { display: block; }
+    .ssr-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background .15s;
+      border-bottom: 1px solid var(--rule);
+    }
+    .ssr-item:last-child { border-bottom: none; }
+    .ssr-item:hover { background: var(--warm); }
+    .ssr-thumb {
+      width: 38px; height: 50px; flex-shrink: 0; border-radius: 4px;
+      overflow: hidden; background: var(--warm);
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .ssr-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ssr-info { flex: 1; min-width: 0; }
+    .ssr-title {
+      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.86rem;
+      color: #2C2416; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .ssr-meta { font-size: 0.74rem; color: #918164; margin-top: 2px; }
+    .ssr-price { font-size: 0.8rem; font-weight: 700; color: var(--ink-w); flex-shrink: 0; }
+    .ssr-viewall {
+      display: block; text-align: center; padding: 10px;
+      font-size: 0.76rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--gold); cursor: pointer; background: var(--cream);
+    }
+    .ssr-viewall:hover { color: var(--ink-w); }
+    .ssr-empty {
+      padding: 16px; text-align: center; font-size: 0.85rem; color: #918164;
+      font-family: 'Playfair Display', serif; font-style: italic;
     }
 
     /* ── CATALOGUE LAYOUT ── */
@@ -315,9 +358,9 @@
   <div class="hero-label">📖 Browse The Shelves</div>
   <h1 id="pageTitle">Catalogue</h1>
   <p>Every book here has lived a story already — now it's looking for its next reader. Filter by age, genre, or condition to find the perfect one.</p>
-  <div class="shop-search-wrap" style="margin-top:20px;display:flex;justify-content:center;">
+  <div class="shop-search-wrap" style="margin-top:14px;display:flex;justify-content:center;">
   <div style="max-width:600px;width:100%;position:relative;">
-    <div style="display:flex;align-items:center;gap:10px;background:white;border-radius:50px;padding:10px 10px 10px 18px;box-shadow:0 4px 24px rgba(0,0,0,0.15);">
+    <div style="display:flex;align-items:center;gap:10px;background:white;border-radius:50px;padding:9px 9px 9px 18px;box-shadow:0 4px 24px rgba(0,0,0,0.15);">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" stroke-width="2" style="flex-shrink:0;">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
@@ -327,16 +370,18 @@
         placeholder="Search by title, author, or age…"
         autocomplete="off"
         style="flex:1;border:none;outline:none;font-size:0.95rem;font-family:'Lato',sans-serif;color:#2C2416;background:transparent;"
-        oninput="handleShopSearch()"
-        onkeydown="if(event.key==='Enter') handleShopSearch()"
+        oninput="handleShopSearchInput()"
+        onfocus="handleShopSearchInput()"
+        onkeydown="if(event.key==='Enter'){ closeSearchDropdown(); handleShopSearch(); } else if(event.key==='Escape'){ closeSearchDropdown(); }"
       />
       <button
-        onclick="handleShopSearch()"
-        style="background:#8B5E3C;color:white;border:none;padding:9px 22px;border-radius:50px;font-family:'Lato',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s;"
+        onclick="closeSearchDropdown(); handleShopSearch();"
+        style="background:#8B5E3C;color:white;border:none;padding:8px 22px;border-radius:50px;font-family:'Lato',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s;"
         onmouseover="this.style.background='#C8923A'" onmouseout="this.style.background='#8B5E3C'">
         Search
       </button>
     </div>
+    <div id="shopSearchResults" class="shop-search-results"></div>
   </div>
 </div>
   <span id="activeFilterPill" class="active-filter-pill" style="display:none"></span>
@@ -852,6 +897,63 @@ function readUrlParams() {
 
   applyFilters();
 }
+
+/* ── LIVE SEARCH DROPDOWN ── */
+let _searchDebounce = null;
+
+function handleShopSearchInput() {
+  clearTimeout(_searchDebounce);
+  _searchDebounce = setTimeout(renderLiveSearchResults, 120);
+}
+
+function renderLiveSearchResults() {
+  const box   = document.getElementById('shopSearchResults');
+  const query = document.getElementById('shopSearchInput').value.trim().toLowerCase();
+
+  if (!query) { box.classList.remove('open'); box.innerHTML = ''; return; }
+  if (!allBooks || !allBooks.length) return;
+
+  const matches = allBooks.filter(b => {
+    const inTitle  = b.title.toLowerCase().includes(query);
+    const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(query);
+    const inAge    = b.ages.some(a => a.toLowerCase().includes(query));
+    const inGenre  = b.genres.some(g => g.toLowerCase().includes(query));
+    return inTitle || inAuthor || inAge || inGenre;
+  });
+
+  if (!matches.length) {
+    box.innerHTML = `<div class="ssr-empty">No books match "${query}"</div>`;
+    box.classList.add('open');
+    return;
+  }
+
+  const top = matches.slice(0, 6);
+
+  box.innerHTML = top.map(b => `
+    <div class="ssr-item" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
+      <div class="ssr-thumb">
+        ${b.image ? `<img src="${b.image}" alt="${b.title}"/>` : '📖'}
+      </div>
+      <div class="ssr-info">
+        <div class="ssr-title">${b.title}</div>
+        <div class="ssr-meta">${(Array.isArray(b.authorName) ? b.authorName.join(', ') : (b.authorName || '')) || (b.condition || '')}</div>
+      </div>
+      <div class="ssr-price">₹ ${b.price.toFixed(2)}</div>
+    </div>
+  `).join('') + `<div class="ssr-viewall" onclick="closeSearchDropdown(); handleShopSearch();">View all ${matches.length} result${matches.length !== 1 ? 's' : ''}</div>`;
+
+  box.classList.add('open');
+}
+
+function closeSearchDropdown() {
+  const box = document.getElementById('shopSearchResults');
+  if (box) { box.classList.remove('open'); }
+}
+
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.shop-search-wrap');
+  if (wrap && !wrap.contains(e.target)) closeSearchDropdown();
+});
 </script>
 </body>
 </html>
