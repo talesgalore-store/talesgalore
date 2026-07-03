@@ -649,7 +649,7 @@ return {
 function readUrlParams() {
     const params  = new URLSearchParams(window.location.search);
     const age     = params.get('age');
-    const genre   = params.get('genre');
+    const genre   = params.get('genre') || params.get('theme');
     const author  = params.get('author');
     const search  = params.get('search');
 
