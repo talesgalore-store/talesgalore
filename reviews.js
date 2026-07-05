@@ -10,21 +10,26 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
          query, orderBy, limit, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Same Firebase project as auth.js — reuse the existing app instead of
-// initializing a second one (which throws app/duplicate-app and silently
-// kills this whole module, including the star picker).
-const firebaseConfig = {
-  apiKey:            "AIzaSyDhBOGaJKp6tb0B495p0BnCwcNCvTafRDs",
-  authDomain:        "talesgalore-fb431.firebaseapp.com",
-  projectId:         "talesgalore-fb431",
-  storageBucket:     "talesgalore-fb431.firebasestorage.app",
-  messagingSenderId: "772991771036",
-  appId:             "1:772991771036:web:b85c2ef90a7eb36e2c6859",
-  measurementId:     "G-ED7Y5BN84J"
+// Reviews use a SEPARATE Firebase project (talesgalore-reviews)
+// which already has Firestore set up on the free Spark plan.
+// We initialise it as a NAMED app ("reviews") so it coexists with
+// the default app used by auth.js (talesgalore-fb431) without
+// throwing app/duplicate-app.
+const REVIEWS_APP_NAME = 'reviews';
+
+const reviewsConfig = {
+  apiKey:            "AIzaSyCNuMz24vkzr551Mmjme4WkHBFXI2GdP80",
+  authDomain:        "talesgalore-reviews.firebaseapp.com",
+  projectId:         "talesgalore-reviews",
+  storageBucket:     "talesgalore-reviews.firebasestorage.app",
+  messagingSenderId: "251408630247",
+  appId:             "1:251408630247:web:dfe7796c11affe21f0fd42"
 };
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+const reviewsApp = getApps().find(a => a.name === REVIEWS_APP_NAME)
+  ?? initializeApp(reviewsConfig, REVIEWS_APP_NAME);
+
+const db = getFirestore(reviewsApp);
 
 /* ── ADMIN CONFIG ──────────────────────────────────────────
    Add the email address(es) allowed to delete reviews.
