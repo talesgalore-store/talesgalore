@@ -578,39 +578,25 @@
 
 const imgField = f.coverImage;
 
-let imageUrl = null;
-
-// 1) If Contentful gives linked asset reference
-if (imgField?.sys?.id) {
-  imageUrl = assets[imgField.sys.id] || null;
-}
-
-// 2) If Contentful gives array of assets (your case sometimes)
-else if (Array.isArray(imgField)) {
-  const first = imgField[0];
-
-  if (first?.sys?.id) {
-    imageUrl = assets[first.sys.id] || null;
+const resolveAssetUrl = (ref) => {
+  if (ref?.sys?.id) return assets[ref.sys.id] || null;
+  if (ref?.fields?.file?.url) {
+    return ref.fields.file.url.startsWith('//') ? 'https:' + ref.fields.file.url : ref.fields.file.url;
   }
+  return null;
+};
 
-  else if (first?.fields?.file?.url) {
-    imageUrl = 'https:' + first.fields.file.url;
-  }
+let imagesArray = [];
+if (Array.isArray(imgField)) {
+  imagesArray = imgField.map(resolveAssetUrl).filter(Boolean);
+} else if (typeof imgField === 'string') {
+  imagesArray = [imgField.startsWith('//') ? 'https:' + imgField : imgField];
+} else if (imgField) {
+  const single = resolveAssetUrl(imgField);
+  if (single) imagesArray = [single];
 }
 
-// 3) If embedded asset object
-else if (imgField?.fields?.file?.url) {
-  imageUrl = imgField.fields.file.url.startsWith("//")
-    ? "https:" + imgField.fields.file.url
-    : imgField.fields.file.url;
-}
-
-// 4) If plain string URL
-else if (typeof imgField === "string") {
-  imageUrl = imgField.startsWith("//")
-    ? "https:" + imgField
-    : imgField;
-}
+const imageUrl = imagesArray[0] || null;
 
 const rawAuthor = f.author || f.authorName || f['author-name'] || '';
 
@@ -629,7 +615,8 @@ return {
   ages:      ageArray,
   genres:    genreArray,
   inStock:   f.inStock !== false,
-  image:     imageUrl,  // ✅ THIS is the correct place
+  image:     imageUrl,
+  images:    imagesArray,   // ✅ full set kept now, grid still uses image (first)
   stockCount: f.stockCount || 1,
 };
       });
