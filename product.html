@@ -44,10 +44,9 @@
       color:#2C2416; line-height:1.25; margin-bottom:6px;
     }
 
-    .product-image-gallery {
+.product-image-gallery {
   position: sticky; top: 100px; max-width: 340px;
 }
-.product-image-wrap { position: static; }
 .product-thumbs {
   display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;
 }
@@ -436,6 +435,41 @@ for (const ref of coverRefs) {
 
 const imageUrl = images[0] || null;
 console.log("FINAL IMAGES:", images);
+
+      const title        = f.title       || 'Untitled';
+
+      const rawAuthor = f.author || f.authorName || f['author-name'] || '';
+      const author = Array.isArray(rawAuthor)
+        ? rawAuthor.join(", ")
+        : rawAuthor;
+      const authorsArray = Array.isArray(rawAuthor)
+        ? rawAuthor
+        : (rawAuthor ? [rawAuthor] : []);
+
+      const price        = parseFloat(f.price) || 0;
+      const condition    = f.bookCondition || f.condition || '';
+      const binding      = f.bookBinding || f.binding || '';
+      const inStock      = f.inStock     !== false;
+      const isbn         = f.isbn        || '';
+      const pageCount    = f.pageCount   || '';
+      const language     = f.language    || '';
+      const dimensions   = f.bookDimensions || '';
+      const returnPolicy = f.returnPolicy || '';
+
+      const ages   = [].concat(f.suggestedAge  || f.suggestedAges  || []);
+      const genres = [].concat(f.theme || []);
+      const tags   = [].concat(f.tags  || []);
+
+      const description = f.bookDescription
+        ? (typeof f.bookDescription === 'string' ? f.bookDescription : richTextToHtml(f.bookDescription)) : '';
+      const note = f.note
+        ? (typeof f.note === 'string' ? f.note : richTextToHtml(f.note)) : '';
+
+      document.title = `${title} – TalesGalore`;
+      document.getElementById('breadcrumb-title').textContent = title;
+      const stockCount = parseInt(f.stockCount) || 0;
+      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, inStock, stockCount }];
+
       document.getElementById('page-content').innerHTML = `
 <div class="product-page">
           <div class="product-image-gallery">
