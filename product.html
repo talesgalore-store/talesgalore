@@ -529,14 +529,14 @@ console.log("FINAL IMAGES:", images);
 <div class="product-page">
           <div class="product-image-gallery">
             <div class="product-image-wrap">
-              ${images.length
-                ? `<img id="mainProductImage" src="${images[0]}" alt="${title}" />`
+            ${images.length
+                ? `<img id="mainProductImage" src="${images[0]}" alt="${title}" onclick="openLightbox(0)" />`
                 : `<div class="product-image-placeholder">📖</div>`}
             </div>
             ${images.length > 1 ? `
               <div class="product-thumbs">
                 ${images.map((img, i) => `
-                  <div class="product-thumb ${i === 0 ? 'active' : ''}" onclick="switchProductImage('${img}', this)">
+                  <div class="product-thumb ${i === 0 ? 'active' : ''}" onclick="switchProductImage('${img}', this, ${i})">
                     <img src="${img}" alt="${title} thumbnail ${i + 1}" />
                   </div>
                 `).join('')}
@@ -693,11 +693,45 @@ console.log("FINAL IMAGES:", images);
 }
   loadProduct();
 
-function switchProductImage(url, el) {
+let _productImages = [];
+let _lightboxIndex = 0;
+
+function switchProductImage(url, el, index) {
   document.getElementById('mainProductImage').src = url;
   document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
+  _lightboxIndex = index;
+  document.getElementById('mainProductImage').setAttribute('onclick', `openLightbox(${index})`);
 }
+
+function openLightbox(index) {
+  if (!_productImages.length) return;
+  _lightboxIndex = index;
+  document.getElementById('lightboxImg').src = _productImages[index];
+  document.getElementById('lightboxOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const showNav = _productImages.length > 1;
+  document.getElementById('lightboxPrev').style.display = showNav ? 'flex' : 'none';
+  document.getElementById('lightboxNext').style.display = showNav ? 'flex' : 'none';
+}
+
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function navLightbox(dir) {
+  _lightboxIndex = (_lightboxIndex + dir + _productImages.length) % _productImages.length;
+  document.getElementById('lightboxImg').src = _productImages[_lightboxIndex];
+}
+
+document.addEventListener('keydown', (e) => {
+  const overlay = document.getElementById('lightboxOverlay');
+  if (!overlay || !overlay.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+  if (e.key === 'ArrowRight') navLightbox(1);
+});
 </script>
   
 </body>
