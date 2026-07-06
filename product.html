@@ -30,7 +30,7 @@
     .product-image-wrap {
       border-radius: 10px; overflow: hidden;
       border: 1px solid var(--rule); background: var(--warm);
-      aspect-ratio: 3/4; position: sticky; top: 100px;
+      aspect-ratio: 3/4;
       max-width: 340px;
     }
     .product-image-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -409,89 +409,49 @@
       console.log("STOCK FIELD TEST:", f.stockCount);
       console.log("ALL KEYS:", Object.keys(f));
       // Resolve image — try includes first, then fetch asset directly
- let imageUrl = null;
-
+let images = [];
 const cover = f.coverImage;
+const coverRefs = Array.isArray(cover) ? cover : (cover ? [cover] : []);
 
-console.log("COVER IMAGE RAW:", cover);
+for (const ref of coverRefs) {
+  const assetId = ref?.sys?.id;
+  if (!assetId) continue;
 
-// CASE 1: direct asset reference
-const assetId =
-  cover?.sys?.id ||
-  cover?.[0]?.sys?.id ||
-  null;
-
-console.log("EXTRACTED ASSET ID:", assetId);
-
-if (assetId) {
   const included = (data.includes?.Asset || []).find(a => a.sys.id === assetId);
+  let url = included?.fields?.file?.url ? "https:" + included.fields.file.url : null;
 
-  if (included?.fields?.file?.url) {
-    imageUrl = "https:" + included.fields.file.url;
-  } else {
+  if (!url) {
     try {
       const assetRes = await fetch(
         `https://cdn.contentful.com/spaces/${SPACE_ID}/assets/${assetId}?access_token=${ACCESS_TOKEN}`
       );
       const assetData = await assetRes.json();
-
-      console.log("ASSET RESPONSE:", assetData);
-
-      if (assetData?.fields?.file?.url) {
-        imageUrl = "https:" + assetData.fields.file.url;
-      }
+      if (assetData?.fields?.file?.url) url = "https:" + assetData.fields.file.url;
     } catch (err) {
       console.warn("Asset fetch failed:", err);
     }
   }
+  if (url) images.push(url);
 }
 
-console.log("FINAL IMAGE URL:", imageUrl);
-      
- 
-      const title        = f.title       || 'Untitled';
-    
-      const rawAuthor = f.author || f.authorName || f['author-name'] || '';
-      // normalize to string safely
-      const author = Array.isArray(rawAuthor)
-      ? rawAuthor.join(", ")
-      : rawAuthor;      
-      const authorsArray = Array.isArray(rawAuthor)
-      ? rawAuthor
-      : (rawAuthor ? [rawAuthor] : []);
-      
-      const price        = parseFloat(f.price) || 0;
-      const condition    = f.bookCondition || f.condition || '';
-      const binding      = f.bookBinding || f.binding || '';
-      const inStock      = f.inStock     !== false;
-      const isbn         = f.isbn        || '';
-      const pageCount    = f.pageCount   || '';
-      const language     = f.language    || '';
-      const dimensions   = f.bookDimensions || '';
-      const returnPolicy = f.returnPolicy || '';
-
-      const ages   = [].concat(f.suggestedAge  || f.suggestedAges  || []);
-      const genres = [].concat(f.theme || []);
-      const tags   = [].concat(f.tags  || []);
-
-      const description = f.bookDescription
-        ? (typeof f.bookDescription === 'string' ? f.bookDescription : richTextToHtml(f.bookDescription)) : '';
-      const note = f.note
-        ? (typeof f.note === 'string' ? f.note : richTextToHtml(f.note)) : '';
-
-      document.title = `${title} – TalesGalore`;
-      document.getElementById('breadcrumb-title').textContent = title;
-      const stockCount = parseInt(f.stockCount) || 0;
-      console.log("STOCK COUNT FROM CONTENTFUL:", stockCount);
-      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, inStock, stockCount }]; 
-      console.log("BOOK DATA:", window._allBooks);
-      console.log("FINAL IMAGE URL:", imageUrl);
+const imageUrl = images[0] || null;
+console.log("FINAL IMAGES:", images);
       document.getElementById('page-content').innerHTML = `
-        <div class="product-page">
-          <div class="product-image-wrap">
-            ${imageUrl
-              ? `<img src="${imageUrl}" alt="${title}" />`
-              : `<div class="product-image-placeholder">📖</div>`}
+<div class="product-page">
+          <div class="product-image-gallery">
+            <div class="product-image-wrap">
+              ${images.length
+                ? `<img id="mainProductImage" src="${images[0]}" alt="${title}" />`
+                : `<div class="product-image-placeholder">📖</div>`}
+            </div>
+            ${images.length > 1 ? `
+              <div class="product-thumbs">
+                ${images.map((img, i) => `
+                  <div class="product-thumb ${i === 0 ? 'active' : ''}" onclick="switchProductImage('${img}', this)">
+                    <img src="${img}" alt="${title} thumbnail ${i + 1}" />
+                  </div>
+                `).join('')}
+              </div>` : ''}
           </div>
           <div class="product-details">
             <h1>${title}</h1>
@@ -644,6 +604,11 @@ console.log("FINAL IMAGE URL:", imageUrl);
 }
   loadProduct();
 
+function switchProductImage(url, el) {
+  document.getElementById('mainProductImage').src = url;
+  document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
 </script>
   
 </body>
