@@ -350,9 +350,18 @@
   <div class="loading-state">Opening the book…</div>
 </div>
 
-  <div id="also-like-section" class="also-like-section" style="display:none;">
+<div id="also-like-section" class="also-like-section" style="display:none;">
   <h2>You may also like…</h2>
   <div class="also-like-grid" id="also-like-grid"></div>
+</div>
+
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="if(event.target===this) closeLightbox()">
+  <div class="lightbox-img-wrap">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" onclick="navLightbox(-1)">‹</button>
+    <img id="lightboxImg" src="" alt="Enlarged book cover"/>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" onclick="navLightbox(1)">›</button>
+  </div>
 </div>
   
 <!-- Footer -->
