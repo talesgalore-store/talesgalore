@@ -633,37 +633,192 @@ return {
     }
   }
 
-function readUrlParams() {
-    const params  = new URLSearchParams(window.location.search);
-    const age     = params.get('age');
-    const genre   = params.get('genre') || params.get('theme');
-    const author  = params.get('author');
-    const search  = params.get('search');
+/* =========================================
+   TALESGALORE — Shop URL Filter Sync
+   Drop this at the bottom of shop.html's
+   <script> block, replacing the existing
+   applyFilters(), clearFilters(), and
+   readUrlParams() functions entirely.
+   ========================================= */
 
-    if (age) {
-      const cb = document.querySelector(`#ageFilters input[value="${age}"]`);
-      if (cb) cb.checked = true;
-      document.getElementById('pageTitle').textContent = age;
-      showPill(age);
-    }
-    if (genre) {
-      const cb = document.querySelector(`#genreFilters input[value="${genre}"]`);
-      if (cb) cb.checked = true;
-      document.getElementById('pageTitle').textContent = genre;
-      showPill(genre);
-    }
-    if (author) {
-      const cb = document.querySelector(`#authorFilters input[value="${author}"]`);
-      if (cb) cb.checked = true;
-      document.getElementById('pageTitle').textContent = author;
-      showPill(author);
-    }
-    if (search) {
-      window._searchQuery = search;
-      document.getElementById('pageTitle').textContent = `"${search}"`;
-      showPill(`Search: ${search}`);
-    }
+/* ── Write current filter state to URL ── */
+function pushFiltersToUrl() {
+  const params = new URLSearchParams();
+
+  const conditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
+  const bindings   = [...document.querySelectorAll('#bindingFilters input:checked')].map(c => c.value);
+  const ages       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
+  const genres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
+  const authors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
+  const sort       = document.getElementById('sort-select').value;
+  const priceMin   = document.getElementById('priceMin').value;
+  const priceMax   = document.getElementById('priceMax').value;
+  const search     = (window._searchQuery || '').trim();
+
+  conditions.forEach(v => params.append('condition', v));
+  bindings.forEach(v   => params.append('binding', v));
+  ages.forEach(v       => params.append('age', v));
+  genres.forEach(v     => params.append('genre', v));
+  authors.forEach(v    => params.append('author', v));
+  if (sort && sort !== 'featured') params.set('sort', sort);
+  if (priceMin) params.set('priceMin', priceMin);
+  if (priceMax) params.set('priceMax', priceMax);
+  if (search)   params.set('search', search);
+
+  const newUrl = params.toString()
+    ? `${window.location.pathname}?${params.toString()}`
+    : window.location.pathname;
+
+  history.replaceState({}, '', newUrl);
+}
+
+/* ── Read URL params and pre-tick filters ── */
+function readUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+
+  // Multi-value params
+  params.getAll('condition').forEach(v => {
+    const cb = document.querySelector(`#conditionFilters input[value="${v}"]`);
+    if (cb) cb.checked = true;
+  });
+  params.getAll('binding').forEach(v => {
+    const cb = document.querySelector(`#bindingFilters input[value="${v}"]`);
+    if (cb) cb.checked = true;
+  });
+  params.getAll('age').forEach(v => {
+    const cb = document.querySelector(`#ageFilters input[value="${v}"]`);
+    if (cb) cb.checked = true;
+  });
+  params.getAll('genre').forEach(v => {
+    // Support legacy ?theme= and ?genre= params
+    const cb = document.querySelector(`#genreFilters input[value="${v}"]`);
+    if (cb) cb.checked = true;
+    document.getElementById('pageTitle').textContent = v;
+    showPill(v);
+  });
+  // Legacy ?theme= support
+  params.getAll('theme').forEach(v => {
+    const cb = document.querySelector(`#genreFilters input[value="${v}"]`);
+    if (cb) cb.checked = true;
+    document.getElementById('pageTitle').textContent = v;
+    showPill(v);
+  });
+  params.getAll('author').forEach(v => {
+    // Authors are populated dynamically — store for after populateAuthorFilters() runs
+    window._pendingAuthorFilters = window._pendingAuthorFilters || [];
+    window._pendingAuthorFilters.push(v);
+    document.getElementById('pageTitle').textContent = v;
+    showPill(v);
+  });
+
+  // Single-value params
+  const sort = params.get('sort');
+  if (sort) {
+    const sel = document.getElementById('sort-select');
+    if (sel) sel.value = sort;
   }
+
+  const priceMin = params.get('priceMin');
+  const priceMax = params.get('priceMax');
+  if (priceMin) document.getElementById('priceMin').value = priceMin;
+  if (priceMax) document.getElementById('priceMax').value = priceMax;
+
+  const search = params.get('search');
+  if (search) {
+    window._searchQuery = search;
+    const input = document.getElementById('shopSearchInput');
+    if (input) input.value = search;
+    document.getElementById('pageTitle').textContent = `"${search}"`;
+    showPill(`Search: ${search}`);
+  }
+
+  // Set page title for age filters (single age link from homepage)
+  const ages = params.getAll('age');
+  if (ages.length === 1 && !params.get('search') && !params.getAll('genre').length) {
+    document.getElementById('pageTitle').textContent = ages[0];
+    showPill(ages[0]);
+  }
+}
+
+/* ── Apply filters + sync URL ── */
+function applyFilters() {
+  const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
+  const checkedBindings   = [...document.querySelectorAll('#bindingFilters input:checked')].map(c => c.value);
+  const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
+  const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
+  const checkedAuthors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
+  const searchQuery       = (window._searchQuery || '').toLowerCase().trim();
+  const priceMin          = parseFloat(document.getElementById('priceMin').value) || 0;
+  const priceMax          = parseFloat(document.getElementById('priceMax').value) || Infinity;
+  const sort              = document.getElementById('sort-select').value;
+
+  filtered = allBooks.filter(b => {
+    if (checkedConditions.length && !checkedConditions.includes(b.condition)) return false;
+    if (checkedBindings.length   && !checkedBindings.includes(b.binding))    return false;
+    if (checkedAges.length       && !checkedAges.some(a => b.ages.includes(a))) return false;
+    if (checkedGenres.length) {
+      const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
+      const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
+      if (!normFilters.some(f => normBook.includes(f))) return false;
+    }
+    if (checkedAuthors.length) {
+      const bookAuthors = Array.isArray(b.authorName) ? b.authorName : (b.authorName ? [b.authorName] : []);
+      if (!checkedAuthors.some(a => bookAuthors.includes(a))) return false;
+    }
+    if (searchQuery) {
+      const inTitle  = b.title.toLowerCase().includes(searchQuery);
+      const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(searchQuery);
+      const inAge    = b.ages.some(a => a.toLowerCase().includes(searchQuery));
+      if (!inTitle && !inAuthor && !inAge) return false;
+    }
+    if (b.price < priceMin || b.price > priceMax) return false;
+    return true;
+  });
+
+  if (sort === 'az')              filtered.sort((a, b) => a.title.localeCompare(b.title));
+  else if (sort === 'za')         filtered.sort((a, b) => b.title.localeCompare(a.title));
+  else if (sort === 'price-low')  filtered.sort((a, b) => a.price - b.price);
+  else if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
+  else if (sort === 'newest')     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  currentPage = 1;
+  pushFiltersToUrl();  // ← sync to URL on every filter change
+  renderPage();
+}
+
+/* ── Clear all filters + reset URL ── */
+function clearFilters() {
+  document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(c => c.checked = false);
+  document.getElementById('priceMin').value = '';
+  document.getElementById('priceMax').value = '';
+  document.getElementById('sort-select').value = 'featured';
+  document.getElementById('pageTitle').textContent = 'Catalogue';
+  document.getElementById('activeFilterPill').style.display = 'none';
+  const input = document.getElementById('shopSearchInput');
+  if (input) input.value = '';
+  window._searchQuery = '';
+  history.replaceState({}, '', 'shop.html');
+  applyFilters();
+}
+
+/* ── Patch populateAuthorFilters to apply pending URL author filters ── */
+const _origPopulateAuthorFilters = populateAuthorFilters;
+function populateAuthorFilters() {
+  _origPopulateAuthorFilters();
+  // Now tick any authors that were in the URL
+  (window._pendingAuthorFilters || []).forEach(v => {
+    const cb = document.querySelector(`#authorFilters input[value="${CSS.escape(v)}"]`);
+    if (cb) cb.checked = true;
+  });
+  window._pendingAuthorFilters = [];
+}
+
+/* ── Also sync URL when search is submitted ── */
+const _origHandleShopSearch = handleShopSearch;
+function handleShopSearch() {
+  _origHandleShopSearch();
+  pushFiltersToUrl();
+}
 
   function showPill(label) {
     const pill = document.getElementById('activeFilterPill');
@@ -671,49 +826,6 @@ function readUrlParams() {
     pill.style.display = 'inline-block';
   }
 
-  function applyFilters() {
-    const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
-    const checkedBindings = [...document.querySelectorAll('#bindingFilters input:checked')].map(c => c.value);
-    const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
-    const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
-    const checkedAuthors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
-    const searchQuery       = (window._searchQuery || '').toLowerCase().trim();
-    const priceMin          = parseFloat(document.getElementById('priceMin').value) || 0;
-    const priceMax          = parseFloat(document.getElementById('priceMax').value) || Infinity;
-    const sort              = document.getElementById('sort-select').value;
-
-    filtered = allBooks.filter(b => {
-      if (checkedConditions.length && !checkedConditions.includes(b.condition)) return false;
-      if (checkedBindings.length && !checkedBindings.includes(b.binding)) return false;
-      if (checkedAges.length && !checkedAges.some(a => b.ages.includes(a))) return false;
-      if (checkedGenres.length) {
-        const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
-        const normFilters = checkedGenres.map(g => g.replace(/&amp;/g, '&').trim());
-        if (!normFilters.some(f => normBook.includes(f))) return false;
-      }
-      if (checkedAuthors.length) {
-        const bookAuthors = Array.isArray(b.authorName) ? b.authorName : (b.authorName ? [b.authorName] : []);
-        if (!checkedAuthors.some(a => bookAuthors.includes(a))) return false;
-      }
-      if (searchQuery) {
-        const inTitle  = b.title.toLowerCase().includes(searchQuery);
-        const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(searchQuery);
-        const inAge    = b.ages.some(a => a.toLowerCase().includes(searchQuery));
-        if (!inTitle && !inAuthor && !inAge) return false;
-      }
-      if (b.price < priceMin || b.price > priceMax) return false;
-      return true;
-    });
-
-    if (sort === 'az')              filtered.sort((a, b) => a.title.localeCompare(b.title));
-    else if (sort === 'za')         filtered.sort((a, b) => b.title.localeCompare(a.title));
-    else if (sort === 'price-low')  filtered.sort((a, b) => a.price - b.price);
-    else if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
-    else if (sort === 'newest')     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    currentPage = 1;
-    renderPage();
-  }
 
   function renderPage() {
     const grid  = document.getElementById('products-grid');
@@ -800,18 +912,6 @@ function readUrlParams() {
     heading.classList.toggle('open');
     const opts = heading.nextElementSibling;
     opts.style.display = opts.style.display === 'none' ? '' : 'none';
-  }
-
-  function clearFilters() {
-    document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(c => c.checked = false);
-    document.getElementById('priceMin').value = '';
-    document.getElementById('priceMax').value = '';
-    document.getElementById('sort-select').value = 'featured';
-    document.getElementById('pageTitle').textContent = 'Catalogue';
-    document.getElementById('activeFilterPill').style.display = 'none';
-    window._searchQuery = '';
-    history.replaceState({}, '', 'shop.html');
-    applyFilters();
   }
 
   function toggleMobileSidebar() {
