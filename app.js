@@ -1,6 +1,74 @@
 const SPACE_ID     = 'tx11zsju5n7c';
 const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
 
+/* =========================================
+   POPULAR TITLES MARQUEE
+   ─────────────────────────────────────────
+   Add or remove keywords below to control
+   which books appear in this section.
+   Matching is case-insensitive and checks
+   title, author name, and publisher fields.
+   ========================================= */
+const POPULAR_KEYWORDS = [
+  'Disney',
+  'Julia Donaldson',
+  'Harry Potter',
+  'Miles Kelly',
+  'Usborne',
+  'Enid Blyton',
+  'Horrid Henry',
+  'David Walliams',
+  'Roald Dahl',
+  'Thomas',
+  'Peppa Pig',
+];
+
+function buildPopularMarquee(books) {
+  const track = document.getElementById('popular-marquee');
+  if (!track) return;
+
+  const keywords = POPULAR_KEYWORDS.map(k => k.toLowerCase());
+
+  const matches = books.filter(b => {
+    const haystack = [
+      b.title,
+      ...(Array.isArray(b.authorName) ? b.authorName : [b.authorName || '']),
+      b.publisher || ''
+    ].join(' ').toLowerCase();
+
+    return keywords.some(k => haystack.includes(k));
+  });
+
+  if (!matches.length) {
+    track.closest('section')?.remove();
+    return;
+  }
+
+  // Duplicate for seamless infinite scroll (same as arrivals marquee)
+  const all = [...matches, ...matches];
+
+  track.innerHTML = all.map(b => `
+    <a href="product.html?id=${b.id}&slug=${slugify(b.title)}" class="marquee-card">
+      ${b.image
+        ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
+        : `<div class="marquee-card-placeholder">📖</div>`}
+      <div class="marquee-card-info">
+        <div class="marquee-card-title">${b.title}</div>
+        <div class="marquee-card-author">${Array.isArray(b.authorName) ? b.authorName.join(', ') : (b.authorName || '')}</div>
+        <div class="marquee-card-price">₹${b.price}</div>
+      </div>
+    </a>
+  `).join('');
+
+  // Slightly offset animation so it doesn't sync with Latest Arrivals
+  track.style.animationDuration = '44s';
+}
+
+function popularMarqueeScroll(dir) {
+  const wrapper = document.querySelector('#popular-marquee')?.closest('.marquee-wrapper');
+  if (wrapper) wrapper.scrollBy({ left: dir * 300, behavior: 'smooth' });
+}
+
 function slugify(title) {
   return title
     .toLowerCase()
