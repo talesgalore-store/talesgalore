@@ -19,8 +19,6 @@ const POPULAR_KEYWORDS = [
   'Horrid Henry',
   'David Walliams',
   'Roald Dahl',
-  'Thomas',
-  'Peppa Pig',
 ];
 
 function buildPopularMarquee(books) {
