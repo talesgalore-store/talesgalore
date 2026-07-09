@@ -2511,5 +2511,5 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 }
 
 #popular-marquee {
-  animation-duration: 38s;
+  animation-duration: 60s !important;
 }
