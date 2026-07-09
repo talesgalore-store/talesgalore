@@ -822,11 +822,19 @@
 
     grid.innerHTML = page.map(b => `
       <div class="product-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer">
-        <div class="product-img-wrap">
-          ${b.image
-            ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
-            : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>`}
-        </div>
+<div class="product-img-wrap" 
+  ${b.images && b.images.length > 1 
+    ? `data-images='${JSON.stringify(b.images)}' onmouseenter="startImageCycle(this)" onmouseleave="stopImageCycle(this)"`
+    : ''}>
+  ${b.image
+    ? `<img src="${b.image}" alt="${b.title}" loading="lazy"/>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>`}
+  ${b.images && b.images.length > 1 
+    ? `<div class="img-cycle-dots">
+        ${b.images.map((_, i) => `<span class="img-dot ${i === 0 ? 'active' : ''}"></span>`).join('')}
+       </div>`
+    : ''}
+</div>
         <div class="product-info">
           <h3>${b.title}</h3>
           ${b.authorName && b.authorName.length
