@@ -58,7 +58,9 @@ const haystack = [
   `).join('');
 
   // Slightly offset animation so it doesn't sync with Latest Arrivals
-  track.style.animationDuration = '60s';
+// Match Latest Arrivals speed: ~2s per card
+const duration = Math.max(40, matches.length * 2);
+track.style.animationDuration = duration + 's';
 }
 
 function popularMarqueeScroll(dir) {
