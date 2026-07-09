@@ -995,6 +995,33 @@
     box.classList.add('open');
   }
 
+  /* ── Multi-image hover cycle ── */
+function startImageCycle(wrap) {
+  const images  = JSON.parse(wrap.dataset.images || '[]');
+  if (images.length < 2) return;
+
+  const img  = wrap.querySelector('img');
+  const dots = wrap.querySelectorAll('.img-dot');
+  let idx    = 0;
+
+  // Preload all images
+  images.forEach(src => { const i = new Image(); i.src = src; });
+
+  wrap._cycleTimer = setInterval(() => {
+    idx = (idx + 1) % images.length;
+    img.src = images[idx];
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }, 900);
+}
+
+function stopImageCycle(wrap) {
+  clearInterval(wrap._cycleTimer);
+  const images = JSON.parse(wrap.dataset.images || '[]');
+  const img    = wrap.querySelector('img');
+  const dots   = wrap.querySelectorAll('.img-dot');
+  if (img && images[0]) img.src = images[0];
+  dots.forEach((d, i) => d.classList.toggle('active', i === 0));
+}
   function closeSearchDropdown() {
     const box = document.getElementById('shopSearchResults');
     if (box) { box.classList.remove('open'); }
