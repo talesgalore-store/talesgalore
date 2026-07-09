@@ -2509,3 +2509,7 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     height: 48px;
   }
 }
+
+#popular-marquee {
+  animation-duration: 44s;
+}
