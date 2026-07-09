@@ -28,11 +28,11 @@ function buildPopularMarquee(books) {
   const keywords = POPULAR_KEYWORDS.map(k => k.toLowerCase());
 
   const matches = books.filter(b => {
-    const haystack = [
-      b.title,
-      ...(Array.isArray(b.authorName) ? b.authorName : [b.authorName || '']),
-      b.publisher || ''
-    ].join(' ').toLowerCase();
+const haystack = [
+  b.title,
+  ...(Array.isArray(b.authorArray) ? b.authorArray : [b.author || '']),
+  b.publisher || ''
+].join(' ').toLowerCase();
 
     return keywords.some(k => haystack.includes(k));
   });
@@ -52,8 +52,7 @@ function buildPopularMarquee(books) {
         : `<div class="marquee-card-placeholder">📖</div>`}
       <div class="marquee-card-info">
         <div class="marquee-card-title">${b.title}</div>
-        <div class="marquee-card-author">${Array.isArray(b.authorName) ? b.authorName.join(', ') : (b.authorName || '')}</div>
-        <div class="marquee-card-price">₹${b.price}</div>
+         ${b.author ? `<div class="marquee-card-author">${b.author}</div>` : ''}        <div class="marquee-card-price">₹${b.price}</div>
       </div>
     </a>
   `).join('');
