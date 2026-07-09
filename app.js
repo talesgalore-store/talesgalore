@@ -139,6 +139,7 @@ let marqueeBooks = remaining.length >= 8 ? remaining.slice(0, 20) : shuffled.sli
 
 renderMarquee(marqueeBooks);
 renderFeatured(featured8);
+buildPopularMarquee(books);
 
   } catch (e) {
     console.error('Failed to load books for homepage:', e);
