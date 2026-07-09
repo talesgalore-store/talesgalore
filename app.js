@@ -58,7 +58,7 @@ const haystack = [
   `).join('');
 
   // Slightly offset animation so it doesn't sync with Latest Arrivals
-  track.style.animationDuration = '44s';
+  track.style.animationDuration = '60s';
 }
 
 function popularMarqueeScroll(dir) {
