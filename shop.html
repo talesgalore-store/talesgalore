@@ -22,7 +22,30 @@
     }
 
     body { background: var(--cream); }
+/* ── Image cycle dots ── */
+.product-img-wrap { position: relative; }
 
+.img-cycle-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+}
+
+.img-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transition: background 0.2s;
+}
+
+.img-dot.active {
+  background: #fff;
+}
     /* ── PAGE HERO — same treatment as Literary Games / Contact ── */
     .page-hero {
       background: var(--ink-w);
