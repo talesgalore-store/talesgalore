@@ -2735,3 +2735,32 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     height: 46px;
   }
 }
+
+/* ── Stock badges ── */
+.stock-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+  display: inline-block;
+}
+.stock-badge.in-stock {
+  color: #5C7A5E;
+  background: #EAF0E8;
+}
+.stock-badge.low-stock {
+  color: #C4622D;
+  background: #FDF0EA;
+}
+.stock-badge.out-of-stock {
+  color: #aaa;
+  background: #F5F5F5;
+}
+
+/* Dim out-of-stock cards */
+.product-card.out-of-stock-card {
+  opacity: 0.6;
+}
