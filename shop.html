@@ -949,10 +949,9 @@ ${(() => {
     opts.style.display = opts.style.display === 'none' ? '' : 'none';
   }
 
-  function toggleMobileSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
-  }
+function toggleMobileSidebar() {
+  document.querySelector('.sidebar').classList.toggle('mobile-open');
+}
 
   function handleNewsletter(e) {
     e.preventDefault();
