@@ -2889,3 +2889,20 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
   }
 }
 
+@media (max-width: 768px) {
+  .main-nav {
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: visible !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    touch-action: pan-x !important;
+  }
+
+  .main-nav a {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    min-width: max-content !important;
+  }
+}
