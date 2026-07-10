@@ -795,6 +795,13 @@
     currentPage = 1;
     pushFiltersToUrl();
     renderPage();
+// Always push out-of-stock to bottom, regardless of sort
+filtered.sort((a, b) => {
+  const aOut = !a.inStock || a.stockCount === 0;
+  const bOut = !b.inStock || b.stockCount === 0;
+  return aOut === bOut ? 0 : aOut ? 1 : -1;
+});
+    
   }
 
   function clearFilters() {
@@ -885,17 +892,27 @@
             : ''}
           ${b.condition ? `<div class="product-condition">${b.condition}</div>` : ''}
           <div class="product-price">₹ ${b.price.toFixed(2)}</div>
-          ${b.inStock
-            ? `<button class="product-add-btn"
-                    onclick="event.stopPropagation(); addToCart('${b.id}'); flyBookToCart(this);">
-                      Add to Cart
-               </button>
-               <button class="product-wishlist-btn"
-                    onclick="event.stopPropagation(); addToWishlistFromShop('${b.id}')">
-                      ♡ Save for Later
-               </button>`
-            : `<div style="margin-top:8px;font-size:0.75rem;color:#aaa;text-align:center;text-transform:uppercase;letter-spacing:0.05em;">Sold</div>`
-          }
+${(() => {
+  const outOfStock = !b.inStock || b.stockCount === 0;
+  const stockLabel = outOfStock
+    ? `<div class="stock-badge out-of-stock">Out of Stock</div>`
+    : b.stockCount === 1
+      ? `<div class="stock-badge low-stock">1 in stock</div>`
+      : `<div class="stock-badge in-stock">${b.stockCount} in stock</div>`;
+  
+  return `
+    ${stockLabel}
+    ${!outOfStock
+      ? `<button class="product-add-btn"
+              onclick="event.stopPropagation(); addToCart('${b.id}'); flyBookToCart(this);">
+                Add to Cart
+         </button>
+         <button class="product-wishlist-btn"
+              onclick="event.stopPropagation(); addToWishlistFromShop('${b.id}')">
+                ♡ Save for Later
+         </button>`
+      : ''}`;
+})()}
         </div>
       </div>
     `).join('');
