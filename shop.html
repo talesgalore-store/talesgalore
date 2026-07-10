@@ -451,6 +451,17 @@
         <label><input type="checkbox" value="Boardbook" onchange="applyFilters()"/> Board Book</label>
       </div>
     </div>
+
+    <div class="filter-group">
+      <div class="filter-heading open" onclick="toggleFilter(this)">
+        <h3>Language</h3><span class="chevron">▼</span>
+      </div>
+      <div class="filter-options" id="bindingFilters">
+        <label><input type="checkbox" value="English" onchange="applyFilters()"/> English</label>
+        <label><input type="checkbox" value="Spanish" onchange="applyFilters()"/> Spanish</label>
+        <label><input type="checkbox" value="French" onchange="applyFilters()"/> French</label>
+      </div>
+    </div>
     
     <div class="filter-group">
       <div class="filter-heading open" onclick="toggleFilter(this)">
