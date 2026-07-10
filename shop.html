@@ -862,7 +862,7 @@ filtered.sort((a, b) => {
     window._allBooks = allBooks;
 
     grid.innerHTML = page.map(b => `
-      <div class="product-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer">
+    <div class="product-card ${(!b.inStock || b.stockCount === 0) ? 'out-of-stock-card' : ''}" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer">
 <div class="product-img-wrap" 
   ${b.images && b.images.length > 1 
     ? `data-images='${JSON.stringify(b.images)}' onmouseenter="startImageCycle(this)" onmouseleave="stopImageCycle(this)"`
