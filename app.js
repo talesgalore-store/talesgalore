@@ -95,8 +95,8 @@ async function loadHomeBooks() {
       assets[a.sys.id] = 'https:' + a.fields.file.url;
     });
 
-    const books = (data.items || [])
-      .filter(item => item.fields.inStock !== false)
+const books = (data.items || [])
+  .filter(item => item.fields.inStock !== false && (item.fields.stockCount ?? 1) > 0)
       .map(item => {
         const f = item.fields;
 
