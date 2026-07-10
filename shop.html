@@ -416,12 +416,13 @@
 
   <!-- Sidebar Filters -->
   <aside class="sidebar">
+    <button class="clear-filters" onclick="clearFilters()">Remove all filters</button>
     <button class="mobile-filter-close" onclick="toggleMobileSidebar()">
       ✕ Close
     </button>
     <button onclick="toggleMobileSidebar()" style="display:none" class="mobile-only-close">✕ Close</button>
     <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Price</h3><span class="chevron">▼</span>
       </div>
       <div class="price-range">
@@ -433,10 +434,10 @@
     </div>
 
     <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Book Condition</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options" id="conditionFilters">
+      <div class="filter-options" id="conditionFilters" style="display:none">
         <label><input type="checkbox" value="New" onchange="applyFilters()"/> New</label>
         <label><input type="checkbox" value="Like New" onchange="applyFilters()"/> Like New</label>
         <label><input type="checkbox" value="Very Good" onchange="applyFilters()"/> Very Good</label>
@@ -445,10 +446,10 @@
     </div>
 
     <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Book Binding</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options" id="bindingFilters">
+      <div class="filter-options" id="bindingFilters" style="display:none">
         <label><input type="checkbox" value="Hardcover" onchange="applyFilters()"/> Hardcover</label>
         <label><input type="checkbox" value="Paperback" onchange="applyFilters()"/> Paperback</label>
         <label><input type="checkbox" value="Boardbook" onchange="applyFilters()"/> Boardbook</label>
@@ -456,10 +457,10 @@
     </div>
 
     <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Language</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options" id="languageFilters">
+      <div class="filter-options" id="languageFilters" style="display:none">
         <label><input type="checkbox" value="English" onchange="applyFilters()"/> English</label>
         <label><input type="checkbox" value="English-Spanish" onchange="applyFilters()"/> English-Spanish</label>
         <label><input type="checkbox" value="English-French" onchange="applyFilters()"/> English-French</label>
@@ -467,10 +468,10 @@
     </div>
     
     <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Suggested Age</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options" id="ageFilters">
+      <div class="filter-options" id="ageFilters" style="display:none">
         <label><input type="checkbox" value="Age 0-2"        onchange="applyFilters()"/> Age 0–2</label>
         <label><input type="checkbox" value="Age 3-5"        onchange="applyFilters()"/> Age 3–5</label>
         <label><input type="checkbox" value="Age 6-8"        onchange="applyFilters()"/> Age 6–8</label>
@@ -480,10 +481,10 @@
     </div>
 
     <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Genre</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options" id="genreFilters">
+      <div class="filter-options" id="genreFilters" style="display:none">
         <label><input type="checkbox" value="Tickles & Chuckles"    onchange="applyFilters()"/> Tickles &amp; Chuckles</label>
         <label><input type="checkbox" value="Activity & Educational" onchange="applyFilters()"/> Activity &amp; Educational</label>
         <label><input type="checkbox" value="Faith & Festivals"     onchange="applyFilters()"/> Faith &amp; Festivals</label>
@@ -496,10 +497,10 @@
     </div>
 
      <div class="filter-group">
-      <div class="filter-heading open" onclick="toggleFilter(this)">
+      <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Author</h3><span class="chevron">▼</span>
       </div>
-      <div class="filter-options" id="authorFilters">
+      <div class="filter-options" id="authorFilters" style="display:none">
         <div style="font-size:0.78rem;color:#aaa;font-style:italic;">Loading authors…</div>
       </div>
     </div>
