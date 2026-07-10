@@ -546,11 +546,21 @@ console.log("FINAL IMAGES:", images);
           <div class="product-details">
             <h1>${title}</h1>
             ${author ? `<div class="product-author">By <a href="shop.html?author=${encodeURIComponent(author)}">${author}</a></div>` : ''}
-            <div class="product-price-large">₹ ${price.toFixed(2)}</div>
-            ${inStock
-            ? `<button class="add-to-cart-btn" id="atc-btn" onclick="addToCart('${id}'); flyBookToCart(this);">Add to Cart</button>
-            <button class="save-later-btn" onclick="addToWishlistFromProduct('${id}')">♡ Save for Later</button>`
-            : `<button class="add-to-cart-btn" disabled>Sold Out</button>`}
+<div class="product-price-large">₹ ${price.toFixed(2)}</div>
+${(() => {
+  const outOfStock = !inStock || stockCount === 0;
+  if (outOfStock) {
+    return `<div class="stock-badge out-of-stock" style="margin-bottom:14px;">Out of Stock</div>`;
+  } else if (stockCount === 1) {
+    return `<div class="stock-badge low-stock" style="margin-bottom:14px;">Only 1 left in stock!</div>`;
+  } else {
+    return `<div class="stock-badge in-stock" style="margin-bottom:14px;">${stockCount} in stock</div>`;
+  }
+})()}
+${inStock && stockCount > 0
+  ? `<button class="add-to-cart-btn" id="atc-btn" onclick="addToCart('${id}'); flyBookToCart(this);">Add to Cart</button>
+  <button class="save-later-btn" onclick="addToWishlistFromProduct('${id}')">♡ Save for Later</button>`
+  : `<button class="add-to-cart-btn" disabled>Out of Stock</button>`}
             <div class="shipping-note">🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available</div>
             ${description ? `<div class="product-description">${description}</div>` : ''}
             ${note ? `<div class="product-note"><strong>Note from TalesGalore</strong>${note}</div>` : ''}
