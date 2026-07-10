@@ -2906,3 +2906,75 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     min-width: max-content !important;
   }
 }
+
+@media (max-width: 860px) {
+
+  /* ── SHOP LAYOUT ── */
+  .catalogue-layout {
+    grid-template-columns: 1fr !important;
+    padding: 20px 12px 60px !important;
+    gap: 16px !important;
+  }
+
+  /* Hide sidebar completely on mobile —
+     user accesses filters via the Filter & Sort button */
+  .sidebar {
+    display: none !important;
+  }
+
+  /* Show the mobile filter button */
+  .mobile-filter-btn {
+    display: flex !important;
+  }
+
+  /* ── TOOLBAR ── */
+  .catalogue-toolbar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* ── PRODUCT GRID — 2 columns ── */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  /* Smaller card text on mobile */
+  .product-info h3 {
+    font-size: 0.82rem !important;
+    margin-bottom: 4px !important;
+  }
+  .product-price { font-size: 0.82rem !important; }
+  .product-add-btn {
+    font-size: 0.68rem !important;
+    padding: 7px !important;
+  }
+  .product-wishlist-btn {
+    font-size: 0.68rem !important;
+    padding: 6px !important;
+  }
+  .stock-badge {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+  }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 18px 12px 16px !important;
+  }
+  .page-hero h1 {
+    font-size: 1.3rem !important;
+  }
+
+  /* Search bar full width */
+  .shop-search-wrap > div {
+    max-width: 100% !important;
+  }
+
+  /* ── PAGINATION ── */
+  .pagination { gap: 4px !important; margin-top: 24px !important; }
+  .page-btn { width: 32px !important; height: 32px !important; font-size: 0.78rem !important; }
+
+}
