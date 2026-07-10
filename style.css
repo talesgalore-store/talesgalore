@@ -2513,3 +2513,224 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 #popular-marquee {
   animation-duration: 80s !important;
 }
+
+/* =========================================
+   TALESGALORE — Mobile Home Page Fixes
+   Paste at the bottom of style.css
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  /* ── HEADER ── */
+
+  /* Hide social icons — reclaim space */
+  .header-social { display: none !important; }
+
+  /* Header row: logo left, actions right */
+  .header-inner {
+    padding: 8px 12px;
+    height: auto;
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .header-logo .logo-img { height: 40px; }
+
+  /* Actions: tighten up */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* Hide "Wishlist" text, keep count badge */
+  .header-actions a[href="wishlist.html"] {
+    font-size: 0;        /* hide text */
+  }
+  .header-actions a[href="wishlist.html"] span {
+    font-size: 11px;     /* restore badge */
+  }
+
+  /* Hide "Cart" text, keep icon + count */
+  .header-cart {
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .header-cart svg { display: block; }
+  .header-cart span {
+    font-size: 11px;
+  }
+
+  /* Auth button smaller */
+  #auth-header-btn button {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+  }
+  #auth-header-btn span {
+    font-size: 0.78rem !important;
+  }
+
+  /* ── NAV — horizontal scroll, show all pages ── */
+  .main-nav {
+    display: flex !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    white-space: nowrap !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    border-top: 1px solid var(--border, #DDD8CF);
+    position: static !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .main-nav::-webkit-scrollbar { display: none; }
+  .main-nav a {
+    flex-shrink: 0;
+    padding: 9px 13px;
+    font-size: 12px;
+    border-right: 1px solid #eee;
+    white-space: nowrap;
+  }
+  .main-nav a:last-child { border-right: none; }
+
+  /* ── SEARCH BAND ── */
+  .home-search-wrap {
+    padding: 16px 12px 14px;
+  }
+  .home-search-wrap h1 {
+    font-size: 1rem !important;
+    margin-bottom: 10px;
+  }
+  .home-search-inner {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .home-filter-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+  .home-search-box input {
+    font-size: 14px;
+  }
+
+  /* ── MISSION SECTION ── */
+  .mission-section {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* Cap the banner image height on mobile */
+  .mission-image {
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+  }
+  .mission-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Mission box full width */
+  .mission-content {
+    width: 100%;
+    padding: 0;
+  }
+  .mission-box {
+    max-width: 100% !important;
+    border-radius: 0;
+    padding: 20px 16px;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+  }
+  .mission-box h2 { font-size: 1.2rem; }
+  .mission-box p  { font-size: 0.88rem; }
+  .mission-box blockquote { font-size: 0.82rem; }
+
+  /* ── COLLECTION SECTIONS (Age / Genre) ── */
+  .collection-section > div { padding: 0 12px; }
+
+  /* Age track — single scrollable row */
+  #age-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 10px !important;
+    padding: 4px 12px 10px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  #age-track::-webkit-scrollbar { display: none; }
+  #age-track .collection-card {
+    flex: 0 0 110px !important;
+    min-width: 110px !important;
+  }
+  #age-track .collection-card img {
+    width: 110px !important;
+    height: 110px !important;
+  }
+  #age-track .collection-card span {
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+  }
+
+  /* Genre track — 2 columns grid */
+  #genre-track {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 4px 12px 10px !important;
+    overflow-x: visible !important;
+  }
+  #genre-track .collection-card img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  #genre-track .collection-card span {
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-outer { padding: 0 40px; }
+  .marquee-arrow { width: 32px; height: 32px; font-size: 1rem; }
+  .marquee-card  { width: 130px; }
+
+  /* ── FEATURED GRID ── */
+  .products-grid,
+  #featured-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 12px !important;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .section-heading {
+    font-size: 1.2rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ── REVIEWS STRIP ── */
+  #homepage-reviews {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── WHATSAPP BTN — don't overlap content ── */
+  .whatsapp-btn {
+    bottom: 14px;
+    right: 14px;
+    width: 46px;
+    height: 46px;
+  }
+}
