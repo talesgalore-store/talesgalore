@@ -644,10 +644,10 @@
           binding:    (f.bookBinding || f.binding || '').trim(),
           ages:       ageArray,
           genres:     genreArray,
-          inStock:    f.inStock === true || f.inStock === 1 || f.inStock === 'true',
+          inStock:    f.inStock !== false,
           image:      imageUrl,
           images:     imagesArray,
-          stockCount: f.stockCount != null ? Number(f.stockCount) : 1,
+          stockCount: typeof f.stockCount === 'number' ? f.stockCount : 1,
         };
       });
 
