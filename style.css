@@ -2858,97 +2858,34 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     object-position: center !important;
   }
 }
-
-/* ── MOBILE HEADER FIX ── */
-@media (max-width: 768px) {
-
-  /* Force header to stack in two rows */
-  .site-header { position: sticky; top: 0; z-index: 1000; }
-
-  .header-inner {
+@media (max-width: 600px) {
+  #genre-track {
     display: flex !important;
-    flex-wrap: wrap !important;
-    height: auto !important;
-    padding: 8px 12px !important;
-    gap: 0 !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-  }
-
-  /* Row 1: hide social, show logo + actions only */
-  .header-social { display: none !important; }
-
-  .header-logo { flex: 0 0 auto !important; }
-  .header-logo .logo-img { height: 42px !important; }
-
-  .header-actions {
-    flex: 0 0 auto !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    margin-left: auto !important;
-  }
-
-  /* Hide Wishlist text, keep badge */
-  .header-actions a[href="wishlist.html"] {
-    font-size: 0 !important;
-  }
-  .header-actions a[href="wishlist.html"] span {
-    font-size: 11px !important;
-  }
-
-  /* Hide Cart text, keep icon + badge */
-  .header-cart {
-    font-size: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 2px !important;
-  }
-  .header-cart svg { display: block !important; }
-  .header-cart span { font-size: 11px !important; }
-
-  /* Auth button */
-  #auth-header-btn { display: flex !important; align-items: center !important; }
-  #auth-header-btn button {
-    padding: 4px 8px !important;
-    font-size: 0.72rem !important;
-    white-space: nowrap !important;
-  }
-
-  /* Row 2: nav takes full width below header row */
-  .main-nav {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    display: flex !important;
+    flex-wrap: nowrap !important;
     overflow-x: auto !important;
-    overflow-y: hidden !important;
-    white-space: nowrap !important;
+    gap: 10px !important;
+    padding: 4px 12px 10px !important;
     scrollbar-width: none !important;
     -webkit-overflow-scrolling: touch !important;
-    border-top: 1px solid #eee !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    gap: 0 !important;
-    background: #fff !important;
-    position: static !important;
-    top: auto !important;
+    grid-template-columns: none !important;
   }
-  .main-nav::-webkit-scrollbar { display: none !important; }
-  .main-nav a {
-    flex-shrink: 0 !important;
-    padding: 9px 14px !important;
-    font-size: 12px !important;
-    border-right: 1px solid #eee !important;
-    white-space: nowrap !important;
-    display: inline-block !important;
-  }
-  .main-nav a:last-child { border-right: none !important; }
+  #genre-track::-webkit-scrollbar { display: none; }
 
-  /* Mission image cap */
-  .mission-image { max-height: 200px; overflow: hidden; }
-  .mission-image img {
-    height: 200px !important;
+  #genre-track .collection-card {
+    flex: 0 0 110px !important;
+    min-width: 110px !important;
+    width: 110px !important;
+  }
+  #genre-track .collection-card img {
+    width: 110px !important;
+    height: 110px !important;
     object-fit: cover !important;
-    object-position: center !important;
+  }
+  #genre-track .collection-card span {
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+    text-align: center !important;
+    display: block !important;
   }
 }
+
