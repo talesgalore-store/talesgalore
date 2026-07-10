@@ -645,6 +645,7 @@
           price:      parseFloat(f.price) || 0,
           condition:  (Array.isArray(f.bookCondition) ? f.bookCondition[0] : (f.bookCondition || f.condition || '')).toString().trim(),
           binding:    (f.bookBinding || f.binding || '').trim(),
+          language:   (Array.isArray(f.language) ? f.language[0] : (f.language || '')).toString().trim(),
           ages:       ageArray,
           genres:     genreArray,
           inStock:    f.inStock !== false,
@@ -672,6 +673,8 @@
 
     [...document.querySelectorAll('#conditionFilters input:checked')].forEach(c => params.append('condition', c.value));
     [...document.querySelectorAll('#bindingFilters input:checked')].forEach(c  => params.append('binding', c.value));
+    [...document.querySelectorAll('#languageFilters input:checked')].forEach(c  => params.append('language', c.value));
+
     [...document.querySelectorAll('#ageFilters input:checked')].forEach(c      => params.append('age', c.value));
     [...document.querySelectorAll('#genreFilters input:checked')].forEach(c    => params.append('genre', c.value));
     [...document.querySelectorAll('#authorFilters input:checked')].forEach(c   => params.append('author', c.value));
@@ -702,6 +705,10 @@
     });
     params.getAll('binding').forEach(v => {
       const cb = document.querySelector(`#bindingFilters input[value="${v}"]`);
+      if (cb) cb.checked = true;
+    });
+    params.getAll('language').forEach(v => {
+      const cb = document.querySelector(`#languageFilters input[value="${v}"]`);
       if (cb) cb.checked = true;
     });
     params.getAll('age').forEach(v => {
@@ -758,6 +765,7 @@
   function applyFilters() {
     const checkedConditions = [...document.querySelectorAll('#conditionFilters input:checked')].map(c => c.value);
     const checkedBindings   = [...document.querySelectorAll('#bindingFilters input:checked')].map(c => c.value);
+    const checkedLanguages  = [...document.querySelectorAll('#languageFilters input:checked')].map(c => c.value);
     const checkedAges       = [...document.querySelectorAll('#ageFilters input:checked')].map(c => c.value);
     const checkedGenres     = [...document.querySelectorAll('#genreFilters input:checked')].map(c => c.value);
     const checkedAuthors    = [...document.querySelectorAll('#authorFilters input:checked')].map(c => c.value);
@@ -769,6 +777,7 @@
     filtered = allBooks.filter(b => {
       if (checkedConditions.length && !checkedConditions.includes(b.condition)) return false;
       if (checkedBindings.length   && !checkedBindings.includes(b.binding))    return false;
+      if (checkedLanguages.length  && !checkedLanguages.includes(b.language)) return false;
       if (checkedAges.length       && !checkedAges.some(a => b.ages.includes(a))) return false;
       if (checkedGenres.length) {
         const normBook    = b.genres.map(g => g.replace(/&amp;/g, '&').trim());
