@@ -45,6 +45,37 @@ function isAdmin() {
   return !!user && ADMIN_EMAILS.includes(user.email);
 }
 
+/* ── Manually-curated reviews (e.g. from Google Reviews) ──
+   These always appear on the homepage strip and the All Reviews
+   page, blended in with live Firestore reviews. Add more here
+   anytime — just give each a unique id. ── */
+const STATIC_REVIEWS = [
+  {
+    id: 'static-zainab',
+    rating: 5,
+    headline: 'Everything exceeded my expectations',
+    body: "I recently bought books for my baby from this platform, and I'm very happy with my purchase. The owner was extremely supportive and helpful throughout the process. The prices were very reasonable, and the quality of the books is excellent. Everything exceeded my expectations. I highly recommend buying from her. Thank you for the wonderful service!",
+    userName: 'Zainab Fozdar',
+    source: 'Google Reviews'
+  },
+  {
+    id: 'static-donna',
+    rating: 5,
+    headline: 'The best of both — website and personal touch',
+    body: "One of the best places to get affordable quality preloved books! There are many pages on Instagram selling second hand books, but most don't entertain you by sharing details of books on requests. You will have to wait and comment and block immediately after they post. And most websites don't share videos of the books. It's very tasking, time consuming and difficult for new moms. If you prefer buying from a website leisurely at reasonable prices, and also would like to see the videos of the books on request, or know more about the books, or want to have a proper conversation with the seller, then Tales Galore has the best of both! They have a dedicated website for you to browse, an Instagram page and also a warm team passionate about books eager to help you get what you want!",
+    userName: 'Donna Partha',
+    source: 'Google Reviews'
+  },
+  {
+    id: 'static-surabhi',
+    rating: 5,
+    headline: 'Personalized guidance that made all the difference',
+    body: "I recently ordered a bunch of books from her, and I absolutely loved the experience. As busy parents ourselves, one thing I really appreciated was how thoughtfully she helped me choose books that were perfect for my 4-year-old son's age and current stage of life. Since he recently became an older brother, she also recommended books that gently explore those emotions and adjusted my selection accordingly. She took the time to explain why certain books would be a better fit, and that personalized guidance made all the difference.",
+    userName: 'Surabhi Sugan',
+    source: 'Google Reviews'
+  }
+];
+
 /* ── Helpers ── */
 function starsHTML(rating, size = '1rem') {
   return Array.from({ length: 5 }, (_, i) =>
@@ -157,32 +188,6 @@ async function deleteReview(reviewId) {
     alert('Could not delete review. Please try again.');
   }
 }
-
-/* ── Manually-curated reviews (e.g. from Google Reviews) ──
-   These always appear on the homepage strip, blended in with
-   live Firestore reviews. Add more objects here anytime. ── */
-/* ── Manually-curated reviews (e.g. from Google Reviews) ──
-   These always appear on the homepage strip and the All Reviews
-   page, blended in with live Firestore reviews. Add more here
-   anytime — just give each a unique id. ── */
-const STATIC_REVIEWS = [
-  {
-    id: 'static-zainab',
-    rating: 5,
-    headline: 'Everything exceeded my expectations',
-    body: "I recently bought books for my baby from this platform, and I'm very happy with my purchase. The owner was extremely supportive and helpful throughout the process. The prices were very reasonable, and the quality of the books is excellent. Everything exceeded my expectations. I highly recommend buying from her. Thank you for the wonderful service!",
-    userName: 'Zainab Fozdar',
-    source: 'Google Reviews'
-  },
-  {
-    id: 'static-donna',
-    rating: 5,
-    headline: 'The best of both — website and personal touch',
-    body: "One of the best places to get affordable quality preloved books! There are many pages on Instagram selling second hand books, but most don't entertain you by sharing details of books on requests. You will have to wait and comment and block immediately after they post. And most websites don't share videos of the books. It's very tasking, time consuming and difficult for new moms. If you prefer buying from a website leisurely at reasonable prices, and also would like to see the videos of the books on request, or know more about the books, or want to have a proper conversation with the seller, then Tales Galore has the best of both! They have a dedicated website for you to browse, an Instagram page and also a warm team passionate about books eager to help you get what you want!",
-    userName: 'Donna Partha',
-    source: 'Google Reviews'
-  }
-];
 
 /* ── Load 3 latest reviews (homepage strip) ── */
 export async function loadHomepageReviews() {
