@@ -72,45 +72,73 @@ export async function loadAllReviews() {
 
   container.innerHTML = `<p class="reviews-loading">Loading reviews…</p>`;
 
+  let liveReviews = [];
   try {
     const q    = query(collection(db, 'store-reviews'), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
+    liveReviews = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    console.error('loadAllReviews:', err);
+    // fall through — STATIC_REVIEWS can still render
+  }
 
-    if (snap.empty) {
-      container.innerHTML = `<p class="reviews-empty">No reviews yet — be the first to share your experience!</p>`;
-      if (countEl) countEl.textContent = '0 reviews';
-      return;
-    }
+  const reviews = [...STATIC_REVIEWS, ...liveReviews];
 
-    const reviews = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    const avg     = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
-    const admin   = isAdmin();
+  if (!reviews.length) {
+    container.innerHTML = `<p class="reviews-empty">No reviews yet — be the first to share your experience!</p>`;
+    if (countEl) countEl.textContent = '0 reviews';
+    return;
+  }
 
-    if (countEl) countEl.textContent = `${reviews.length} review${reviews.length !== 1 ? 's' : ''}`;
-    if (avgEl)   avgEl.innerHTML     = `${starsHTML(Math.round(avg), '1.2rem')} <span style="font-weight:700;font-size:1.1rem;color:#1C1C1A;">${avg}</span> <span style="color:#888;font-size:13px;">/ 5</span>`;
+  const avg   = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+  const admin = isAdmin();
 
-    container.innerHTML = reviews.map(r => `
-      <div class="review-card" data-id="${r.id}">
+  if (countEl) countEl.textContent = `${reviews.length} review${reviews.length !== 1 ? 's' : ''}`;
+  if (avgEl)   avgEl.innerHTML     = `${starsHTML(Math.round(avg), '1.2rem')} <span style="font-weight:700;font-size:1.1rem;color:#1C1C1A;">${avg}</span> <span style="color:#888;font-size:13px;">/ 5</span>`;
+
+  container.innerHTML = reviews.map(r => {
+    const isStatic = String(r.id).startsWith('static-');
+    return `
+      <div class="review-card" id="review-${esc(r.id)}" data-id="${esc(r.id)}">
         <div class="review-header">
           <div class="review-stars">${starsHTML(r.rating, '1rem')}</div>
           <span class="review-author">${esc(r.userName)}</span>
-          <span class="review-date">${formatDate(r.createdAt)}</span>
-          ${admin ? `<button class="review-delete-btn" data-id="${r.id}" title="Delete review">🗑</button>` : ''}
+          ${isStatic ? `<span class="review-date" style="color:#999;">${esc(r.source || '')}</span>` : `<span class="review-date">${formatDate(r.createdAt)}</span>`}
+          ${(admin && !isStatic) ? `<button class="review-delete-btn" data-id="${r.id}" title="Delete review">🗑</button>` : ''}
         </div>
         ${r.headline ? `<p class="review-headline">"${esc(r.headline)}"</p>` : ''}
         <p class="review-body">${esc(r.body)}</p>
-      </div>`).join('');
+      </div>`;
+  }).join('');
 
-    if (admin) {
-      container.querySelectorAll('.review-delete-btn').forEach(btn => {
-        btn.addEventListener('click', () => deleteReview(btn.dataset.id));
-      });
-    }
-
-  } catch (err) {
-    console.error('loadAllReviews:', err);
-    container.innerHTML = `<p style="color:#cc4444;">Could not load reviews. Please try again later.</p>`;
+  if (admin) {
+    container.querySelectorAll('.review-delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => deleteReview(btn.dataset.id));
+    });
   }
+
+  scrollToHashReview();
+}
+
+/* ── Scroll to & briefly highlight a review linked via #review-<id> ── */
+function scrollToHashReview() {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  const originalTransition = target.style.transition;
+  const originalBg         = target.style.backgroundColor;
+  target.style.transition      = 'background-color 0.4s ease';
+  target.style.backgroundColor = '#FFF3CD';
+
+  setTimeout(() => {
+    target.style.backgroundColor = originalBg || '';
+    setTimeout(() => { target.style.transition = originalTransition || ''; }, 400);
+  }, 1600);
 }
 
 /* ── Delete a review (admin only) ── */
