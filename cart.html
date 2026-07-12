@@ -95,10 +95,26 @@
   .delivery-method-option:hover {
     border-color: #C8923A;
   }
-  .delivery-method-option input[type="radio"] {
+  /* style.css has a generic ".checkout-form input, .checkout-form textarea"
+     rule that gives EVERY input (including these radios) width:100%, padding,
+     a border, and a background — turning the radio into a big box and pushing
+     the label text out of view. This more specific selector overrides that
+     back to a normal small radio button. Do not remove. */
+  .checkout-form input[type="radio"] {
+    width: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    border-radius: 0;
     margin-top: 2px;
     accent-color: #C8923A;
     flex-shrink: 0;
+  }
+
+  .delivery-method-option span {
+    display: block;
+    min-width: 0;
+    flex: 1;
   }
   .delivery-method-option.active {
     border-color: #C8923A;
