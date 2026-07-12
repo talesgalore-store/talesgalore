@@ -130,31 +130,49 @@ async function deleteReview(reviewId) {
   }
 }
 
+/* ── Manually-curated reviews (e.g. from Google Reviews) ──
+   These always appear on the homepage strip, blended in with
+   live Firestore reviews. Add more objects here anytime. ── */
+const STATIC_REVIEWS = [
+  {
+    rating: 5,
+    headline: 'Everything exceeded my expectations',
+    body: "I recently bought books for my baby from this platform, and I'm very happy with my purchase. The owner was extremely supportive and helpful throughout the process. The prices were very reasonable, and the quality of the books is excellent. Everything exceeded my expectations. I highly recommend buying from her. Thank you for the wonderful service!",
+    userName: 'Zainab Fozdar',
+    source: 'Google Reviews'
+  }
+];
+
 /* ── Load 3 latest reviews (homepage strip) ── */
 export async function loadHomepageReviews() {
   const container = document.getElementById('homepage-reviews');
   if (!container) return;
 
+  let liveReviews = [];
+
   try {
     const q    = query(collection(db, 'store-reviews'), orderBy('createdAt', 'desc'), limit(3));
     const snap = await getDocs(q);
-    if (snap.empty) { container.closest('section')?.remove(); return; }
-
-    container.innerHTML = snap.docs.map(doc => {
-      const r = doc.data();
-      return `
-        <div class="hp-review-card">
-          <div style="margin-bottom:8px;">${starsHTML(r.rating, '0.95rem')}</div>
-          ${r.headline ? `<p class="hp-review-headline">"${esc(r.headline)}"</p>` : ''}
-          <p class="hp-review-body">${esc(r.body)}</p>
-          <p class="hp-review-author">— ${esc(r.userName)}</p>
-        </div>`;
-    }).join('');
-
+    liveReviews = snap.docs.map(doc => doc.data());
   } catch (err) {
     console.error('loadHomepageReviews:', err);
-    container.closest('section')?.remove();
+    // fall through — we still have STATIC_REVIEWS to show
   }
+
+  const combined = [...STATIC_REVIEWS, ...liveReviews].slice(0, 3);
+
+  if (!combined.length) {
+    container.closest('section')?.remove();
+    return;
+  }
+
+  container.innerHTML = combined.map(r => `
+    <div class="hp-review-card">
+      <div style="margin-bottom:8px;">${starsHTML(r.rating, '0.95rem')}</div>
+      ${r.headline ? `<p class="hp-review-headline">"${esc(r.headline)}"</p>` : ''}
+      <p class="hp-review-body">${esc(r.body)}</p>
+      <p class="hp-review-author">— ${esc(r.userName)}${r.source ? ` <span style="font-weight:400;color:#999;">(${esc(r.source)})</span>` : ''}</p>
+    </div>`).join('');
 }
 
 /* ── Submit a store review ── */
