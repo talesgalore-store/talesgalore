@@ -4,6 +4,8 @@
 
 const RAZORPAY_KEY_ID = 'rzp_live_SUkydXEvJ1GdJV';
 
+const STORE_PICKUP_ADDRESS = 'TalesGalore, Sector 43, Noida, Uttar Pradesh';
+
 const shippingRates = {
   "Andaman and Nicobar Islands": 99,
   "Andhra Pradesh": 99,
@@ -43,14 +45,56 @@ const shippingRates = {
   "West Bengal": 99
 };
 
+/* ── Get the currently-selected delivery method ── */
+function getDeliveryMethod() {
+  const checked = document.querySelector('input[name="deliveryMethod"]:checked');
+  return checked ? checked.value : 'ship';
+}
+
+/* ── Toggle UI when the person switches between Ship / Pick-up ── */
+window.updateDeliveryMethod = function () {
+  const method       = getDeliveryMethod();
+  const isPickup      = method === 'pickup';
+
+  const shipFields    = document.getElementById('shipToFields');
+  const addressField  = document.getElementById('addressField');
+  const pickupNote    = document.getElementById('pickupNote');
+  const shipLabel     = document.getElementById('shipOptionLabel');
+  const pickupLabel   = document.getElementById('pickupOptionLabel');
+  const stateSelect   = document.getElementById('deliveryState');
+  const addressInput  = document.getElementById('custAddress');
+
+  if (shipFields)   shipFields.style.display   = isPickup ? 'none' : 'block';
+  if (addressField) addressField.style.display = isPickup ? 'none' : 'block';
+  if (pickupNote)    pickupNote.style.display    = isPickup ? 'block' : 'none';
+
+  if (shipLabel)   shipLabel.classList.toggle('active', !isPickup);
+  if (pickupLabel) pickupLabel.classList.toggle('active', isPickup);
+
+  // Pick-up doesn't need a state or a typed address — relax the `required`
+  // attributes so the browser doesn't block submission on hidden fields.
+  if (stateSelect)  stateSelect.required  = !isPickup;
+  if (addressInput) addressInput.required = !isPickup;
+
+  updateShipping();
+};
+
 window.updateShipping = function () {
-  const state    = document.getElementById('deliveryState')?.value;
-  const shipping = state ? (shippingRates[state] || 99) : 0;
+  const isPickup = getDeliveryMethod() === 'pickup';
   const subtotal = getCartTotal();
-  const total    = subtotal + shipping;
 
   const shippingEl = document.getElementById('shippingCost');
   const totalEl    = document.getElementById('cartTotal');
+
+  if (isPickup) {
+    if (shippingEl) shippingEl.textContent = 'Free (Store Pick-up)';
+    if (totalEl)    totalEl.textContent    = `₹${subtotal}`;
+    return;
+  }
+
+  const state    = document.getElementById('deliveryState')?.value;
+  const shipping = state ? (shippingRates[state] || 99) : 0;
+  const total    = subtotal + shipping;
 
   if (shippingEl) shippingEl.textContent = state ? `₹${shipping}` : '— Select state —';
   if (totalEl)    totalEl.textContent    = state ? `₹${total}`    : `₹${subtotal}`;
@@ -65,23 +109,31 @@ function initiatePayment() {
     return;
   }
 
+  const method  = getDeliveryMethod();
+  const isPickup = method === 'pickup';
+
   const name    = document.getElementById('custName')?.value.trim();
   const email   = document.getElementById('custEmail')?.value.trim();
   const phone   = document.getElementById('custPhone')?.value.trim();
   const address = document.getElementById('custAddress')?.value.trim();
   const state   = document.getElementById('deliveryState')?.value;
 
-  if (!name || !email || !phone || !address) {
+  if (!name || !email || !phone) {
     alert('Please fill in all your details before paying.');
     return;
   }
 
-  if (!state) {
-    alert('Please select your delivery state.');
-    return;
+  if (!isPickup) {
+    if (!address) {
+      alert('Please fill in all your details before paying.');
+      return;
+    }
+    if (!state) {
+      alert('Please select your delivery state.');
+      return;
+    }
   }
 
-  // FIX: use getCart() instead of bare `cart`
   const cart = getCart();
 
   if (!cart.length) {
@@ -89,10 +141,13 @@ function initiatePayment() {
     return;
   }
 
-  const shipping   = shippingRates[state] || 99;
+  const shipping   = isPickup ? 0 : (shippingRates[state] || 99);
   const subtotal   = getCartTotal();
   const total      = subtotal + shipping;
   const bookTitles = cart.map(b => b.title).join(', ');
+
+  const resolvedAddress = isPickup ? STORE_PICKUP_ADDRESS : address;
+  const resolvedState   = isPickup ? 'Store Pick-up — Noida Sector 43' : state;
 
   const options = {
     key:         RAZORPAY_KEY_ID,
@@ -102,7 +157,13 @@ function initiatePayment() {
     description: `Books: ${bookTitles}`,
     image:       '/images/TalesGalore-logo.PNG',
     handler: function (response) {
-      onPaymentSuccess(response, { name, email, phone, address, state, cart, total });
+      onPaymentSuccess(response, {
+        name, email, phone,
+        address: resolvedAddress,
+        state:   resolvedState,
+        deliveryMethod: method,
+        cart, total
+      });
     },
     prefill: {
       name:    name,
@@ -110,7 +171,8 @@ function initiatePayment() {
       contact: phone
     },
     notes: {
-      delivery_address: address,
+      delivery_method:  isPickup ? 'Store Pick-up' : 'Shipping',
+      delivery_address: resolvedAddress,
       books: bookTitles
     },
     theme: {
@@ -135,6 +197,8 @@ function onPaymentSuccess(response, orderDetails) {
   sendAdminNotificationEmails(response, orderDetails);
   clearCart();
 
+  const isPickup = orderDetails.deliveryMethod === 'pickup';
+
   const container = document.querySelector('.container');
   container.innerHTML = `
     <div style="text-align:center;padding:80px 0;">
@@ -143,7 +207,10 @@ function onPaymentSuccess(response, orderDetails) {
       <p style="color:#4A4A46;font-size:18px;margin-bottom:8px;">Thank you, ${orderDetails.name}!</p>
       <p style="color:#4A4A46;margin-bottom:8px;">Payment ID: <strong>${response.razorpay_payment_id}</strong></p>
       <p style="color:#4A4A46;margin-bottom:8px;">A confirmation email has been sent to <strong>${orderDetails.email}</strong>.</p>
-      <p style="color:#4A4A46;margin-bottom:32px;">We'll ship your books via India Post soon!</p>
+      ${isPickup
+        ? `<p style="color:#4A4A46;margin-bottom:32px;">We'll message you once your order is ready for pick-up at <strong>${STORE_PICKUP_ADDRESS}</strong>. No shipping charges apply!</p>`
+        : `<p style="color:#4A4A46;margin-bottom:32px;">We'll ship your books via India Post soon!</p>`
+      }
       <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
     </div>`;
 }
@@ -166,6 +233,7 @@ function buildOrderEmailParams(response, orderDetails) {
     subtotal:         subtotal.toFixed(2),
     shipping:         shipping.toFixed(2),
     total:            orderDetails.total.toFixed(2),
+    delivery_method:  orderDetails.deliveryMethod === 'pickup' ? 'Free Store Pick-up' : 'Shipping (India Post)',
     delivery_address: orderDetails.address,
     delivery_state:   orderDetails.state || '',
     payment_id:       response.razorpay_payment_id
