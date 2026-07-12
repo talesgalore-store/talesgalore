@@ -166,7 +166,7 @@ export async function loadHomepageReviews() {
   try {
     const q    = query(collection(db, 'store-reviews'), orderBy('createdAt', 'desc'), limit(3));
     const snap = await getDocs(q);
-    liveReviews = snap.docs.map(doc => doc.data());
+    liveReviews = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (err) {
     console.error('loadHomepageReviews:', err);
     // fall through — we still have STATIC_REVIEWS to show
@@ -180,12 +180,12 @@ export async function loadHomepageReviews() {
   }
 
   container.innerHTML = combined.map(r => `
-    <div class="hp-review-card">
+    <a href="reviews.html#review-${esc(r.id)}" class="hp-review-card" style="text-decoration:none;color:inherit;display:block;">
       <div style="margin-bottom:8px;">${starsHTML(r.rating, '0.95rem')}</div>
       ${r.headline ? `<p class="hp-review-headline">"${esc(r.headline)}"</p>` : ''}
       <p class="hp-review-body">${esc(r.body)}</p>
       <p class="hp-review-author">— ${esc(r.userName)}${r.source ? ` <span style="font-weight:400;color:#999;">(${esc(r.source)})</span>` : ''}</p>
-    </div>`).join('');
+    </a>`).join('');
 }
 
 /* ── Submit a store review ── */
