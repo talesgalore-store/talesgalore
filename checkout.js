@@ -100,6 +100,15 @@ window.updateShipping = function () {
   if (totalEl)    totalEl.textContent    = state ? `₹${total}`    : `₹${subtotal}`;
 };
 
+/* ── Build the compact "id:qty,id:qty" string the stock-decrement
+     webhook (functions/stockDecrement.js) reads from payment notes ── */
+function buildBookIdsNote(cart) {
+  return cart
+    .filter(item => item.id)
+    .map(item => `${item.id}:${item.qty || 1}`)
+    .join(',');
+}
+
 function initiatePayment() {
   // Check auth first
   const user = window.getCurrentUser ? window.getCurrentUser() : null;
@@ -145,6 +154,7 @@ function initiatePayment() {
   const subtotal   = getCartTotal();
   const total      = subtotal + shipping;
   const bookTitles = cart.map(b => b.title).join(', ');
+  const bookIdsNote = buildBookIdsNote(cart);
 
   const resolvedAddress = isPickup ? STORE_PICKUP_ADDRESS : address;
   const resolvedState   = isPickup ? 'Store Pick-up — Noida Sector 43' : state;
@@ -173,7 +183,10 @@ function initiatePayment() {
     notes: {
       delivery_method:  isPickup ? 'Store Pick-up' : 'Shipping',
       delivery_address: resolvedAddress,
-      books: bookTitles
+      books: bookTitles,
+      // Read by functions/stockDecrement.js (Razorpay webhook) to know
+      // exactly which Contentful entries to decrement, and by how much.
+      book_ids: bookIdsNote
     },
     theme: {
       color: '#5C7A5E'
@@ -196,6 +209,11 @@ function onPaymentSuccess(response, orderDetails) {
   sendOrderConfirmationEmail(response, orderDetails);
   sendAdminNotificationEmails(response, orderDetails);
   clearCart();
+
+  // NOTE: Stock is now decremented server-side by the Razorpay webhook
+  // (functions/stockDecrement.js) once payment.captured fires — not here.
+  // This keeps stock accurate even if the customer closes this tab before
+  // this function finishes running.
 
   const isPickup = orderDetails.deliveryMethod === 'pickup';
 
