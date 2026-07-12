@@ -133,12 +133,25 @@ async function deleteReview(reviewId) {
 /* ── Manually-curated reviews (e.g. from Google Reviews) ──
    These always appear on the homepage strip, blended in with
    live Firestore reviews. Add more objects here anytime. ── */
+/* ── Manually-curated reviews (e.g. from Google Reviews) ──
+   These always appear on the homepage strip and the All Reviews
+   page, blended in with live Firestore reviews. Add more here
+   anytime — just give each a unique id. ── */
 const STATIC_REVIEWS = [
   {
+    id: 'static-zainab',
     rating: 5,
     headline: 'Everything exceeded my expectations',
     body: "I recently bought books for my baby from this platform, and I'm very happy with my purchase. The owner was extremely supportive and helpful throughout the process. The prices were very reasonable, and the quality of the books is excellent. Everything exceeded my expectations. I highly recommend buying from her. Thank you for the wonderful service!",
     userName: 'Zainab Fozdar',
+    source: 'Google Reviews'
+  },
+  {
+    id: 'static-donna',
+    rating: 5,
+    headline: 'The best of both — website and personal touch',
+    body: "One of the best places to get affordable quality preloved books! There are many pages on Instagram selling second hand books, but most don't entertain you by sharing details of books on requests. You will have to wait and comment and block immediately after they post. And most websites don't share videos of the books. It's very tasking, time consuming and difficult for new moms. If you prefer buying from a website leisurely at reasonable prices, and also would like to see the videos of the books on request, or know more about the books, or want to have a proper conversation with the seller, then Tales Galore has the best of both! They have a dedicated website for you to browse, an Instagram page and also a warm team passionate about books eager to help you get what you want!",
+    userName: 'Donna Partha',
     source: 'Google Reviews'
   }
 ];
