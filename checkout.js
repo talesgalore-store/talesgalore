@@ -206,6 +206,7 @@ function initiatePayment() {
 }
 
 function onPaymentSuccess(response, orderDetails) {
+  decrementStock(orderDetails.cart);  // ← add this
   sendOrderConfirmationEmail(response, orderDetails);
   sendAdminNotificationEmails(response, orderDetails);
   clearCart();
