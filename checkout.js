@@ -293,3 +293,66 @@ function sendAdminNotificationEmails(response, orderDetails) {
       .catch(err => console.error(`EmailJS error (admin: ${adminEmail}):`, err));
   });
 }
+
+const CONTENTFUL_MGMT_TOKEN = 'your-management-token-here';
+const CONTENTFUL_SPACE      = 'tx11zsju5n7c';
+const CONTENTFUL_ENV        = 'master';
+
+async function decrementStock(cart) {
+  for (const item of cart) {
+    try {
+      // 1. Fetch current entry
+      const res = await fetch(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENV}/entries/${item.id}`,
+        { headers: { Authorization: `Bearer ${CONTENTFUL_MGMT_TOKEN}` } }
+      );
+      const entry = await res.json();
+
+      const currentStock = Number(entry.fields?.stockCount?.['en-US'] ?? 1);
+      const qty          = item.qty || 1;
+      const newStock     = Math.max(0, currentStock - qty);
+
+      const updatedFields = {
+        ...entry.fields,
+        stockCount: { 'en-US': newStock },
+      };
+
+      // If sold out, flip inStock to false
+      if (newStock === 0) {
+        updatedFields.inStock = { 'en-US': false };
+      }
+
+      // 2. Update entry (creates draft)
+      const putRes = await fetch(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENV}/entries/${item.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization:          `Bearer ${CONTENTFUL_MGMT_TOKEN}`,
+            'Content-Type':         'application/vnd.contentful.management.v1+json',
+            'X-Contentful-Version': String(entry.sys.version),
+          },
+          body: JSON.stringify({ fields: updatedFields }),
+        }
+      );
+      const updated = await putRes.json();
+
+      // 3. Publish so it goes live immediately
+      await fetch(
+        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENV}/entries/${item.id}/published`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization:          `Bearer ${CONTENTFUL_MGMT_TOKEN}`,
+            'X-Contentful-Version': String(updated.sys.version),
+          },
+        }
+      );
+
+      console.log(`Stock updated: ${item.title} → ${newStock} remaining`);
+
+    } catch (err) {
+      console.error(`Failed to decrement stock for ${item.id}:`, err);
+    }
+  }
+}
