@@ -295,7 +295,7 @@ function sendAdminNotificationEmails(response, orderDetails) {
   });
 }
 
-const CONTENTFUL_MGMT_TOKEN = 'your-management-token-here';
+const CONTENTFUL_MGMT_TOKEN = 'CFPAT-KDVrq5fnJjBNRBs5VE98QFVF9PphCiu_OMIaxKOyba4';
 const CONTENTFUL_SPACE      = 'tx11zsju5n7c';
 const CONTENTFUL_ENV        = 'master';
 
