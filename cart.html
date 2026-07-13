@@ -286,7 +286,11 @@
             <h4>Your Details</h4>
             <input type="text" id="custName" placeholder="Full Name" required />
             <input type="email" id="custEmail" placeholder="Email Address" required />
-            <input type="tel" id="custPhone" placeholder="Phone Number" required />
+            <input type="tel" id="custPhone" placeholder="Phone Number *" required
+                   inputmode="numeric" maxlength="13"
+                   pattern="[6-9][0-9]{9}"
+                   title="Enter a valid 10-digit phone number" />
+            <div style="font-size:11.5px;color:#999;margin:-8px 0 4px;">* Required — used to coordinate delivery / pick-up</div>
 
             <div id="addressField">
               <textarea id="custAddress" placeholder="Delivery Address" rows="3" required></textarea>
