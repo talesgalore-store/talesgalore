@@ -127,14 +127,37 @@ function initiatePayment() {
   const address = document.getElementById('custAddress')?.value.trim();
   const state   = document.getElementById('deliveryState')?.value;
 
-  if (!name || !email || !phone) {
-    alert('Please fill in all your details before paying.');
+  if (!name) {
+    alert('Please enter your full name.');
+    return;
+  }
+
+  if (!email) {
+    alert('Please enter your email address.');
+    return;
+  }
+
+  if (!phone) {
+    alert('Please enter your phone number.');
+    document.getElementById('custPhone')?.focus();
+    return;
+  }
+
+  // Phone must look like a real 10-digit Indian mobile number
+  // (optionally with a +91 / 91 / 0 prefix) — not just any non-empty text.
+  const digitsOnly   = phone.replace(/\D/g, '');
+  const phoneDigits  = digitsOnly.replace(/^(91|0)/, '');
+  const isValidPhone = /^[6-9]\d{9}$/.test(phoneDigits);
+
+  if (!isValidPhone) {
+    alert('Please enter a valid 10-digit phone number.');
+    document.getElementById('custPhone')?.focus();
     return;
   }
 
   if (!isPickup) {
     if (!address) {
-      alert('Please fill in all your details before paying.');
+      alert('Please fill in your delivery address.');
       return;
     }
     if (!state) {
@@ -206,15 +229,15 @@ function initiatePayment() {
 }
 
 function onPaymentSuccess(response, orderDetails) {
-  decrementStock(orderDetails.cart);  // ← add this
   sendOrderConfirmationEmail(response, orderDetails);
   sendAdminNotificationEmails(response, orderDetails);
   clearCart();
 
-  // NOTE: Stock is now decremented server-side by the Razorpay webhook
-  // (functions/stockDecrement.js) once payment.captured fires — not here.
-  // This keeps stock accurate even if the customer closes this tab before
-  // this function finishes running.
+  // Stock is decremented server-side by the Razorpay webhook
+  // (functions/stockDecrement.js) once payment.captured fires.
+  // Do NOT add any Contentful Management API calls to this file — it runs
+  // in the customer's browser, so a Management token placed here would be
+  // visible to anyone via view-source / browser dev tools.
 
   const isPickup = orderDetails.deliveryMethod === 'pickup';
 
@@ -293,67 +316,4 @@ function sendAdminNotificationEmails(response, orderDetails) {
       .then(() => console.log(`Admin notification sent to ${adminEmail}`))
       .catch(err => console.error(`EmailJS error (admin: ${adminEmail}):`, err));
   });
-}
-
-const CONTENTFUL_MGMT_TOKEN = 'CFPAT-KDVrq5fnJjBNRBs5VE98QFVF9PphCiu_OMIaxKOyba4';
-const CONTENTFUL_SPACE      = 'tx11zsju5n7c';
-const CONTENTFUL_ENV        = 'master';
-
-async function decrementStock(cart) {
-  for (const item of cart) {
-    try {
-      // 1. Fetch current entry
-      const res = await fetch(
-        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENV}/entries/${item.id}`,
-        { headers: { Authorization: `Bearer ${CONTENTFUL_MGMT_TOKEN}` } }
-      );
-      const entry = await res.json();
-
-      const currentStock = Number(entry.fields?.stockCount?.['en-US'] ?? 1);
-      const qty          = item.qty || 1;
-      const newStock     = Math.max(0, currentStock - qty);
-
-      const updatedFields = {
-        ...entry.fields,
-        stockCount: { 'en-US': newStock },
-      };
-
-      // If sold out, flip inStock to false
-      if (newStock === 0) {
-        updatedFields.inStock = { 'en-US': false };
-      }
-
-      // 2. Update entry (creates draft)
-      const putRes = await fetch(
-        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENV}/entries/${item.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization:          `Bearer ${CONTENTFUL_MGMT_TOKEN}`,
-            'Content-Type':         'application/vnd.contentful.management.v1+json',
-            'X-Contentful-Version': String(entry.sys.version),
-          },
-          body: JSON.stringify({ fields: updatedFields }),
-        }
-      );
-      const updated = await putRes.json();
-
-      // 3. Publish so it goes live immediately
-      await fetch(
-        `https://api.contentful.com/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENV}/entries/${item.id}/published`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization:          `Bearer ${CONTENTFUL_MGMT_TOKEN}`,
-            'X-Contentful-Version': String(updated.sys.version),
-          },
-        }
-      );
-
-      console.log(`Stock updated: ${item.title} → ${newStock} remaining`);
-
-    } catch (err) {
-      console.error(`Failed to decrement stock for ${item.id}:`, err);
-    }
-  }
 }
