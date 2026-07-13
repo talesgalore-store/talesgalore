@@ -805,16 +805,17 @@
     else if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
     else if (sort === 'newest')     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+    // Always push out-of-stock to bottom, regardless of sort — must run
+    // BEFORE renderPage() so the reordering actually shows up on screen.
+    filtered.sort((a, b) => {
+      const aOut = !a.inStock || a.stockCount === 0;
+      const bOut = !b.inStock || b.stockCount === 0;
+      return aOut === bOut ? 0 : aOut ? 1 : -1;
+    });
+
     currentPage = 1;
     pushFiltersToUrl();
     renderPage();
-// Always push out-of-stock to bottom, regardless of sort
-filtered.sort((a, b) => {
-  const aOut = !a.inStock || a.stockCount === 0;
-  const bOut = !b.inStock || b.stockCount === 0;
-  return aOut === bOut ? 0 : aOut ? 1 : -1;
-});
-    
   }
 
   function clearFilters() {
@@ -1032,6 +1033,13 @@ function toggleMobileSidebar() {
       const inAge    = b.ages.some(a => a.toLowerCase().includes(query));
       const inGenre  = b.genres.some(g => g.toLowerCase().includes(query));
       return inTitle || inAuthor || inAge || inGenre;
+    });
+
+    // Push out-of-stock matches to the bottom of the quick-search list too
+    matches.sort((a, b) => {
+      const aOut = !a.inStock || a.stockCount === 0;
+      const bOut = !b.inStock || b.stockCount === 0;
+      return aOut === bOut ? 0 : aOut ? 1 : -1;
     });
 
     if (!matches.length) {
