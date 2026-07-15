@@ -98,9 +98,35 @@
     .sbts-surface {
       padding: 26px 28px 24px;
       cursor: pointer;
-      display: block;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
       -webkit-tap-highlight-color: transparent;
     }
+
+    /* ── Cover thumbnail ── */
+    .sbts-thumb {
+      flex: 0 0 auto;
+      width: 76px;
+      height: 104px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: var(--warm);
+      border: 1px solid var(--rule);
+      box-shadow: 0 4px 10px rgba(139,94,60,0.12);
+    }
+    .sbts-thumb--fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--gold-lt);
+    }
+    .sbts-surface-content {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
     .sbts-theme-tag {
       display: inline-block;
       font-size: 0.68rem;
@@ -204,6 +230,11 @@
       color: #6B5A47;
       font-size: 0.95rem;
       line-height: 1.7;
+    }
+
+    @media (max-width: 480px) {
+      .sbts-thumb { width: 60px; height: 84px; }
+      .sbts-thumb--fallback { font-size: 22px; }
     }
   </style>
   <script type="module" src="auth.js"></script>
@@ -319,11 +350,14 @@
     grid.innerHTML = SBTS_ENTRIES.map((e, i) => `
       <article class="sbts-card" id="sbts-${e.slug}">
         <div class="sbts-surface" onclick="toggleSBTSCard('${e.slug}')">
-          <span class="sbts-theme-tag">${e.theme}</span>
-          <h2 class="sbts-title">${e.bookTitle}</h2>
-          ${e.author ? `<div class="sbts-author">${e.author}</div>` : ''}
-          <p class="sbts-teaser">${e.body[0]}</p>
-          <div class="sbts-toggle-row"><span class="arrow">▶</span><span class="toggle-label"></span></div>
+          ${sbtsCoverMarkup(e, 'sbts-thumb')}
+          <div class="sbts-surface-content">
+            <span class="sbts-theme-tag">${e.theme}</span>
+            <h2 class="sbts-title">${e.bookTitle}</h2>
+            ${e.author ? `<div class="sbts-author">${e.author}</div>` : ''}
+            <p class="sbts-teaser">${e.body[0]}</p>
+            <div class="sbts-toggle-row"><span class="arrow">▶</span><span class="toggle-label"></span></div>
+          </div>
         </div>
         <div class="sbts-reveal">
           <div class="sbts-reveal-inner">
