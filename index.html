@@ -3,6 +3,57 @@
 <style>
   :root { --cream: #FDFAF4; }
   body { background: var(--cream); }
+
+  /* ============================================================
+     MOBILE NAV FIX — show all tabs on the home page nav instead
+     of collapsing/hiding them. Wraps onto multiple lines and
+     centers on small screens.
+     ============================================================ */
+  @media (max-width: 768px) {
+    .header-inner {
+      flex-wrap: wrap !important;
+      row-gap: 10px;
+    }
+    .main-nav {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 10px 16px !important;
+      width: 100% !important;
+      order: 5;
+      overflow: visible !important;
+      white-space: normal !important;
+    }
+    .main-nav a {
+      font-size: 13px !important;
+      white-space: nowrap;
+    }
+  }
+
+  /* ============================================================
+     LITERARY CORNER + STORY BENEATH THE STORY — side by side
+     ============================================================ */
+  .literary-sbts-section {
+    padding: 56px 24px;
+  }
+  .literary-sbts-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .literary-sbts-col {
+    min-width: 0; /* prevents grid children from overflowing */
+  }
+  @media (max-width: 900px) {
+    .literary-sbts-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
 </style>
 <head>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -301,14 +352,14 @@
   
 </section>
 
-<!-- Literary Corner -->
-<div id="literary-corner-container"></div>
-
-<!-- Story Beneath the Story — Reflection widget -->
-<section class="section" style="padding:56px 24px;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <h2 class="section-heading" style="text-align:center;margin-bottom:28px;">The Story Beneath the Story</h2>
-    <div id="sbtsHomeSlot"></div>
+<!-- Literary Corner + Story Beneath the Story — side by side -->
+<section class="literary-sbts-section">
+  <div class="literary-sbts-grid">
+    <div class="literary-sbts-col" id="literary-corner-container"></div>
+    <div class="literary-sbts-col">
+      <h2 class="section-heading" style="text-align:center;margin-bottom:28px;">The Story Beneath the Story</h2>
+      <div id="sbtsHomeSlot"></div>
+    </div>
   </div>
 </section>
   
