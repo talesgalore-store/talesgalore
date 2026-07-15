@@ -48,6 +48,29 @@
   .literary-sbts-col {
     min-width: 0; /* prevents grid children from overflowing */
   }
+
+  /* Shared "card" treatment so both widgets read as one visual family:
+     white background, matching border/radius/shadow/padding. */
+  .literary-sbts-card {
+    background: #FFFFFF;
+    border: 1px solid #E2D5BC;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(139,94,60,0.08);
+    padding: 32px;
+  }
+
+  /* Shared heading style — matches the bold serif treatment already
+     used for "The Story Beneath the Story" so both cards' titles look
+     the same weight/size/spacing. */
+  .literary-sbts-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2.4vw, 26px);
+    font-weight: 700;
+    color: #1C1C1A;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
   @media (max-width: 900px) {
     .literary-sbts-grid {
       grid-template-columns: 1fr;
@@ -352,12 +375,12 @@
   
 </section>
 
-<!-- Literary Corner + Story Beneath the Story — side by side -->
+<!-- Literary Corner + Story Beneath the Story — side by side, matching card style -->
 <section class="literary-sbts-section">
   <div class="literary-sbts-grid">
-    <div class="literary-sbts-col" id="literary-corner-container"></div>
-    <div class="literary-sbts-col">
-      <h2 class="section-heading" style="text-align:center;margin-bottom:28px;">The Story Beneath the Story</h2>
+    <div class="literary-sbts-col literary-sbts-card" id="literary-corner-container"></div>
+    <div class="literary-sbts-col literary-sbts-card">
+      <h2 class="literary-sbts-heading">The Story Beneath the Story</h2>
       <div id="sbtsHomeSlot"></div>
     </div>
   </div>
