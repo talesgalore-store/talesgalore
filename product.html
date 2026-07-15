@@ -359,6 +359,7 @@
   <nav class="main-nav">
     <a href="index.html">Home</a>
     <a href="shop.html">Catalogue</a>
+    <a href="story-beneath-the-story.html">Story Beneath the Story</a>
     <a href="contact.html" class="active">Contact Us</a>
     <a href="literary-games.html">Literary Games</a>
     <a href="why-talesgalore.html">Why TalesGalore?</a>
@@ -589,6 +590,7 @@ ${inStock && stockCount > 0
             <div class="shipping-note">🚚 Ships via India Post &nbsp;·&nbsp; 🏡 Free store pick-up available</div>
             ${description ? `<div class="product-description">${description}</div>` : ''}
             ${note ? `<div class="product-note"><strong>Note from TalesGalore</strong>${note}</div>` : ''}
+            <div id="sbtsPanelSlot"></div>
             ${tags.length ? `
               <div class="product-tags-section">
                 <h4>This book is for you if you love…</h4>
@@ -611,6 +613,7 @@ ${inStock && stockCount > 0
           </div>
         </div>
       `;
+     renderSBTSPanel('sbtsPanelSlot', title);
      loadAlsoLike(id, authorsArray, ages, genres); 
     } catch(e) {
       console.error(e);
@@ -769,6 +772,8 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') navLightbox(1);
 });
 </script>
+<script src="sbts-data.js"></script>
+<script src="sbts-widgets.js"></script>
   
 </body>
 </html>
