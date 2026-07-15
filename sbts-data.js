@@ -7,6 +7,12 @@
    - the Why TalesGalore callout
    `bookTitle` should match the book's title in Contentful exactly
    (matching is case-insensitive) so it can be linked automatically.
+
+   `coverImage` should be the same cover image URL used for that book
+   in Contentful (the coverImage asset's URL, same as shown on
+   shop.html / product.html). Leave it as an empty string ("") if you
+   don't have it yet — the page falls back to a book emoji instead of
+   a broken image.
    ============================================================ */
 
 const SBTS_ENTRIES = [
@@ -15,6 +21,7 @@ const SBTS_ENTRIES = [
     bookTitle: "Giraffes Can't Dance",
     author: "by Giles Andreae and illustrated by Guy Parker-Rees",
     theme: "Confidence & Self-Acceptance",
+    coverImage: "https://images.ctfassets.net/tx11zsju5n7c/35MmqFGG1Klt7P21ZxFd7q/e3434f6fa5d00cb213b0e5064b6cfaef/Giraffes_Cant_Dance.jpg",
     body: [
       "There is a quiet moment many children experience, though they may not have words for it yet: feeling like they don't fit in.",
       "It often begins in simple situations—games, performances, group activities—where some children seem naturally confident, while others feel stiff, unsure, or out of place.",
@@ -34,6 +41,7 @@ const SBTS_ENTRIES = [
     bookTitle: "Mindful Journey",
     author: "",
     theme: "Mindfulness & Emotions",
+    coverImage: "https://images.ctfassets.net/tx11zsju5n7c/2IocOswwalsYWNBWK6xRXy/e97894f58675b11bf9ebe809cbac3677/Mindful_Journey.jpg",
     body: [
       "There is a quiet truth about emotions that children—and adults—often discover the hard way: Not every sad feeling needs to be fixed. Sometimes it simply needs to be noticed.",
       "When Brodie feels heavy and out of sorts, Bea doesn't rush to tell him to \u201ccheer up.\u201d She doesn't scold him for feeling gloomy. Instead, she invites him on a journey.",
@@ -50,8 +58,9 @@ const SBTS_ENTRIES = [
   {
     slug: "the-jungle-book",
     bookTitle: "The Jungle Book",
-    author: "",
+    author: "https://images.ctfassets.net/tx11zsju5n7c/4nbPHZygoPGSXSgmCelT2D/82c4de3b7cf4190445f02556871ec9d5/The_Jungle_Book.jpeg",
     theme: "Belonging & Identity",
+    coverImage: "",
     body: [
       "One of the deepest human questions is surprisingly simple: \u201cWhere do I belong?\u201d Children begin asking this question long before they can put it into words.",
       "They ask it when they start a new school. When they feel different from others. When they wonder why they don't quite fit in.",
@@ -71,6 +80,7 @@ const SBTS_ENTRIES = [
     bookTitle: "The Greedy Rabbit",
     author: "by Enid Blyton",
     theme: "Contentment & Gratitude",
+    coverImage: "https://images.ctfassets.net/tx11zsju5n7c/1gDkLlIRwHiNwikkzXEqMO/8ebe9ae20d5f77faeaf6ee501c2ec17e/The_Greedy_Rabbit.jpg",
     body: [
       "There is a feeling children experience very early in life: the fear of not having enough.",
       "If there are two cookies, they want three. If someone else has something nice, they suddenly want it too.",
