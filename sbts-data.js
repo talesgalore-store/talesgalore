@@ -104,3 +104,20 @@ function findSBTSEntry(bookTitle) {
   const target = norm(bookTitle);
   return SBTS_ENTRIES.find(e => norm(e.bookTitle) === target) || null;
 }
+
+/* ------------------------------------------------------------
+   Shared cover-thumbnail markup.
+   Renders the coverImage as an <img> when present, and falls
+   back to a book emoji tile (instead of a broken image icon)
+   when coverImage is missing or fails to load.
+   `cls` is the base class name to apply (e.g. "sbts-thumb");
+   a `${cls}--fallback` modifier class is added on the emoji tile.
+   ------------------------------------------------------------ */
+function sbtsCoverMarkup(entry, cls) {
+  if (entry && entry.coverImage) {
+    const safeAlt = (entry.bookTitle || 'Book cover').replace(/"/g, '&quot;');
+    const fallback = `this.replaceWith(Object.assign(document.createElement('div'), {className:'${cls} ${cls}--fallback', textContent:'\uD83D\uDCD6'}))`;
+    return `<img src="${entry.coverImage}" alt="${safeAlt} cover" class="${cls}" loading="lazy" onerror="${fallback}">`;
+  }
+  return `<div class="${cls} ${cls}--fallback">\uD83D\uDCD6</div>`;
+}
