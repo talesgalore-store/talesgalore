@@ -15,6 +15,21 @@
       --cream: #FDFAF4; --warm: #F5EDD8; --rule: #E2D5BC; --ink-dk: #2C2416;
       font-family: 'Lato', sans-serif;
     }
+
+    /* ---- Shared thumbnail styles ---- */
+    .sbts-w-thumb {
+      border-radius: 6px;
+      object-fit: cover;
+      background: var(--warm);
+      border: 1px solid var(--rule);
+      box-shadow: 0 4px 10px rgba(139,94,60,0.12);
+      flex: 0 0 auto;
+    }
+    .sbts-w-thumb--fallback {
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold-lt);
+    }
+
     /* ---- Product page accordion ---- */
     .sbts-panel {
       margin-top: 28px; border: 1px solid var(--rule); border-radius: 10px;
@@ -24,6 +39,8 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 20px; cursor: pointer; background: var(--warm);
     }
+    .sbts-panel-head-left { display: flex; align-items: center; gap: 12px; }
+    .sbts-panel-thumb { width: 40px; height: 56px; font-size: 18px; }
     .sbts-panel-head h3 {
       font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
       color: var(--ink-w); margin: 0; display: flex; align-items: center; gap: 8px;
@@ -51,6 +68,10 @@
     .sbts-w-home .sbts-w-eyebrow {
       font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
       color: var(--gold); font-weight: 700; margin-bottom: 10px; display: block;
+    }
+    .sbts-w-home .sbts-w-thumb {
+      width: 84px; height: 116px; font-size: 30px;
+      margin: 0 auto 16px;
     }
     .sbts-w-home h3 {
       font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--ink-dk); margin-bottom: 4px;
@@ -83,7 +104,9 @@
       background: #fff; border-radius: 8px; padding: 18px; margin: 0;
       font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.92rem;
       color: var(--ink-w); line-height: 1.5; border: 1px solid var(--rule);
+      display: flex; flex-direction: column; align-items: center; text-align: center;
     }
+    .sbts-w-quotes .sbts-w-thumb { width: 56px; height: 78px; font-size: 20px; margin-bottom: 12px; }
     .sbts-w-quotes cite { display: block; margin-top: 10px; font-family: 'Lato', sans-serif; font-style: normal;
       font-size: 0.72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--gold); }
     .sbts-w-callout a.sbts-w-cta {
@@ -113,7 +136,10 @@ function renderSBTSPanel(containerId, bookTitle) {
   container.innerHTML = `
     <div class="sbts-w-card sbts-panel" id="sbtsPanel">
       <div class="sbts-panel-head" onclick="document.getElementById('sbtsPanel').classList.toggle('open')">
-        <h3>✨ The Story Beneath the Story</h3>
+        <div class="sbts-panel-head-left">
+          ${sbtsCoverMarkup(entry, 'sbts-w-thumb sbts-panel-thumb')}
+          <h3>✨ The Story Beneath the Story</h3>
+        </div>
         <span class="sbts-panel-arrow">▶</span>
       </div>
       <div class="sbts-panel-reveal">
@@ -144,6 +170,7 @@ function renderSBTSHomeWidget(containerId) {
   container.innerHTML = `
     <div class="sbts-w-card sbts-w-home">
       <span class="sbts-w-eyebrow">This Week's Reflection</span>
+      ${sbtsCoverMarkup(entry, 'sbts-w-thumb')}
       <h3>${entry.bookTitle}</h3>
       ${entry.author ? `<div class="sbts-w-author">${entry.author}</div>` : ''}
       <p class="sbts-w-quote">${entry.reminder}</p>
@@ -169,6 +196,7 @@ function renderSBTSWhyCallout(containerId) {
       <div class="sbts-w-quotes">
         ${picks.map(e => `
           <blockquote>
+            ${sbtsCoverMarkup(e, 'sbts-w-thumb')}
             "${e.reminder}"
             <cite>${e.bookTitle}</cite>
           </blockquote>
