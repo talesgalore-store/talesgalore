@@ -58,9 +58,9 @@ const SBTS_ENTRIES = [
   {
     slug: "the-jungle-book",
     bookTitle: "The Jungle Book",
-    author: "https://images.ctfassets.net/tx11zsju5n7c/4nbPHZygoPGSXSgmCelT2D/82c4de3b7cf4190445f02556871ec9d5/The_Jungle_Book.jpeg",
+    author: "Rudyard Kipling",
     theme: "Belonging & Identity",
-    coverImage: "",
+    coverImage: "https://images.ctfassets.net/tx11zsju5n7c/4nbPHZygoPGSXSgmCelT2D/82c4de3b7cf4190445f02556871ec9d5/The_Jungle_Book.jpeg",
     body: [
       "One of the deepest human questions is surprisingly simple: \u201cWhere do I belong?\u201d Children begin asking this question long before they can put it into words.",
       "They ask it when they start a new school. When they feel different from others. When they wonder why they don't quite fit in.",
