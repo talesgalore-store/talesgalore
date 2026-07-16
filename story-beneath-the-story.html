@@ -232,9 +232,87 @@
       line-height: 1.7;
     }
 
+    /* ── Submission call-to-action ── */
+    .sbts-submit-cta {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 40px 36px;
+      margin-top: 48px;
+      text-align: center;
+    }
+    .sbts-submit-icon {
+      font-size: 34px;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    .sbts-submit-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--ink-dk);
+      margin-bottom: 12px;
+    }
+    .sbts-submit-cta > p {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #5c4d3a;
+      max-width: 520px;
+      margin: 0 auto 18px;
+    }
+    .sbts-submit-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto 20px;
+      max-width: 380px;
+      text-align: left;
+      display: inline-block;
+    }
+    .sbts-submit-list li {
+      font-size: 0.92rem;
+      color: #5c4d3a;
+      padding: 6px 0 6px 28px;
+      position: relative;
+      font-family: 'Lato', sans-serif;
+    }
+    .sbts-submit-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .sbts-submit-note {
+      font-size: 0.85rem !important;
+      color: #9c8a6f !important;
+      margin-bottom: 24px !important;
+    }
+    .sbts-submit-note a {
+      color: var(--gold);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .sbts-submit-btn {
+      display: inline-block;
+      background: var(--ink-w);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .sbts-submit-btn:hover { background: var(--gold); }
+
     @media (max-width: 480px) {
       .sbts-thumb { width: 60px; height: 84px; }
       .sbts-thumb--fallback { font-size: 22px; }
+      .sbts-submit-cta { padding: 30px 22px; }
     }
   </style>
   <script type="module" src="auth.js"></script>
@@ -299,6 +377,20 @@
 <div class="sbts-layout">
   <p class="sbts-intro">Tap any reflection below to read it in full. Each one closes with a gentle reminder worth carrying with you.</p>
   <div id="sbtsGrid"></div>
+
+  <!-- Submission call-to-action -->
+  <div class="sbts-submit-cta">
+    <div class="sbts-submit-icon">✉️</div>
+    <h2>Share Your Child's Story Beneath the Story</h2>
+    <p>Has your child read a book that left them with a quiet lesson worth sharing? We'd love to feature it here. Send us:</p>
+    <ul class="sbts-submit-list">
+      <li>A short synopsis of the book, in your own words</li>
+      <li>A photo of the front cover page</li>
+      <li>A photo of the back cover page</li>
+    </ul>
+    <p class="sbts-submit-note">Email everything, along with your child's name, to <a href="mailto:support@talesgalore.com">support@talesgalore.com</a> — we'll publish it here as a Story Beneath the Story, with your child credited as the storyteller.</p>
+    <a class="sbts-submit-btn" href="mailto:support@talesgalore.com?subject=Story%20Beneath%20the%20Story%20Submission&body=Book%20title%3A%0AChild's%20name%3A%0ASynopsis%3A%0A%0A(Please%20attach%20a%20photo%20of%20the%20front%20cover%20and%20back%20cover.)">Email Us Your Story →</a>
+  </div>
 </div>
 
 <!-- Footer -->
