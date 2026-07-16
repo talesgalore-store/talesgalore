@@ -561,5 +561,81 @@ loadSearchBooks();
 <script src="sbts-widgets.js"></script>
 <script>renderSBTSHomeWidget('sbtsHomeSlot');</script>
 <script src="app.js"></script>
+
+<script>
+/* =========================================================
+   CIRCULAR MARQUEE CAROUSEL — Latest Arrivals & Popular Titles
+   Overrides marqueeScroll()/popularMarqueeScroll() (whatever
+   app.js may define) with a working, circular implementation.
+
+   Behaviour: clicking an arrow slides the row over by one card
+   width, then — instead of running out of cards — moves the
+   edge card around to the opposite end of the list (like
+   advancing a pointer around a circular linked list), so the
+   row loops forever in either direction.
+   ========================================================= */
+function makeCircularCarousel(trackId) {
+  const track = document.getElementById(trackId);
+  let busy = false; // guards against overlapping clicks mid-animation
+
+  function cardStep() {
+    const card = track && track.querySelector(':scope > *');
+    if (!card) return 180; // sensible fallback (160px card + 20px gap)
+    const style = window.getComputedStyle(track);
+    const gap = parseFloat(style.columnGap || style.gap) || 20;
+    return card.getBoundingClientRect().width + gap;
+  }
+
+  return function scroll(direction) {
+    if (!track || busy) return;
+    const children = track.children;
+    if (children.length < 2) return; // nothing to rotate
+
+    busy = true;
+
+    // Manual control takes over from the passive CSS auto-scroll animation
+    track.style.animation = 'none';
+
+    const step = cardStep();
+    track.style.transition = 'transform 0.4s ease';
+    track.style.transform = `translateX(${direction > 0 ? -step : step}px)`;
+
+    const onEnd = () => {
+      track.removeEventListener('transitionend', onEnd);
+
+      // Snap back to 0 instantly, and rotate the edge card around —
+      // this is the "circular linked list" step: the card that just
+      // scrolled off one end reappears at the other end.
+      track.style.transition = 'none';
+      if (direction > 0) {
+        track.appendChild(track.firstElementChild);
+      } else {
+        track.insertBefore(track.lastElementChild, track.firstElementChild);
+      }
+      track.style.transform = 'translateX(0px)';
+
+      // Force a reflow so the next transition applies cleanly
+      void track.offsetHeight;
+      track.style.transition = '';
+      busy = false;
+    };
+
+    track.addEventListener('transitionend', onEnd);
+
+    // Fallback in case transitionend doesn't fire (e.g. 0-width track)
+    setTimeout(() => { if (busy) onEnd(); }, 500);
+  };
+}
+
+const _arrivalsScroll = makeCircularCarousel('arrivals-marquee');
+const _popularScroll  = makeCircularCarousel('popular-marquee');
+
+function marqueeScroll(direction) {
+  _arrivalsScroll(direction);
+}
+function popularMarqueeScroll(direction) {
+  _popularScroll(direction);
+}
+</script>
 </body>
 </html>
