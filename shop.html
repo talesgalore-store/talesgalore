@@ -436,6 +436,35 @@
       </div>
     </div>
 
+     <div class="filter-group">
+      <div class="filter-heading" onclick="toggleFilter(this)">
+        <h3>Suggested Age</h3><span class="chevron">▼</span>
+      </div>
+      <div class="filter-options" id="ageFilters" style="display:none">
+        <label><input type="checkbox" value="Age 0-2"        onchange="applyFilters()"/> Age 0–2</label>
+        <label><input type="checkbox" value="Age 3-5"        onchange="applyFilters()"/> Age 3–5</label>
+        <label><input type="checkbox" value="Age 6-8"        onchange="applyFilters()"/> Age 6–8</label>
+        <label><input type="checkbox" value="Age 9-12"       onchange="applyFilters()"/> Age 9–12</label>
+        <label><input type="checkbox" value="Age 13+" onchange="applyFilters()"/> Age 13+</label>
+      </div>
+    </div>
+    
+    <div class="filter-group">
+      <div class="filter-heading" onclick="toggleFilter(this)">
+        <h3>Genre</h3><span class="chevron">▼</span>
+      </div>
+      <div class="filter-options" id="genreFilters" style="display:none">
+        <label><input type="checkbox" value="Tickles & Chuckles"    onchange="applyFilters()"/> Tickles &amp; Chuckles</label>
+        <label><input type="checkbox" value="Activity & Educational" onchange="applyFilters()"/> Activity &amp; Educational</label>
+        <label><input type="checkbox" value="Faith & Festivals"     onchange="applyFilters()"/> Faith &amp; Festivals</label>
+        <label><input type="checkbox" value="Vehicles & Machines"   onchange="applyFilters()"/> Vehicles &amp; Machines</label>
+        <label><input type="checkbox" value="Sensory & Moveables"   onchange="applyFilters()"/> Sensory &amp; Moveables</label>
+        <label><input type="checkbox" value="Morals & Values"       onchange="applyFilters()"/> Morals &amp; Values</label>
+        <label><input type="checkbox" value="Fantasy & Fairy Tales"  onchange="applyFilters()"/> Fantasy &amp; Fairy Tales</label>
+        <label><input type="checkbox" value="Adventure"             onchange="applyFilters()"/> Adventure</label>
+      </div>
+    </div>
+    
     <div class="filter-group">
       <div class="filter-heading" onclick="toggleFilter(this)">
         <h3>Book Condition</h3><span class="chevron">▼</span>
@@ -467,35 +496,6 @@
         <label><input type="checkbox" value="English" onchange="applyFilters()"/> English</label>
         <label><input type="checkbox" value="English-Spanish" onchange="applyFilters()"/> English-Spanish</label>
         <label><input type="checkbox" value="English-French" onchange="applyFilters()"/> English-French</label>
-      </div>
-    </div>
-    
-    <div class="filter-group">
-      <div class="filter-heading" onclick="toggleFilter(this)">
-        <h3>Suggested Age</h3><span class="chevron">▼</span>
-      </div>
-      <div class="filter-options" id="ageFilters" style="display:none">
-        <label><input type="checkbox" value="Age 0-2"        onchange="applyFilters()"/> Age 0–2</label>
-        <label><input type="checkbox" value="Age 3-5"        onchange="applyFilters()"/> Age 3–5</label>
-        <label><input type="checkbox" value="Age 6-8"        onchange="applyFilters()"/> Age 6–8</label>
-        <label><input type="checkbox" value="Age 9-12"       onchange="applyFilters()"/> Age 9–12</label>
-        <label><input type="checkbox" value="Age 13+" onchange="applyFilters()"/> Age 13+</label>
-      </div>
-    </div>
-
-    <div class="filter-group">
-      <div class="filter-heading" onclick="toggleFilter(this)">
-        <h3>Genre</h3><span class="chevron">▼</span>
-      </div>
-      <div class="filter-options" id="genreFilters" style="display:none">
-        <label><input type="checkbox" value="Tickles & Chuckles"    onchange="applyFilters()"/> Tickles &amp; Chuckles</label>
-        <label><input type="checkbox" value="Activity & Educational" onchange="applyFilters()"/> Activity &amp; Educational</label>
-        <label><input type="checkbox" value="Faith & Festivals"     onchange="applyFilters()"/> Faith &amp; Festivals</label>
-        <label><input type="checkbox" value="Vehicles & Machines"   onchange="applyFilters()"/> Vehicles &amp; Machines</label>
-        <label><input type="checkbox" value="Sensory & Moveables"   onchange="applyFilters()"/> Sensory &amp; Moveables</label>
-        <label><input type="checkbox" value="Morals & Values"       onchange="applyFilters()"/> Morals &amp; Values</label>
-        <label><input type="checkbox" value="Fantasy & Fairy Tales"  onchange="applyFilters()"/> Fantasy &amp; Fairy Tales</label>
-        <label><input type="checkbox" value="Adventure"             onchange="applyFilters()"/> Adventure</label>
       </div>
     </div>
 
