@@ -641,6 +641,16 @@
         const rawAuthor   = f.author || f.authorName || f['author-name'] || '';
         const authorsArray = Array.isArray(rawAuthor) ? rawAuthor : (rawAuthor ? [rawAuthor] : []);
 
+        // Description / synopsis — supports whichever field name the
+        // Contentful "book" content type actually uses.
+        const rawDescription =
+          f.description ?? f.synopsis ?? f.summary ?? f.bookDescription ?? '';
+        const description = typeof rawDescription === 'string'
+         ? rawDescription
+        : (rawDescription?.content
+      ? '' // rich text field — plain-text extraction not attempted here
+      : String(rawDescription || ''));
+        
         return {
           id:         item.sys.id,
           title:      f.title || 'Untitled',
@@ -652,6 +662,7 @@
           language:   (Array.isArray(f.language) ? f.language[0] : (f.language || '')).toString().trim(),
           ages:       ageArray,
           genres:     genreArray,
+          description: description,
           inStock:    f.inStock !== false,
           image:      imageUrl,
           images:     imagesArray,
@@ -795,8 +806,8 @@
       if (searchQuery) {
         const inTitle  = b.title.toLowerCase().includes(searchQuery);
         const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(searchQuery);
-        const inAge    = b.ages.some(a => a.toLowerCase().includes(searchQuery));
-        if (!inTitle && !inAuthor && !inAge) return false;
+        const inDescription = (b.description || '').toLowerCase().includes(searchQuery);
+        if (!inTitle && !inAuthor && !inAge && !inDescription) return false;
       }
       if (b.price < priceMin || b.price > priceMax) return false;
       return true;
@@ -1035,7 +1046,8 @@ function toggleMobileSidebar() {
       const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(query);
       const inAge    = b.ages.some(a => a.toLowerCase().includes(query));
       const inGenre  = b.genres.some(g => g.toLowerCase().includes(query));
-      return inTitle || inAuthor || inAge || inGenre;
+      const inDescription = (b.description || '').toLowerCase().includes(query);
+      return inTitle || inAuthor || inAge || inGenre || inDescription;
     });
 
     // Push out-of-stock matches to the bottom of the quick-search list too
@@ -1051,20 +1063,37 @@ function toggleMobileSidebar() {
       return;
     }
 
-    const top = matches.slice(0, 6);
+const top = matches.slice(0, 6);
 
-    box.innerHTML = top.map(b => `
-      <div class="ssr-item" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
-        <div class="ssr-thumb">
-          ${b.image ? `<img src="${b.image}" alt="${b.title}"/>` : '📖'}
-        </div>
-        <div class="ssr-info">
-          <div class="ssr-title">${b.title}</div>
-          <div class="ssr-meta">${(Array.isArray(b.authorName) ? b.authorName.join(', ') : (b.authorName || '')) || (b.condition || '')}</div>
-        </div>
-        <div class="ssr-price">₹ ${b.price.toFixed(2)}</div>
-      </div>
-    `).join('') + `<div class="ssr-viewall" onclick="closeSearchDropdown(); handleShopSearch();">View all ${matches.length} result${matches.length !== 1 ? 's' : ''}</div>`;
+box.innerHTML = top.map(b => {
+  const inTitle  = b.title.toLowerCase().includes(query);
+  const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(query);
+  const inAge    = b.ages.some(a => a.toLowerCase().includes(query));
+  const inGenre  = b.genres.some(g => g.toLowerCase().includes(query));
+  const matchedOnlyDescription = !inTitle && !inAuthor && !inAge && !inGenre;
+  let metaLine = (Array.isArray(b.authorName) ? b.authorName.join(', ') : (b.authorName || '')) || (b.condition || '');
+
+  if (matchedOnlyDescription && b.description) {
+    const desc = b.description;
+    const idx  = desc.toLowerCase().indexOf(query);
+    const start = Math.max(0, idx - 30);
+    const snippet = (start > 0 ? '…' : '') + desc.slice(start, idx + query.length + 40).trim() + '…';
+    metaLine = snippet;
+  }
+
+  return `
+  <div class="ssr-item" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
+    <div class="ssr-thumb">
+      ${b.image ? `<img src="${b.image}" alt="${b.title}"/>` : '📖'}
+    </div>
+    <div class="ssr-info">
+      <div class="ssr-title">${b.title}</div>
+      <div class="ssr-meta">${metaLine}</div>
+    </div>
+    <div class="ssr-price">₹ ${b.price.toFixed(2)}</div>
+  </div>
+`;
+}).join('') + `<div class="ssr-viewall" onclick="closeSearchDropdown(); handleShopSearch();">View all ${matches.length} result${matches.length !== 1 ? 's' : ''}</div>`;
 
     box.classList.add('open');
   }
