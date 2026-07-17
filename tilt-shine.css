@@ -9,6 +9,8 @@
 .tilt-shine {
   position: relative;
   display: block;
+  width: 100%;
+  height: 100%;
   perspective: 700px;
   overflow: hidden;
   border-radius: inherit;
