@@ -643,13 +643,21 @@
 
         // Description / synopsis — supports whichever field name the
         // Contentful "book" content type actually uses.
-        const rawDescription =
-          f.description ?? f.synopsis ?? f.summary ?? f.bookDescription ?? '';
-        const description = typeof rawDescription === 'string'
-         ? rawDescription
-        : (rawDescription?.content
-      ? '' // rich text field — plain-text extraction not attempted here
-      : String(rawDescription || ''));
+function extractPlainText(node) {
+  if (!node) return '';
+  if (typeof node === 'string') return node;
+  if (typeof node.value === 'string') return node.value;
+  if (Array.isArray(node.content)) {
+    return node.content.map(extractPlainText).join(' ');
+  }
+  return '';
+}
+
+const rawDescription =
+  f.description ?? f.synopsis ?? f.summary ?? f.bookDescription ?? '';
+const description = typeof rawDescription === 'string'
+  ? rawDescription
+  : extractPlainText(rawDescription);
         
         return {
           id:         item.sys.id,
