@@ -807,7 +807,7 @@
         const inTitle  = b.title.toLowerCase().includes(searchQuery);
         const inAuthor = (Array.isArray(b.authorName) ? b.authorName.join(' ') : (b.authorName || '')).toLowerCase().includes(searchQuery);
         const inDescription = (b.description || '').toLowerCase().includes(searchQuery);
-        if (!inTitle && !inAuthor && !inAge && !inDescription) return false;
+        if (!inTitle && !inAuthor && !inDescription) return false;
       }
       if (b.price < priceMin || b.price > priceMax) return false;
       return true;
