@@ -1,0 +1,81 @@
+/* =========================================================
+   TALESGALORE — 3D Tilt + Shine for book covers
+   -----------------------------------------------------------
+   Wraps any matched <img> in a .tilt-shine span (done by
+   tilt-shine.js) so the cover tilts toward the cursor and a
+   soft light sweep follows it — like glass catching light.
+   ========================================================= */
+
+.tilt-shine {
+  position: relative;
+  display: block;
+  perspective: 700px;
+  overflow: hidden;
+  border-radius: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tilt-shine > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* while actively tracking the cursor, respond instantly (no lag) */
+.tilt-shine.tilt-active > img {
+  transition: transform 0.06s linear;
+}
+
+/* the light sweep */
+.tilt-shine-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--tilt-x, 50%) var(--tilt-y, 50%),
+    rgba(255, 255, 255, 0.65),
+    rgba(255, 255, 255, 0) 42%
+  );
+  mix-blend-mode: overlay;
+  transition: opacity 0.25s ease;
+}
+
+.tilt-shine:hover .tilt-shine-layer,
+.tilt-shine.tilt-active .tilt-shine-layer {
+  opacity: 1;
+}
+
+/* a thin edge highlight so the tilt reads as a physical object */
+.tilt-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
+  transition: box-shadow 0.25s ease;
+}
+.tilt-shine:hover::after,
+.tilt-shine.tilt-active::after {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+/* touch devices: a one-shot sweep on tap instead of a hover tilt */
+.tilt-shine.tilt-touch-sweep .tilt-shine-layer {
+  opacity: 1;
+  animation: tilt-sweep 0.7s ease forwards;
+}
+@keyframes tilt-sweep {
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-shine > img { transition: none; }
+  .tilt-shine-layer, .tilt-shine::after { display: none; }
+}
