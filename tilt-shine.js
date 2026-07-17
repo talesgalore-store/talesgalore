@@ -15,10 +15,12 @@
 
   const SELECTORS = [
     '.product-image img',        // shop/home product cards
+    '.product-img-wrap img',     // ← catalogue product cards (shop.html)
     '#featured-grid img',        // featured products
     '.marquee-card img',         // arrivals & popular marquees
     '.cart-img img',             // cart page thumbnails
     '.search-suggestion img',    // homepage search dropdown
+    '.ssr-thumb img',            // ← live search dropdown (shop.html)
     '.age-card img',             // shop-by-age icons
     '.genre-card img',           // shop-by-genre icons
     '.product-detail-image img', // single product page hero image (if present)
