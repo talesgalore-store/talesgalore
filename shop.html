@@ -722,7 +722,7 @@ const description = typeof rawDescription === 'string'
     if (priceMin) params.set('priceMin', priceMin);
     if (priceMax) params.set('priceMax', priceMax);
     if (search)   params.set('search', search);
-
+    if (PER_PAGE !== 18) params.set('perPage', PER_PAGE === Infinity ? 'all' : PER_PAGE);
     const newUrl = params.toString()
       ? `${window.location.pathname}?${params.toString()}`
       : window.location.pathname;
@@ -767,6 +767,12 @@ const description = typeof rawDescription === 'string'
     }
 
     const sort = params.get('sort');
+    const perPage = params.get('perPage');
+    if (perPage) {
+      PER_PAGE = perPage === 'all' ? Infinity : parseInt(perPage, 10);
+      const ppSelect = document.getElementById('per-page-select');
+      if (ppSelect) ppSelect.value = perPage;
+    }
     if (sort) document.getElementById('sort-select').value = sort;
 
     const priceMin = params.get('priceMin');
