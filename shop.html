@@ -594,7 +594,7 @@
 <script id="shop-main-v2">
   const SPACE_ID     = 'tx11zsju5n7c';
   const ACCESS_TOKEN = '1gi_iikDoQygU8FDuM4__2GE6YWb4iJMrOYLUCsyviQ';
-  const PER_PAGE     = 18;
+  let PER_PAGE     = 18;
 
   let allBooks    = [];
   let filtered    = [];
@@ -1028,6 +1028,14 @@ function toggleMobileSidebar() {
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
     updateWishlistCount();
     showToast(`"${book.title}" saved to wishlist`);
+  }
+
+  function handlePerPageChange() {
+    const val = document.getElementById('per-page-select').value;
+    PER_PAGE = val === 'all' ? Infinity : parseInt(val, 10);
+    currentPage = 1;
+    pushFiltersToUrl();
+    renderPage();
   }
 
   function handleShopSearch() {
