@@ -2637,22 +2637,6 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     font-size: 14px;
   }
 
-  /* ── MISSION SECTION ── */
-.mission-section{
-    display:grid;
-    grid-template-columns: 60% 30%;
-    gap:20px;
-    align-items:center;
-    max-width:1200px;
-    margin:60px auto;
-}
-
-.mission-image img{
-    width:100%;
-    display:block;
-    border-radius:12px;
-}
-
   /* ── COLLECTION SECTIONS (Age / Genre) ── */
   .collection-section > div { padding: 0 12px; }
 
