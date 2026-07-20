@@ -1458,24 +1458,32 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     display:grid;
     grid-template-columns: 60% 30%;
     gap:20px;
-    align-items:center;
+    align-items:start;
     max-width:1200px;
-    margin:60px auto;
+    margin:20px auto 60px;
 }
 
 .mission-image {
     display: flex;
     justify-content: center;
+    padding: 8px;
 }
 
 .mission-image img{
     width: 100%;
+    max-height: 380px;
     display: block;
-    border-radius: 12px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 6px solid #fff;
+    box-shadow: 0 16px 40px rgba(139, 94, 60, 0.22);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
 }
 
-
-
+.mission-image img:hover {
+    transform: scale(1.02) rotate(-0.5deg);
+    box-shadow: 0 20px 48px rgba(139, 94, 60, 0.3);
+}
 
 
 @media (max-width:768px){
