@@ -1463,18 +1463,37 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
     margin:60px auto;
 }
 
+.mission-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
 .mission-image img{
-    width:100%;
-    display:block;
-    border-radius:12px;
+    width: 100%;
+    max-height: 380px;
+    display: block;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 6px solid #fff;
+    box-shadow: 0 16px 40px rgba(139, 94, 60, 0.22);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+
+.mission-image img:hover {
+    transform: scale(1.02) rotate(-0.5deg);
+    box-shadow: 0 20px 48px rgba(139, 94, 60, 0.3);
 }
 
 @media (max-width:768px){
     .mission-section{
         grid-template-columns:1fr;
     }
+    .mission-image img {
+        max-height: 220px;
+    }
 }
-
 .age-track .section-title{
     text-align:center;
 }
