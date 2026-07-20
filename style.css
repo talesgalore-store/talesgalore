@@ -1465,32 +1465,18 @@ blockquote cite { display: block; font-size: 13px; font-style: normal; margin-to
 
 .mission-image {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-}
-
-.mission-section{
-    display:grid;
-    grid-template-columns: 45% 30%;
-    gap:20px;
-    align-items:center;
-    justify-content:center;
-    max-width:1200px;
-    margin:60px auto;
-}
-
-.mission-image {
-    display: flex;
     justify-content: center;
 }
 
 .mission-image img{
-    width: 80%;
-    max-width: 420px;
+    width: 100%;
     display: block;
     border-radius: 12px;
 }
+
+
+
+
 
 @media (max-width:768px){
     .mission-section{
