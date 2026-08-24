@@ -531,7 +531,6 @@ console.log("FINAL IMAGES:", images);
       const price        = parseFloat(f.price) || 0;
       const condition    = f.bookCondition || f.condition || '';
       const binding      = f.bookBinding || f.binding || '';
-      const inStock      = f.inStock     !== false;
       const isbn         = f.isbn        || '';
       const pageCount    = f.pageCount   || '';
       const language     = f.language    || '';
@@ -550,7 +549,7 @@ console.log("FINAL IMAGES:", images);
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
       const stockCount = parseInt(f.stockCount) || 0;
-      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, inStock, stockCount }];
+      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, stockCount }];
 
       document.getElementById('page-content').innerHTML = `
 <div class="product-page">
@@ -574,7 +573,7 @@ console.log("FINAL IMAGES:", images);
             ${author ? `<div class="product-author">By <a href="shop.html?author=${encodeURIComponent(author)}">${author}</a></div>` : ''}
 <div class="product-price-large">₹ ${price.toFixed(2)}</div>
 ${(() => {
-  const outOfStock = !inStock || stockCount === 0;
+  const outOfStock = stockCount === 0;
   if (outOfStock) {
     return `<div class="stock-badge out-of-stock" style="margin-bottom:14px;">Out of Stock</div>`;
   } else if (stockCount === 1) {
@@ -583,7 +582,7 @@ ${(() => {
     return `<div class="stock-badge in-stock" style="margin-bottom:14px;">${stockCount} in stock</div>`;
   }
 })()}
-${inStock && stockCount > 0
+${stockCount > 0
   ? `<button class="add-to-cart-btn" id="atc-btn" onclick="addToCart('${id}'); flyBookToCart(this);">Add to Cart</button>
   <button class="save-later-btn" onclick="addToWishlistFromProduct('${id}')">♡ Save for Later</button>`
   : `<button class="add-to-cart-btn" disabled>Out of Stock</button>`}
@@ -661,7 +660,7 @@ ${inStock && stockCount > 0
     });
 
     const allBooks = (data.items || [])
-      .filter(item => item.sys.id !== currentId && item.fields.inStock !== false)
+      .filter(item => item.sys.id !== currentId)
       .map(item => {
         const f = item.fields;
         const imgField = f.coverImage;
