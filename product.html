@@ -549,7 +549,7 @@ console.log("FINAL IMAGES:", images);
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
       const stockCount = parseInt(f.stockCount) || 0;
-      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, stockCount, weightGrams }];
+      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, stockCount, weightGrams: Number(f.weightGrams) || 0  }];
 
       document.getElementById('page-content').innerHTML = `
 <div class="product-page">
