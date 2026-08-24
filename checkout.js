@@ -6,44 +6,71 @@ const RAZORPAY_KEY_ID = 'rzp_live_SUkydXEvJ1GdJV';
 
 const STORE_PICKUP_ADDRESS = 'TalesGalore, Sector 43, Noida, Uttar Pradesh';
 
-const shippingRates = {
-  "Andaman and Nicobar Islands": 199,
-  "Andhra Pradesh": 199,
-  "Arunachal Pradesh": 199,
-  "Assam": 199,
-  "Bihar": 149,
-  "Chandigarh": 99,
-  "Chhattisgarh": 99,
-  "Dadra and Nagar Haveli and Daman and Diu": 99,
-  "Delhi": 79,
-  "Goa": 149,
-  "Gujarat": 129,
-  "Haryana": 99,
-  "Himachal Pradesh": 99,
-  "Jammu and Kashmir": 199,
-  "Jharkhand": 199,
-  "Karnataka": 199,
-  "Kerala": 199,
-  "Ladakh": 149,
-  "Lakshadweep": 199,
-  "Madhya Pradesh": 149,
-  "Maharashtra": 149,
-  "Manipur": 199,
-  "Meghalaya": 199,
-  "Mizoram": 199,
-  "Nagaland": 199,
-  "Odisha": 199,
-  "Puducherry": 199,
-  "Punjab": 129,
-  "Rajasthan": 129,
-  "Sikkim": 199,
-  "Tamil Nadu": 199,
-  "Telangana": 199,
-  "Tripura": 199,
-  "Uttar Pradesh": 99,
-  "Uttarakhand": 99,
-  "West Bengal": 199
-};
+/* ── India Post Parcel — Contractual Tariff (rates inclusive of GST) ──
+   Each row: "up to `uptoGrams` grams costs this much" per zone.
+   `within` = Uttar Pradesh (our home state)
+   `zone`   = Uttarakhand
+   `other`  = every other state/UT
+   (The `local` column isn't used — we don't offer same-city rates
+   separately from Store Pick-up.)
+   NOTE: the source chart only lists milestone weights (it says the
+   full chart runs in 500g/1kg slabs up to 35kg, but this table only
+   has the values actually shown on the card). For a weight that falls
+   between two listed brackets, this always rounds UP to the next known
+   bracket — so it may occasionally overcharge slightly rather than
+   ever undercharge. If you get the full granular chart later, just
+   add the missing rows below and the lookup will automatically use
+   the tighter brackets. */
+const PARCEL_RATES = [
+  { uptoGrams: 500,   local: 31,  within: 37,  zone: 40,   other: 41   },
+  { uptoGrams: 1000,  local: 37,  within: 52,  zone: 61,   other: 67   },
+  { uptoGrams: 1500,  local: 42,  within: 68,  zone: 82,   other: 94   },
+  { uptoGrams: 2000,  local: 53,  within: 94,  zone: 118,  other: 135  },
+  { uptoGrams: 3000,  local: 67,  within: 118, zone: 147,  other: 171  },
+  { uptoGrams: 4000,  local: 81,  within: 142, zone: 178,  other: 207  },
+  { uptoGrams: 5000,  local: 95,  within: 166, zone: 207,  other: 241  },
+  { uptoGrams: 6000,  local: 109, within: 188, zone: 236,  other: 277  },
+  { uptoGrams: 7000,  local: 123, within: 210, zone: 265,  other: 313  },
+  { uptoGrams: 8000,  local: 137, within: 232, zone: 296,  other: 349  },
+  { uptoGrams: 9000,  local: 160, within: 260, zone: 325,  other: 383  },
+  { uptoGrams: 10000, local: 184, within: 284, zone: 354,  other: 419  },
+  { uptoGrams: 12000, local: 220, within: 330, zone: 414,  other: 489  },
+  { uptoGrams: 15000, local: 273, within: 402, zone: 501,  other: 595  },
+  { uptoGrams: 20000, local: 362, within: 520, zone: 650,  other: 773  },
+  { uptoGrams: 25000, local: 449, within: 638, zone: 797,  other: 949  },
+  { uptoGrams: 30000, local: 538, within: 756, zone: 944,  other: 1127 },
+  { uptoGrams: 35000, local: 627, within: 874, zone: 1091, other: 1303 }
+];
+
+const WITHIN_STATE_NAME = 'Uttar Pradesh';
+const SAME_ZONE_STATES  = ['Uttarakhand'];
+
+/* Maps a delivery state to which rate-table column applies. */
+function getZoneForState(state) {
+  if (state === WITHIN_STATE_NAME) return 'within';
+  if (SAME_ZONE_STATES.includes(state)) return 'zone';
+  return 'other';
+}
+
+/* Looks up the shipping cost for a given total weight (grams) and zone.
+   Finds the first bracket whose ceiling covers the weight. If the order
+   is heavier than the table's top bracket (35,000g), extrapolates
+   using the per-gram rate implied by the last two known brackets
+   (rather than assuming a fixed 1000g step, since this table's
+   brackets aren't evenly spaced). */
+function getShippingForWeight(grams, zoneKey) {
+  const weight = Math.max(0, Number(grams) || 0);
+  const row = PARCEL_RATES.find(r => weight <= r.uptoGrams);
+  if (row) return row[zoneKey];
+
+  const last        = PARCEL_RATES[PARCEL_RATES.length - 1];
+  const secondLast   = PARCEL_RATES[PARCEL_RATES.length - 2];
+  const weightDiff   = last.uptoGrams - secondLast.uptoGrams;
+  const rateDiff     = last[zoneKey] - secondLast[zoneKey];
+  const ratePerGram  = rateDiff / weightDiff;
+  const extraGrams   = weight - last.uptoGrams;
+  return Math.ceil(last[zoneKey] + ratePerGram * extraGrams);
+}
 
 /* ── Get the currently-selected delivery method ── */
 function getDeliveryMethod() {
@@ -92,9 +119,10 @@ window.updateShipping = function () {
     return;
   }
 
-  const state    = document.getElementById('deliveryState')?.value;
-  const shipping = state ? (shippingRates[state] || 99) : 0;
-  const total    = subtotal + shipping;
+  const state       = document.getElementById('deliveryState')?.value;
+  const totalWeight = typeof getCartTotalWeight === 'function' ? getCartTotalWeight() : 0;
+  const shipping    = state ? getShippingForWeight(totalWeight, getZoneForState(state)) : 0;
+  const total       = subtotal + shipping;
 
   if (shippingEl) shippingEl.textContent = state ? `₹${shipping}` : '— Select state —';
   if (totalEl)    totalEl.textContent    = state ? `₹${total}`    : `₹${subtotal}`;
@@ -173,7 +201,8 @@ function initiatePayment() {
     return;
   }
 
-  const shipping   = isPickup ? 0 : (shippingRates[state] || 99);
+  const totalWeight = typeof getCartTotalWeight === 'function' ? getCartTotalWeight() : 0;
+  const shipping     = isPickup ? 0 : getShippingForWeight(totalWeight, getZoneForState(state));
   const subtotal   = getCartTotal();
   const total      = subtotal + shipping;
   const bookTitles = cart.map(b => b.title).join(', ');
