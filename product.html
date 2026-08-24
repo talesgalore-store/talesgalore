@@ -536,7 +536,7 @@ console.log("FINAL IMAGES:", images);
       const language     = f.language    || '';
       const dimensions   = f.bookDimensions || '';
       const returnPolicy = f.returnPolicy || '';
-
+      const weightGrams = f.weightGrams || f.bookWeight || f.weight || 0;
       const ages   = [].concat(f.suggestedAge  || f.suggestedAges  || []);
       const genres = [].concat(f.theme || []);
       const tags   = [].concat(f.tags  || []);
@@ -549,7 +549,7 @@ console.log("FINAL IMAGES:", images);
       document.title = `${title} – TalesGalore`;
       document.getElementById('breadcrumb-title').textContent = title;
       const stockCount = parseInt(f.stockCount) || 0;
-      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, stockCount }];
+      window._allBooks = [{ id: item.sys.id, title, author, price, condition, image: imageUrl, stockCount, weightGrams }];
 
       document.getElementById('page-content').innerHTML = `
 <div class="product-page">
@@ -718,7 +718,8 @@ window._allBooks = (window._allBooks || []).concat(
     author: b.authors.join(', '),
     price: b.price,
     image: b.image,
-    stockCount: b.stockCount
+    stockCount: b.stockCount,
+    weightGrams: b.weightGrams   // needs to be captured earlier in the allBooks.map() inside loadAlsoLike too
   }))
 );
 
