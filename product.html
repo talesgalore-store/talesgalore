@@ -709,6 +709,19 @@ ${stockCount > 0
 
     if (!picked.length) return;
 
+    // Add these books' data to _allBooks too, so their "Add to Cart"
+    // buttons (which only pass an id) can actually be looked up —
+    // without this, addToCart() always fails for every suggested book.
+    window._allBooks = (window._allBooks || []).concat(
+      picked.map(b => ({
+        id:    b.id,
+        title: b.title,
+        author: b.authors.join(', '),
+        price: b.price,
+        image: b.image
+      }))
+    );
+
     document.getElementById('also-like-grid').innerHTML = picked.map(b => `
       <div class="also-like-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
         ${b.image
