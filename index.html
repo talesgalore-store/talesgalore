@@ -493,7 +493,6 @@ async function loadSearchBooks() {
         ages,
         price:  parseFloat(f.price) || 0,
         image:  imageUrl,
-        inStock: f.inStock !== false
       };
     });
   } catch(e) {
