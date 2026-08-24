@@ -683,7 +683,6 @@ const description = typeof rawDescription === 'string'
           ages:       ageArray,
           genres:     genreArray,
           description: description,
-          inStock:    f.inStock !== false,
           image:      imageUrl,
           images:     imagesArray,
           stockCount: typeof f.stockCount === 'number' ? f.stockCount : 1,
@@ -848,8 +847,8 @@ const description = typeof rawDescription === 'string'
     // Always push out-of-stock to bottom, regardless of sort — must run
     // BEFORE renderPage() so the reordering actually shows up on screen.
     filtered.sort((a, b) => {
-      const aOut = !a.inStock || a.stockCount === 0;
-      const bOut = !b.inStock || b.stockCount === 0;
+      const aOut = a.stockCount === 0;
+      const bOut = b.stockCount === 0;
       return aOut === bOut ? 0 : aOut ? 1 : -1;
     });
 
@@ -916,7 +915,7 @@ const description = typeof rawDescription === 'string'
     window._allBooks = allBooks;
 
     grid.innerHTML = page.map(b => `
-    <div class="product-card ${(!b.inStock || b.stockCount === 0) ? 'out-of-stock-card' : ''}" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer">
+    <div class="product-card ${(b.stockCount === 0) ? 'out-of-stock-card' : ''}" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'" style="cursor:pointer">
 <div class="product-img-wrap" 
   ${b.images && b.images.length > 1 
     ? `data-images='${JSON.stringify(b.images)}' onmouseenter="startImageCycle(this)" onmouseleave="stopImageCycle(this)"`
@@ -947,7 +946,7 @@ const description = typeof rawDescription === 'string'
           ${b.condition ? `<div class="product-condition">${b.condition}</div>` : ''}
           <div class="product-price">₹ ${b.price.toFixed(2)}</div>
 ${(() => {
-  const outOfStock = !b.inStock || b.stockCount === 0;
+  const outOfStock = b.stockCount === 0;
   const stockLabel = outOfStock
     ? `<div class="stock-badge out-of-stock">Out of Stock</div>`
     : b.stockCount === 1
@@ -1086,8 +1085,8 @@ function toggleMobileSidebar() {
 
     // Push out-of-stock matches to the bottom of the quick-search list too
     matches.sort((a, b) => {
-      const aOut = !a.inStock || a.stockCount === 0;
-      const bOut = !b.inStock || b.stockCount === 0;
+      const aOut = a.stockCount === 0;
+      const bOut = b.stockCount === 0;
       return aOut === bOut ? 0 : aOut ? 1 : -1;
     });
 
