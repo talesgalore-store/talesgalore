@@ -673,8 +673,7 @@ ${stockCount > 0
         const ages = [].concat(f.suggestedAge || f.suggestedAges || []);
         const genres = [].concat(f.theme || []);
 
-        return { id: item.sys.id, title: f.title || 'Untitled', authors, ages, genres, price: parseFloat(f.price) || 0, image: imageUrl };
-      });
+return { id: item.sys.id, title: f.title || 'Untitled', authors, ages, genres, price: parseFloat(f.price) || 0, image: imageUrl, stockCount: parseInt(f.stockCount) || 0 };      });
 
     const picked = [];
     const usedIds = new Set();
@@ -712,29 +711,32 @@ ${stockCount > 0
     // Add these books' data to _allBooks too, so their "Add to Cart"
     // buttons (which only pass an id) can actually be looked up —
     // without this, addToCart() always fails for every suggested book.
-    window._allBooks = (window._allBooks || []).concat(
-      picked.map(b => ({
-        id:    b.id,
-        title: b.title,
-        author: b.authors.join(', '),
-        price: b.price,
-        image: b.image
-      }))
-    );
+window._allBooks = (window._allBooks || []).concat(
+  picked.map(b => ({
+    id:    b.id,
+    title: b.title,
+    author: b.authors.join(', '),
+    price: b.price,
+    image: b.image,
+    stockCount: b.stockCount
+  }))
+);
 
-    document.getElementById('also-like-grid').innerHTML = picked.map(b => `
-      <div class="also-like-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
-        ${b.image
-          ? `<img class="also-like-img" src="${b.image}" alt="${b.title}" loading="lazy"/>`
-          : `<div class="also-like-img-placeholder">📖</div>`}
-        <div class="also-like-info">
-          <div class="also-like-title">${b.title}</div>
-          <div class="also-like-author">${b.authors.join(', ')}</div>
-          <div class="also-like-price">₹ ${b.price.toFixed(2)}</div>
-          <button class="also-like-btn" onclick="event.stopPropagation(); addToCart('${b.id}')">Add to Cart</button>
-        </div>
-      </div>
-    `).join('');
+document.getElementById('also-like-grid').innerHTML = picked.map(b => `
+  <div class="also-like-card" onclick="window.location='product.html?id=${b.id}&slug=${slugify(b.title)}'">
+    ${b.image
+      ? `<img class="also-like-img" src="${b.image}" alt="${b.title}" loading="lazy"/>`
+      : `<div class="also-like-img-placeholder">📖</div>`}
+    <div class="also-like-info">
+      <div class="also-like-title">${b.title}</div>
+      <div class="also-like-author">${b.authors.join(', ')}</div>
+      <div class="also-like-price">₹ ${b.price.toFixed(2)}</div>
+      ${b.stockCount > 0
+        ? `<button class="also-like-btn" onclick="event.stopPropagation(); addToCart('${b.id}')">Add to Cart</button>`
+        : `<button class="also-like-btn" disabled style="opacity:0.5;cursor:default;">Out of Stock</button>`}
+    </div>
+  </div>
+`).join('');
 
     document.getElementById('also-like-section').style.display = 'block';
 
