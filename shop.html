@@ -677,6 +677,7 @@ const description = typeof rawDescription === 'string'
           author:     rawAuthor,
           authorName: authorsArray,
           price:      parseFloat(f.price) || 0,
+          weightGrams: Number(f.weightGrams) || 0,
           condition:  (Array.isArray(f.bookCondition) ? f.bookCondition[0] : (f.bookCondition || f.condition || '')).toString().trim(),
           binding:    (f.bookBinding || f.binding || '').trim(),
           language:   (Array.isArray(f.language) ? f.language[0] : (f.language || '')).toString().trim(),
