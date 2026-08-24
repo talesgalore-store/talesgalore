@@ -673,8 +673,7 @@ ${stockCount > 0
         const ages = [].concat(f.suggestedAge || f.suggestedAges || []);
         const genres = [].concat(f.theme || []);
 
-return { id: item.sys.id, title: f.title || 'Untitled', authors, ages, genres, price: parseFloat(f.price) || 0, image: imageUrl, stockCount: parseInt(f.stockCount) || 0 };      });
-
+return { id: item.sys.id, title: f.title || 'Untitled', authors, ages, genres, price: parseFloat(f.price) || 0, image: imageUrl, stockCount: parseInt(f.stockCount) || 0, weightGrams: f.weightGrams || 0 };
     const picked = [];
     const usedIds = new Set();
 
