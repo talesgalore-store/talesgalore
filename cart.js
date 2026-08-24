@@ -54,6 +54,7 @@ function addToCart(bookData, event) {
     price:     Number(book.price),
     condition: book.condition || '',
     image:     book.image || '',
+    weight:    Number(book.weightGrams) || 0,
     qty:       1
   });
   saveCart(cart);
@@ -224,4 +225,11 @@ if (!document.getElementById("cartItems")) {
   console.log("Not cart page — skipping cart.js");
 } else {
   renderCart();
+}
+
+function getCartTotalWeight() {
+  return getCart().reduce(
+    (sum, item) => sum + (Number(item.weight) || 0) * (item.qty || 1),
+    0
+  );
 }
