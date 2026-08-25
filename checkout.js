@@ -45,8 +45,20 @@ const PARCEL_RATES = [
 const WITHIN_STATE_NAME = 'Uttar Pradesh';
 const SAME_ZONE_STATES  = ['Uttarakhand'];
 
-/* Maps a delivery state to which rate-table column applies. */
-function getZoneForState(state) {
+// PIN code prefixes that always count as "local" delivery,
+// regardless of which state was selected — takes priority
+// over the state-based zone below.
+const LOCAL_PINCODE_PREFIXES = ['11', '12', '20'];
+
+/* Maps a delivery state + PIN code to which rate-table column applies.
+   PIN code is checked first: if it starts with one of the "local"
+   prefixes, that wins outright. Otherwise falls back to the
+   state-based zone (within / zone / other). */
+function getShippingZone(state, pincode) {
+  const pin = (pincode || '').trim();
+  if (LOCAL_PINCODE_PREFIXES.some(prefix => pin.startsWith(prefix))) {
+    return 'local';
+  }
   if (state === WITHIN_STATE_NAME) return 'within';
   if (SAME_ZONE_STATES.includes(state)) return 'zone';
   return 'other';
