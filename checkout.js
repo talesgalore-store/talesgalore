@@ -132,8 +132,9 @@ window.updateShipping = function () {
   }
 
   const state       = document.getElementById('deliveryState')?.value;
+  const pincode     = document.getElementById('deliveryPincode')?.value;
   const totalWeight = typeof getCartTotalWeight === 'function' ? getCartTotalWeight() : 0;
-  const shipping    = state ? getShippingForWeight(totalWeight, getZoneForState(state)) : 0;
+  const shipping    = state ? getShippingForWeight(totalWeight, getShippingZone(state, pincode)) : 0;
   const total       = subtotal + shipping;
 
   if (shippingEl) shippingEl.textContent = state ? `₹${shipping}` : '— Select state —';
@@ -213,8 +214,9 @@ function initiatePayment() {
     return;
   }
 
-  const totalWeight = typeof getCartTotalWeight === 'function' ? getCartTotalWeight() : 0;
-  const shipping     = isPickup ? 0 : getShippingForWeight(totalWeight, getZoneForState(state));
+  const pincode      = document.getElementById('deliveryPincode')?.value;
+  const totalWeight  = typeof getCartTotalWeight === 'function' ? getCartTotalWeight() : 0;
+  const shipping     = isPickup ? 0 : getShippingForWeight(totalWeight, getShippingZone(state, pincode));
   const subtotal   = getCartTotal();
   const total      = subtotal + shipping;
   const bookTitles = cart.map(b => b.title).join(', ');
