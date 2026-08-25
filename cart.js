@@ -197,18 +197,26 @@ container.innerHTML = cartItems.map(item => `
   </div>
 `).join('');
 
+  // Fixed: now multiplies by quantity, matching getCartTotal() in utils.js
   const subtotal = cartItems.reduce(
-    (sum, item) => sum + Number(item.price || 0),
+    (sum, item) => sum + Number(item.price || 0) * (item.qty || 1),
     0
   );
 
-  document.getElementById("cartSubtotal").textContent =
-    `₹${subtotal}`;
+  document.getElementById('cartSubtotal').textContent = `₹${subtotal}`;
+  document.getElementById('cartTotal').textContent = `₹${subtotal}`;
+  document.getElementById('cartSummary').style.display = 'block';
 
-  document.getElementById("cartTotal").textContent =
-    `₹${subtotal}`;
+  // Display total parcel weight — grams under 1000, kg (2dp) above that
+  const weightEl = document.getElementById('cartWeight');
+  if (weightEl) {
+    const totalGrams = getCartTotalWeight();
+    weightEl.textContent = totalGrams >= 1000
+      ? `${(totalGrams / 1000).toFixed(2)} kg`
+      : `${totalGrams} g`;
+  }
 
-  document.getElementById("cartSummary").style.display = "block";
+  if (typeof updateShipping === 'function') updateShipping();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
