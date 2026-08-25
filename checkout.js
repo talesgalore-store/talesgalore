@@ -137,7 +137,7 @@ window.updateShipping = function () {
   const shipping    = state ? getShippingForWeight(totalWeight, getShippingZone(state, pincode)) : 0;
   const total       = subtotal + shipping;
 
-  if (shippingEl) shippingEl.textContent = state ? `₹${shipping}` : '— Select state —';
+  if (shippingEl) shippingEl.textContent = state ? `₹${shipping}` : '— Select state & add PIN code —';
   if (totalEl)    totalEl.textContent    = state ? `₹${total}`    : `₹${subtotal}`;
 };
 
