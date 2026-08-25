@@ -62,26 +62,19 @@ async function renderCart() {
           : '📖'}
       </div>
 
-      <div class="cart-details">
-        <h3>${item.title}</h3>
+      <div class="cart-item-info">
+        <h3 class="cart-item-title">${item.title}</h3>
+        <p class="cart-item-author">${item.author || ''}</p>
+        <p class="cart-item-price">₹${item.price}</p>
+      </div>
 
-        <p class="cart-author">
-          ${item.author || ''}
-        </p>
-
-        <p class="cart-price">
-          ₹${item.price}
-        </p>
-
+      <div class="cart-item-actions-col">
         <div class="cart-qty-controls">
           <button class="qty-btn" onclick="decreaseQty('${item.id}'); renderCart()">−</button>
           <span class="qty-display">${item.qty || 1}</span>
           <button class="qty-btn" onclick="increaseQty('${item.id}'); renderCart()">+</button>
         </div>
-
-        <button class="remove-btn" onclick="removeFromCart('${item.id}')">
-          Remove from Cart
-        </button>
+        <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
       </div>
 
     </div>
