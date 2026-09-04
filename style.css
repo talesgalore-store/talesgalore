@@ -366,6 +366,7 @@ input, textarea, select, button { font-family: inherit; }
   margin-top: auto;
 }
 .product-price {
+  margin-top: auto;
   font-size: 18px;
   font-weight: 700;
   color: var(--terracotta);
