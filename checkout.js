@@ -232,15 +232,16 @@ function initiatePayment() {
     name:        'TalesGalore',
     description: `Books: ${bookTitles}`,
     image:       '/images/TalesGalore-logo.PNG',
-    handler: function (response) {
-      onPaymentSuccess(response, {
-        name, email, phone,
-        address: resolvedAddress,
-        state:   resolvedState,
-        deliveryMethod: method,
-        cart, total
-      });
-    },
+   handler: function (response) {
+     onPaymentSuccess(response, {
+     name, email, phone,
+     address: resolvedAddress,
+     state:   resolvedState,
+     pincode: isPickup ? '' : pincode,
+     deliveryMethod: method,
+     cart, total
+  });
+},
     prefill: {
       name:    name,
       email:   email,
@@ -310,19 +311,20 @@ function buildOrderEmailParams(response, orderDetails) {
   );
   const shipping = orderDetails.total - subtotal;
 
-  return {
-    customer_name:    orderDetails.name,
-    customer_email:   orderDetails.email,
-    customer_phone:   orderDetails.phone,
-    order_items:      orderItems,
-    subtotal:         subtotal.toFixed(2),
-    shipping:         shipping.toFixed(2),
-    total:            orderDetails.total.toFixed(2),
-    delivery_method:  orderDetails.deliveryMethod === 'pickup' ? 'Free Store Pick-up' : 'Shipping (India Post)',
-    delivery_address: orderDetails.address,
-    delivery_state:   orderDetails.state || '',
-    payment_id:       response.razorpay_payment_id
-  };
+return {
+  customer_name:    orderDetails.name,
+  customer_email:   orderDetails.email,
+  customer_phone:   orderDetails.phone,
+  delivery_pincode: orderDetails.pincode || '',
+  order_items:      orderItems,
+  subtotal:         subtotal.toFixed(2),
+  shipping:         shipping.toFixed(2),
+  total:            orderDetails.total.toFixed(2),
+  delivery_method:  orderDetails.deliveryMethod === 'pickup' ? 'Free Store Pick-up' : 'Shipping (India Post)',
+  delivery_address: orderDetails.address,
+  delivery_state:   orderDetails.state || '',
+  payment_id:       response.razorpay_payment_id
+};
 }
 
 function sendOrderConfirmationEmail(response, orderDetails) {
