@@ -34,7 +34,7 @@
       aspect-ratio: 3/4;
       max-width: 340px;
     }
-    .product-image-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+    .product-image-wrap img { width:100%; height:100%; object-fit:contain; display:block; }
     .product-image-placeholder {
       width:100%; height:100%; display:flex;
       align-items:center; justify-content:center; font-size:5rem;
@@ -56,7 +56,7 @@
       border: 2px solid transparent; cursor: pointer; background: var(--warm);
       transition: border-color .15s;
     }
-    .product-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .product-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
     .product-thumb.active,
     .product-thumb:hover { border-color: var(--gold); }
 
