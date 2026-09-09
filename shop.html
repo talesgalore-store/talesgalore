@@ -603,6 +603,15 @@
   let filtered    = [];
   let currentPage = 1;
 
+  // Safe helper — the shop page no longer has a #pageTitle element,
+  // so every write to it must be guarded or it throws and kills the
+  // rest of the calling function (this was the root cause of search
+  // silently failing).
+  function setPageTitle(text) {
+    const el = document.getElementById('pageTitle');
+    if (el) el.textContent = text;
+  }
+
   function slugify(title) {
     return title
       .toLowerCase()
@@ -757,7 +766,7 @@ const description = typeof rawDescription === 'string'
     [...params.getAll('genre'), ...params.getAll('theme')].forEach(v => {
       const cb = document.querySelector(`#genreFilters input[value="${v}"]`);
       if (cb) cb.checked = true;
-      document.getElementById('pageTitle').textContent = v;
+      setPageTitle(v);
       showPill(v);
     });
 
@@ -765,7 +774,7 @@ const description = typeof rawDescription === 'string'
     const urlAuthors = params.getAll('author');
     if (urlAuthors.length) {
       window._pendingAuthorFilters = urlAuthors;
-      document.getElementById('pageTitle').textContent = urlAuthors[0];
+      setPageTitle(urlAuthors[0]);
       showPill(urlAuthors[0]);
     }
 
@@ -788,13 +797,13 @@ const description = typeof rawDescription === 'string'
       window._searchQuery = search;
       const input = document.getElementById('shopSearchInput');
       if (input) input.value = search;
-      document.getElementById('pageTitle').textContent = `"${search}"`;
+      setPageTitle(`"${search}"`);
       showPill(`Search: ${search}`);
     }
 
     const ages = params.getAll('age');
     if (ages.length === 1 && !params.get('search') && !params.getAll('genre').length && !params.getAll('theme').length) {
-      document.getElementById('pageTitle').textContent = ages[0];
+      setPageTitle(ages[0]);
       showPill(ages[0]);
     }
   }
@@ -865,7 +874,7 @@ const description = typeof rawDescription === 'string'
     document.getElementById('priceMin').value = '';
     document.getElementById('priceMax').value = '';
     document.getElementById('sort-select').value = 'featured';
-    document.getElementById('pageTitle').textContent = 'Catalogue';
+    setPageTitle('Catalogue');
     document.getElementById('activeFilterPill').style.display = 'none';
     const input = document.getElementById('shopSearchInput');
     if (input) input.value = '';
@@ -1052,10 +1061,10 @@ function toggleMobileSidebar() {
     window._searchQuery = query;
 
     if (query) {
-      document.getElementById('pageTitle').textContent = `"${query}"`;
+      setPageTitle(`"${query}"`);
       showPill(`Search: ${query}`);
     } else {
-      document.getElementById('pageTitle').textContent = 'Catalogue';
+      setPageTitle('Catalogue');
       document.getElementById('activeFilterPill').style.display = 'none';
     }
 
