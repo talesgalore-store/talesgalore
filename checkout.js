@@ -150,7 +150,71 @@ function buildBookIdsNote(cart) {
     .join(',');
 }
 
-function initiatePayment() {
+/* ── Final stock check, run right before opening Razorpay ──
+   Cart.js already reconciles stock whenever the cart page renders, but
+   time passes between loading the page and clicking "Pay" — someone
+   else's order could have sold the last copy in the meantime. This
+   re-fetches live stock and refuses to proceed if anything in the cart
+   is no longer available in the quantity requested, instead of letting
+   the customer pay for a book that can't be fulfilled.
+   Returns { ok: true, cart } with a stock-safe cart to charge, or
+   { ok: false } if the user needs to fix their cart first. */
+async function verifyStockBeforePayment() {
+  const cart = getCart().filter(item => item.id);
+
+  if (typeof fetchBooks !== 'function') {
+    // Safety net: if for some reason the live-stock helper isn't
+    // available on this page, fall back to whatever's cached rather
+    // than blocking checkout entirely.
+    return { ok: true, cart };
+  }
+
+  let liveBooks;
+  try {
+    liveBooks = await fetchBooks();
+  } catch (err) {
+    console.warn('Stock re-check failed before payment:', err);
+    return { ok: true, cart };
+  }
+
+  const liveById = new Map(liveBooks.map(b => [b.id, b]));
+  const problems = [];
+
+  cart.forEach(item => {
+    const live = liveById.get(item.id);
+    const liveStock = live ? live.stockCount : 0;
+
+    if (liveStock <= 0) {
+      item.outOfStock = true;
+      item.stockCount = 0;
+      problems.push(`"${item.title}" just went out of stock`);
+    } else if ((item.qty || 1) > liveStock) {
+      item.outOfStock = false;
+      item.stockCount = liveStock;
+      item.qty = liveStock;
+      problems.push(`Only ${liveStock} left of "${item.title}" — quantity updated`);
+    } else {
+      item.outOfStock = false;
+      item.stockCount = liveStock;
+    }
+  });
+
+  saveCart(cart);
+  if (typeof renderCart === 'function') renderCart();
+
+  if (problems.length) {
+    alert(
+      'Sorry — some items in your cart changed while you were checking out:\n\n' +
+      problems.join('\n') +
+      '\n\nPlease review your cart and try again.'
+    );
+    return { ok: false };
+  }
+
+  return { ok: true, cart: cart.filter(item => !item.outOfStock) };
+}
+
+async function initiatePayment() {
   // Check auth first
   const user = window.getCurrentUser ? window.getCurrentUser() : null;
   if (!user) {
@@ -207,8 +271,16 @@ function initiatePayment() {
     }
   }
 
-  const cart = getCart();
+  if (!getCart().length) {
+    alert('Your cart is empty!');
+    return;
+  }
 
+  // Re-verify stock right before charging the customer.
+  const stockCheck = await verifyStockBeforePayment();
+  if (!stockCheck.ok) return;
+
+  const cart = stockCheck.cart;
   if (!cart.length) {
     alert('Your cart is empty!');
     return;
