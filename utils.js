@@ -27,18 +27,20 @@ function clearCart() {
   updateCartCount();
 }
 
+// Items flagged outOfStock (set by cart.js's live stock check on cart.html)
+// are excluded here so they never contribute to what the customer is
+// actually charged or shipped — even if they're still shown in the cart
+// UI so the customer knows to remove them.
 function getCartTotal() {
-  return getCart().reduce(
-    (sum, item) => sum + Number(item.price || 0) * (item.qty || 1),
-    0
-  );
+  return getCart()
+    .filter(item => !item.outOfStock)
+    .reduce((sum, item) => sum + Number(item.price || 0) * (item.qty || 1), 0);
 }
 
 function getCartTotalWeight() {
-  return getCart().reduce(
-    (sum, item) => sum + (Number(item.weight) || 0) * (item.qty || 1),
-    0
-  );
+  return getCart()
+    .filter(item => !item.outOfStock)
+    .reduce((sum, item) => sum + (Number(item.weight) || 0) * (item.qty || 1), 0);
 }
 
 function updateCartCount() {
@@ -73,6 +75,7 @@ function addToCart(idOrBook, event) {
       return;
     }
     existing.qty += 1;
+    existing.outOfStock = false;
   } else {
     cart.push({
       id:         book.id,
@@ -83,6 +86,7 @@ function addToCart(idOrBook, event) {
       image:      book.image || '',
       weight:     Number(book.weightGrams || book.weight) || 0,
       stockCount: stockLimit,
+      outOfStock: false,
       qty:        1
     });
   }
